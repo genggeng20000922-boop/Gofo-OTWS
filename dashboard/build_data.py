@@ -72,16 +72,28 @@ class OpenApiBackend:
                     continue
                 raise RuntimeError("网络错误: %s" % e)
 
+    @staticmethod
+    def _fingerprint(v):
+        """返回值的可诊断指纹：长度 + 首尾字符，不泄露完整内容。"""
+        if v is None:
+            return "<None>"
+        return "len=%d head=%r tail=%r has_space=%s" % (
+            len(v), v[:8], v[-4:] if len(v) > 4 else v, (" " in v or "\t" in v or "\n" in v or "\r" in v))
+
     def token(self):
         """tenant_access_token 有效期 2 小时，剩余不足 5 分钟时提前续签。"""
         now = time.time()
         if self._token and now < self._expire_at - 300:
             return self._token
-        r = self._request("POST", "/auth/v3/tenant_access_token/internal", {
+        payload = {
             "app_id": self.app_id,
             "app_secret": self.app_secret,
-        })
+        }
+        r = self._request("POST", "/auth/v3/tenant_access_token/internal", payload)
         if r.get("code") != 0:
+            # 诊断：打印两个参数的长度与首尾字符，便于定位是值被污染还是格式不对
+            print("凭证诊断 app_id:     %s" % self._fingerprint(self.app_id), file=sys.stderr)
+            print("凭证诊断 app_secret: %s" % self._fingerprint(self.app_secret), file=sys.stderr)
             raise RuntimeError("获取 token 失败: code=%s msg=%s" % (r.get("code"), r.get("msg")))
         self._token = r["tenant_access_token"]
         self._expire_at = now + int(r.get("expire", 7200))
