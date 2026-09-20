@@ -47,25 +47,25 @@ class OpenApiBackend:
         self._token = None
         self._expire_at = 0
 
-    def _post(self, path, payload, token=None):
+    def _request(self, method, path, payload=None, token=None):
+        """统一的 HTTP 请求，支持 GET / POST；429 与 5xx 走指数退避重试。"""
         url = API_HOST + path
         headers = {"Content-Type": "application/json; charset=utf-8"}
         if token:
             headers["Authorization"] = "Bearer " + token
-        req = urllib.request.Request(
-            url, data=json.dumps(payload).encode("utf-8"), headers=headers, method="POST")
+        body = json.dumps(payload).encode("utf-8") if payload is not None else None
+        req = urllib.request.Request(url, data=body, headers=headers, method=method)
         for attempt in range(4):
             try:
                 with urllib.request.urlopen(req, timeout=30) as resp:
                     return json.loads(resp.read().decode("utf-8"))
             except urllib.error.HTTPError as e:
-                body = e.read().decode("utf-8", "replace")
+                detail = e.read().decode("utf-8", "replace")
                 # 429 限流 / 5xx 服务端错误 -> 指数退避重试
-                if e.code == 429 or e.code >= 500:
-                    if attempt < 3:
-                        time.sleep(2 ** attempt)
-                        continue
-                raise RuntimeError("HTTP %s: %s" % (e.code, body[:400]))
+                if (e.code == 429 or e.code >= 500) and attempt < 3:
+                    time.sleep(2 ** attempt)
+                    continue
+                raise RuntimeError("HTTP %s: %s" % (e.code, detail[:400]))
             except urllib.error.URLError as e:
                 if attempt < 3:
                     time.sleep(2 ** attempt)
@@ -77,7 +77,7 @@ class OpenApiBackend:
         now = time.time()
         if self._token and now < self._expire_at - 300:
             return self._token
-        r = self._post("/auth/v3/tenant_access_token/internal", {
+        r = self._request("POST", "/auth/v3/tenant_access_token/internal", {
             "app_id": self.app_id,
             "app_secret": self.app_secret,
         })
@@ -96,7 +96,8 @@ class OpenApiBackend:
                 params["page_token"] = page_token
             path = "/bitable/v1/apps/%s/tables/%s/records?%s" % (
                 BASE_TOKEN, table_id, urllib.parse.urlencode(params))
-            r = self._post(path, {})
+            # 取记录是 GET，且必须带上 Authorization 头
+            r = self._request("GET", path, token=self.token())
             if r.get("code") != 0:
                 raise RuntimeError("读取表 %s 失败: code=%s msg=%s" % (
                     table_id, r.get("code"), r.get("msg")))
