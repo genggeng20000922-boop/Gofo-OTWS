@@ -157,11 +157,11 @@ footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11
 
   <div class="grid g-2">
     <section class="panel">
-      <h2>区域推广完成率 <span class="hint">站点维度 · 五环节全完成计为已完成</span></h2>
+      <h2>区域推广完成率 <span class="hint">HUB 维度 · 五环节全完成计为已完成</span></h2>
       <div class="body" id="regions"></div>
     </section>
     <section class="panel funnel">
-      <h2>推进环节漏斗 <span class="hint">各环节达成「完成」的站点数</span></h2>
+      <h2>推进环节漏斗 <span class="hint">各环节达成「完成」的 HUB 数</span></h2>
       <div class="body" id="funnel"></div>
     </section>
   </div>
@@ -178,12 +178,12 @@ footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11
   </div>
 
   <section class="panel">
-    <h2>站点推进明细 <span class="hint">27 个站点 · 悬停查看状态</span></h2>
+    <h2>HUB 推进明细 <span class="hint">27 个 HUB · 悬停查看状态</span></h2>
     <div class="tbl-scroll">
       <table>
         <thead>
           <tr>
-            <th>站点/HUB</th><th>区域</th>
+            <th>HUB</th><th>区域</th>
             <th>文员提需</th><th>HR发单</th><th>供应商+业务培训</th><th>推广结束</th><th>运营数据晾晒</th>
           </tr>
         </thead>
@@ -202,7 +202,7 @@ footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11
 <script>
 /* ============================================================
    数据契约（字段名以多维表为准）
-   - kpi.progress.total_sites   -> 站点总数
+   - kpi.progress.total_sites   -> HUB 总数
    - kpi.progress.region_count  -> 覆盖区域数
    - kpi.progress.overall_rate  -> 整体完成率
    - kpi.plan.total_tasks       -> 推广任务总数
@@ -211,7 +211,7 @@ footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11
    - progress.funnel[]          -> 环节漏斗
    - plan.status_dist           -> 任务状态分布
    - plan.region_dist           -> 区域任务分布
-   - progress.records[]         -> 站点明细
+   - progress.records[]         -> HUB 明细
    缺失/异常一律渲染 "—"，不显示 NaN。
    ============================================================ */
 
@@ -251,12 +251,12 @@ function requirePath(obj, path){
 /* ---------- 渲染：指标卡 ---------- */
 function renderCards(d){
   const cards = [
-    { lbl:"站点总数",       val:num(requirePath(d,"kpi.progress.total_sites")),  unit:"个",
+    { lbl:"HUB 总数",       val:num(requirePath(d,"kpi.progress.total_sites")),  unit:"个",
       foot:"覆盖 " + num(requirePath(d,"kpi.progress.region_count")) + " 个区域", cls:"c-ok" },
     { lbl:"整体完成率",     val:pct(requirePath(d,"kpi.progress.overall_rate")), unit:"",
       foot:"五环节完成占比", cls:"", bar:Number(requirePath(d,"kpi.progress.overall_rate")) },
     { lbl:"推广任务总数",   val:num(requirePath(d,"kpi.plan.total_tasks")),     unit:"条",
-      foot:"覆盖 " + num(requirePath(d,"kpi.plan.site_count")) + " 个站点", cls:"c-warn" },
+      foot:"覆盖 " + num(requirePath(d,"kpi.plan.site_count")) + " 个 HUB", cls:"c-warn" },
     { lbl:"合作供应商数",   val:num(requirePath(d,"kpi.plan.supplier_count")),  unit:"家",
       foot:"推广计划表去重", cls:"c-hold" },
   ];
@@ -285,7 +285,7 @@ function renderRegions(d){
     return `
     <div class="region">
       <div class="top">
-        <span class="nm">${esc(text(r.name))}<small>${fmt(t)} 个站点 · ${fmt(r.done)} 已完成</small></span>
+        <span class="nm">${esc(text(r.name))}<small>${fmt(t)} 个 HUB · ${fmt(r.done)} 已完成</small></span>
         <span class="pc">${pct(r.rate)}</span>
       </div>
       <div class="stack" style="width:100%">
@@ -348,12 +348,12 @@ function renderDist(elId, obj, colorMap){
   }).join("");
 }
 
-/* ---------- 渲染：站点明细 ---------- */
+/* ---------- 渲染：HUB 明细 ---------- */
 function renderDetail(d){
   const recs = requirePath(d,"progress.records");
   const tb = document.getElementById("detail");
   if (!Array.isArray(recs) || !recs.length){
-    tb.innerHTML = `<tr><td colspan="7" class="na">${NA} 暂无站点数据</td></tr>`;
+    tb.innerHTML = `<tr><td colspan="7" class="na">${NA} 暂无 HUB 数据</td></tr>`;
     return;
   }
   tb.innerHTML = recs.map(r => {

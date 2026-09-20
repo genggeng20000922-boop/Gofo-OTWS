@@ -277,7 +277,7 @@ def build_progress(rows):
     cell_done = sum(stage_count(s, STAGE_DONE) for s in STAGES)
     overall = round(cell_done / cell_total * 100, 1) if cell_total else 0.0
 
-    # 按区域聚合：已完成站点 = 五个环节全部为「完成」
+    # 按区域聚合：已完成 HUB = 五个环节全部为「完成」
     by_region = collections.defaultdict(lambda: {"total": 0, "done": 0, "doing": 0, "todo": 0, "hold": 0})
     for x in records:
         b = by_region[x["region"]]
