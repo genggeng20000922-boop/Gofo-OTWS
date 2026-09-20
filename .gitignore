@@ -1,20 +1,13 @@
-# Excel output
-*.xlsx
-*.xls
-
-# Python
+# 报表数据与本地缓存
+data/
+server.log
 __pycache__/
 *.pyc
-*.pyo
 
-# IDE
-.vscode/
-.idea/
-
-# OS
+# 凭证与本地工作记录
+.env
+.env.*
+*.secret
+.workbuddy/
 .DS_Store
 Thumbs.db
-
-# Temp
-/tmp/
-*.tmp

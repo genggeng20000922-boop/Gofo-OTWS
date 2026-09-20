@@ -1,0 +1,128 @@
+# 链路 A：定时从飞书多维表拉取数据，生成 data.json 并发布到 GitHub Pages
+#
+# 看板位于 dashboard/ 子目录，不影响仓库根目录的现有报表页面。
+#   Pages 地址: https://<用户>.github.io/Gofo-OTWS/dashboard/
+#
+# 凭证管理（重要）：
+#   App Secret 只放在仓库 Secrets 里，绝不写入代码或提交进仓库。
+#   本工作流通过 LARK_APP_ID / LARK_APP_SECRET 环境变量传给 build_data.py，
+#   脚本自行换取 tenant_access_token，不依赖任何 CLI 工具。
+#
+# 一次性配置（务必逐项完成）：
+#   1. Settings -> Secrets and variables -> Actions 添加：
+#        LARK_APP_ID      = cli_xxxxxxxx
+#        LARK_APP_SECRET  = 应用密钥
+#   2. Settings -> Pages -> Source 选择 "GitHub Actions"
+#   3. 飞书多维表 -> 右上角 ··· -> 更多 -> 添加文档应用 -> 搜索应用名 -> 授予「可阅读」
+#      注意：开放平台改过权限范围后，必须重新发布应用版本才生效。
+
+name: Sync dashboard data
+
+on:
+  schedule:
+    # 每 10 分钟同步一次
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: dashboard-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: dashboard
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check secrets present
+        env:
+          LARK_APP_ID: ${{ secrets.LARK_APP_ID }}
+          LARK_APP_SECRET: ${{ secrets.LARK_APP_SECRET }}
+        run: |
+          if [ -z "$LARK_APP_ID" ] || [ -z "$LARK_APP_SECRET" ]; then
+            echo "::error::缺少 LARK_APP_ID / LARK_APP_SECRET，请在 Settings -> Secrets and variables -> Actions 中配置"
+            exit 1
+          fi
+          echo "凭证已配置"
+
+      - name: Build data.json from Base
+        env:
+          LARK_APP_ID: ${{ secrets.LARK_APP_ID }}
+          LARK_APP_SECRET: ${{ secrets.LARK_APP_SECRET }}
+        run: python build_data.py
+
+      - name: Verify output
+        run: |
+          test -f data.json || { echo "::error::data.json 未生成"; exit 1; }
+          python - <<'PY'
+          import json, sys
+          d = json.load(open('data.json', encoding='utf-8'))
+          required = [
+              "updated_at","kpi.progress.total_sites","kpi.progress.region_count",
+              "kpi.progress.overall_rate","kpi.plan.total_tasks","kpi.plan.site_count",
+              "kpi.plan.supplier_count","progress.regions","progress.funnel",
+              "progress.records","plan.status_dist","plan.region_dist",
+          ]
+          def get(o, p):
+              for k in p.split('.'):
+                  if not isinstance(o, dict) or k not in o: return None
+                  o = o[k]
+              return o
+          miss = [p for p in required if get(d, p) is None]
+          if miss:
+              print("::error::数据契约缺失字段: " + ", ".join(miss)); sys.exit(1)
+          sites = len(get(d, "progress.records") or [])
+          print(f"契约校验通过：12/12 字段命中，{sites} 个站点，更新于 {d['updated_at']}")
+          PY
+
+      - name: Guard - ensure no secrets leaked
+        run: |
+          # 只扫描对外发布的产物；工作流自身含变量名属正常
+          if grep -rniE 'app_secret|tenant_access_token|cli_[a-z0-9]{10,}|\bsecret\b' index.html data.json 2>/dev/null; then
+            echo "::error::页面或数据文件中检测到疑似凭证，已阻止发布"
+            exit 1
+          fi
+          echo "凭证检查通过：发布产物中无任何密钥"
+
+      - name: Commit refreshed data.json
+        run: |
+          cd ..
+          if git diff --quiet -- dashboard/data.json; then
+            echo "data.json 无变化，跳过提交"
+          else
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add dashboard/data.json
+            git commit -m "chore: 同步看板数据 $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dashboard
+
+  deploy:
+    needs: sync
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

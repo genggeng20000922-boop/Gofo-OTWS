@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>推广运营数据看板</title>
+<style>
+:root{
+  --bg:#f4f6fb; --panel:#ffffff; --ink:#111827; --ink-2:#4b5563; --ink-3:#8a93a5;
+  --line:#e6e9f0; --brand:#2563eb; --brand-soft:#eff4ff;
+  --ok:#10b981; --warn:#f59e0b; --bad:#ef4444; --hold:#9aa3b2; --todo:#cbd5e1;
+  --radius:14px; --shadow:0 1px 2px rgba(16,24,40,.04),0 6px 20px rgba(16,24,40,.06);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1360px; margin:0 auto; padding:26px 24px 64px}
+
+/* ---------- 顶部 ---------- */
+header{display:flex; align-items:flex-start; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:22px}
+h1{margin:0 0 6px; font-size:23px; font-weight:650; letter-spacing:-.2px}
+.sub{color:var(--ink-3); font-size:12.5px}
+.stamp{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+.pill{
+  display:inline-flex; align-items:center; gap:7px; padding:7px 13px; border-radius:999px;
+  background:var(--panel); border:1px solid var(--line); font-size:12.5px; color:var(--ink-2);
+  box-shadow:var(--shadow); white-space:nowrap;
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--ok);flex:none}
+.dot.stale{background:var(--warn)}
+.dot.err{background:var(--bad)}
+.dot.load{background:var(--brand); animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.btn{
+  padding:7px 15px; border-radius:999px; border:1px solid var(--line); background:var(--panel);
+  color:var(--ink-2); font-size:12.5px; cursor:pointer; box-shadow:var(--shadow); transition:.15s;
+  font-family:inherit;
+}
+.btn:hover{border-color:var(--brand); color:var(--brand)}
+.btn:disabled{opacity:.55; cursor:default}
+
+.banner{
+  display:none; margin-bottom:18px; padding:12px 16px; border-radius:var(--radius);
+  font-size:13px; border:1px solid;
+}
+.banner.show{display:block}
+.banner.warn{background:#fffbeb; border-color:#fde68a; color:#92400e}
+.banner.err{background:#fef2f2; border-color:#fecaca; color:#991b1b}
+
+/* ---------- 指标卡 ---------- */
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(212px,1fr)); gap:14px; margin-bottom:22px}
+.card{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:17px 18px 15px; box-shadow:var(--shadow); position:relative; overflow:hidden;
+}
+.card::after{content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--brand); opacity:.85}
+.card.c-ok::after{background:var(--ok)} .card.c-warn::after{background:var(--warn)}
+.card.c-hold::after{background:var(--hold)} .card.c-todo::after{background:var(--todo)}
+.card .lbl{font-size:12.5px; color:var(--ink-3); margin-bottom:9px; display:flex; align-items:center; gap:6px}
+.card .val{font-size:29px; font-weight:660; letter-spacing:-.6px; line-height:1.1; font-variant-numeric:tabular-nums}
+.card .val .u{font-size:14px; font-weight:500; color:var(--ink-2); margin-left:3px; letter-spacing:0}
+.card .foot{margin-top:9px; font-size:11.5px; color:var(--ink-3)}
+.bar{height:4px; border-radius:2px; background:var(--line); margin-top:10px; overflow:hidden}
+.bar>i{display:block; height:100%; border-radius:2px; background:var(--brand); transition:width .5s}
+
+/* ---------- 区块 ---------- */
+.grid{display:grid; gap:14px; margin-bottom:16px}
+.g-2{grid-template-columns:1.25fr 1fr}
+.g-2b{grid-template-columns:1fr 1fr}
+@media(max-width:980px){.g-2,.g-2b{grid-template-columns:1fr}}
+.panel{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden}
+.panel h2{
+  margin:0; padding:15px 18px 13px; font-size:14px; font-weight:620;
+  border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; gap:10px;
+}
+.panel h2 .hint{font-size:11.5px; font-weight:400; color:var(--ink-3)}
+.panel .body{padding:16px 18px 18px}
+.panel .body.tight{padding:8px 0 4px}
+
+/* ---------- 区域进度 ---------- */
+.region{margin-bottom:15px}
+.region:last-child{margin-bottom:2px}
+.region .top{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:6px; gap:10px}
+.region .nm{font-size:13px; font-weight:600}
+.region .nm small{font-weight:400; color:var(--ink-3); margin-left:6px; font-size:11.5px}
+.region .pc{font-size:13px; font-weight:650; font-variant-numeric:tabular-nums}
+.stack{display:flex; height:9px; border-radius:5px; overflow:hidden; background:var(--line)}
+.stack>span{display:block; height:100%; transition:width .5s}
+.s-done{background:var(--ok)} .s-doing{background:var(--brand)} .s-todo{background:var(--todo)} .s-hold{background:var(--hold)}
+.legend{display:flex; gap:14px; flex-wrap:wrap; font-size:11.5px; color:var(--ink-2); margin-top:14px; padding-top:13px; border-top:1px solid var(--line)}
+.legend i{display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:5px; vertical-align:-1px}
+
+/* ---------- 漏斗 ---------- */
+.funnel .row{display:flex; align-items:center; gap:11px; margin-bottom:11px}
+.funnel .row:last-child{margin-bottom:0}
+.funnel .fn{width:118px; flex:none; font-size:12.5px; color:var(--ink-2); text-align:right}
+.funnel .track{flex:1; height:26px; background:#f7f8fc; border-radius:6px; overflow:hidden; position:relative}
+.funnel .fill{
+  height:100%; border-radius:6px; background:linear-gradient(90deg,#3b82f6,#60a5fa);
+  display:flex; align-items:center; padding-left:10px; color:#fff; font-size:12px; font-weight:600;
+  transition:width .55s; min-width:0; font-variant-numeric:tabular-nums;
+}
+.funnel .fv{width:62px; flex:none; font-size:12.5px; font-weight:620; text-align:left; font-variant-numeric:tabular-nums}
+
+/* ---------- 表格 ---------- */
+.tbl-scroll{overflow:auto; max-height:520px}
+table{width:100%; border-collapse:collapse; font-size:12.5px}
+thead th{
+  position:sticky; top:0; z-index:2; background:#fafbfd; color:var(--ink-2); font-weight:600; text-align:center;
+  padding:10px 8px; border-bottom:1px solid var(--line); white-space:nowrap; font-size:12px;
+}
+thead th:first-child,tbody td:first-child{text-align:left; padding-left:18px}
+tbody td{padding:9px 8px; border-bottom:1px solid #f2f4f8; text-align:center; white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#fbfcfe}
+.site{font-weight:600}
+.na{color:var(--ink-3)}
+.tag{display:inline-block; padding:2px 9px; border-radius:999px; font-size:11.5px; font-weight:500; line-height:1.7}
+.t-完成{background:#ecfdf5; color:#047857}
+.t-进行中{background:var(--brand-soft); color:#1d4ed8}
+.t-未开始{background:#f3f4f6; color:#6b7280}
+.t-暂不推进{background:#f9fafb; color:#9aa3b2}
+.t-其他{background:#f5f3ff; color:#6d28d9}
+
+/* ---------- 状态分布 ---------- */
+.dist{display:flex; flex-direction:column; gap:9px}
+.dist .d{display:flex; align-items:center; gap:10px}
+.dist .d .n{width:62px; flex:none; font-size:12.5px; color:var(--ink-2)}
+.dist .d .t{flex:1; height:8px; background:#f2f4f8; border-radius:4px; overflow:hidden}
+.dist .d .t>i{display:block; height:100%; border-radius:4px; transition:width .5s}
+.dist .d .v{width:44px; flex:none; text-align:right; font-size:12.5px; font-weight:600; font-variant-numeric:tabular-nums}
+
+footer{margin-top:26px; padding-top:16px; border-top:1px solid var(--line); color:var(--ink-3); font-size:11.5px; line-height:1.9}
+footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <h1>推广运营数据看板</h1>
+      <div class="sub">数据源：飞书多维表 · 推广计划 / 区域推广进度 &nbsp;|&nbsp; 链路 A（构建时拉取）</div>
+    </div>
+    <div class="stamp">
+      <span class="pill" id="freshness"><i class="dot load" id="dot"></i><span id="fresh-text">数据加载中…</span></span>
+      <button class="btn" id="refresh">刷新数据</button>
+    </div>
+  </header>
+
+  <div class="banner" id="banner"></div>
+
+  <div class="cards" id="cards"></div>
+
+  <div class="grid g-2">
+    <section class="panel">
+      <h2>区域推广完成率 <span class="hint">站点维度 · 五环节全完成计为已完成</span></h2>
+      <div class="body" id="regions"></div>
+    </section>
+    <section class="panel funnel">
+      <h2>推进环节漏斗 <span class="hint">各环节达成「完成」的站点数</span></h2>
+      <div class="body" id="funnel"></div>
+    </section>
+  </div>
+
+  <div class="grid g-2b">
+    <section class="panel">
+      <h2>推广任务状态分布 <span class="hint" id="plan-total"></span></h2>
+      <div class="body"><div class="dist" id="status-dist"></div></div>
+    </section>
+    <section class="panel">
+      <h2>推广计划区域分布 <span class="hint">按任务条数</span></h2>
+      <div class="body"><div class="dist" id="region-dist"></div></div>
+    </section>
+  </div>
+
+  <section class="panel">
+    <h2>站点推进明细 <span class="hint">27 个站点 · 悬停查看状态</span></h2>
+    <div class="tbl-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>站点/HUB</th><th>区域</th>
+            <th>文员提需</th><th>HR发单</th><th>供应商+业务培训</th><th>推广结束</th><th>运营数据晾晒</th>
+          </tr>
+        </thead>
+        <tbody id="detail"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <div>数据表：<code>2、区域推广进度</code> · <code>1、推广计划</code> &nbsp;|&nbsp; Base：<code>TorLbanFNaFDussPBckcwdvvnhc</code></div>
+    <div>页面仅读取 <code>data.json</code>，不含任何凭证；数据由构建脚本 <code>build_data.py</code> 定时从多维表拉取生成。</div>
+  </footer>
+
+</div>
+
+<script>
+/* ============================================================
+   数据契约（字段名以多维表为准）
+   - kpi.progress.total_sites   -> 站点总数
+   - kpi.progress.region_count  -> 覆盖区域数
+   - kpi.progress.overall_rate  -> 整体完成率
+   - kpi.plan.total_tasks       -> 推广任务总数
+   - kpi.plan.supplier_count    -> 供应商数
+   - progress.regions[]         -> 区域完成率堆叠条
+   - progress.funnel[]          -> 环节漏斗
+   - plan.status_dist           -> 任务状态分布
+   - plan.region_dist           -> 区域任务分布
+   - progress.records[]         -> 站点明细
+   缺失/异常一律渲染 "—"，不显示 NaN。
+   ============================================================ */
+
+const NA = "—";
+const STALE_MIN = 15;        // 超过该分钟数视为数据陈旧，顶部标黄
+const POLL_MS = 5 * 60 * 1000; // 每 5 分钟重新拉取
+
+let lastGood = null;
+
+/* ---------- 取值工具：任何异常都返回占位符 ---------- */
+function num(v){
+  if (v === null || v === undefined || v === "") return NA;
+  const n = Number(v);
+  return Number.isFinite(n) ? n : NA;
+}
+function text(v){
+  if (v === null || v === undefined || v === "") return NA;
+  return String(v);
+}
+function pct(v){
+  const n = Number(v);
+  return Number.isFinite(n) ? n.toFixed(1) + "%" : NA;
+}
+function fmt(n){
+  const x = Number(n);
+  return Number.isFinite(x) ? x.toLocaleString("zh-CN") : NA;
+}
+function esc(s){
+  return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+/* ---------- 卡片可达性检查 ---------- */
+function requirePath(obj, path){
+  return path.split(".").reduce((o,k) => (o && o[k] !== undefined ? o[k] : undefined), obj);
+}
+
+/* ---------- 渲染：指标卡 ---------- */
+function renderCards(d){
+  const cards = [
+    { lbl:"站点总数",       val:num(requirePath(d,"kpi.progress.total_sites")),  unit:"个",
+      foot:"覆盖 " + num(requirePath(d,"kpi.progress.region_count")) + " 个区域", cls:"c-ok" },
+    { lbl:"整体完成率",     val:pct(requirePath(d,"kpi.progress.overall_rate")), unit:"",
+      foot:"五环节完成占比", cls:"", bar:Number(requirePath(d,"kpi.progress.overall_rate")) },
+    { lbl:"推广任务总数",   val:num(requirePath(d,"kpi.plan.total_tasks")),     unit:"条",
+      foot:"覆盖 " + num(requirePath(d,"kpi.plan.site_count")) + " 个站点", cls:"c-warn" },
+    { lbl:"合作供应商数",   val:num(requirePath(d,"kpi.plan.supplier_count")),  unit:"家",
+      foot:"推广计划表去重", cls:"c-hold" },
+  ];
+  document.getElementById("cards").innerHTML = cards.map(c => `
+    <div class="card ${c.cls}">
+      <div class="lbl">${esc(c.lbl)}</div>
+      <div class="val">${esc(c.val)}${c.unit ? `<span class="u">${esc(c.unit)}</span>` : ""}</div>
+      ${c.bar !== undefined && Number.isFinite(c.bar)
+        ? `<div class="bar"><i style="width:${Math.max(0,Math.min(100,c.bar))}%"></i></div>` : ""}
+      <div class="foot">${esc(c.foot)}</div>
+    </div>`).join("");
+}
+
+/* ---------- 渲染：区域完成率堆叠条 ---------- */
+function renderRegions(d){
+  const regs = requirePath(d,"progress.regions");
+  const box = document.getElementById("regions");
+  if (!Array.isArray(regs) || !regs.length){
+    box.innerHTML = `<div class="na">${NA} 暂无区域数据</div>`;
+    return;
+  }
+  const max = Math.max(1, ...regs.map(r => Number(r.total) || 0));
+  box.innerHTML = regs.map(r => {
+    const t = Number(r.total) || 0;
+    const seg = (v) => t ? (v / t * 100) : 0;
+    return `
+    <div class="region">
+      <div class="top">
+        <span class="nm">${esc(text(r.name))}<small>${fmt(t)} 个站点 · ${fmt(r.done)} 已完成</small></span>
+        <span class="pc">${pct(r.rate)}</span>
+      </div>
+      <div class="stack" style="width:100%">
+        <span class="s-done"  style="width:${seg(r.done||0)}%;opacity:${0.55+0.45*t/max}"></span>
+        <span class="s-doing" style="width:${seg(r.doing||0)}%"></span>
+        <span class="s-todo"  style="width:${seg(r.todo||0)}%"></span>
+        <span class="s-hold"  style="width:${seg(r.hold||0)}%"></span>
+      </div>
+    </div>`;
+  }).join("") + `
+    <div class="legend">
+      <span><i class="s-done"></i>已完成 ${fmt(regs.reduce((a,r)=>a+(r.done||0),0))}</span>
+      <span><i class="s-doing"></i>进行中 ${fmt(regs.reduce((a,r)=>a+(r.doing||0),0))}</span>
+      <span><i class="s-todo"></i>未开始 ${fmt(regs.reduce((a,r)=>a+(r.todo||0),0))}</span>
+      <span><i class="s-hold"></i>暂不推进 ${fmt(regs.reduce((a,r)=>a+(r.hold||0),0))}</span>
+    </div>`;
+}
+
+/* ---------- 渲染：漏斗 ---------- */
+function renderFunnel(d){
+  const f = requirePath(d,"progress.funnel");
+  const box = document.getElementById("funnel");
+  if (!Array.isArray(f) || !f.length){
+    box.innerHTML = `<div class="na">${NA} 暂无环节数据</div>`;
+    return;
+  }
+  const total = Number(requirePath(d,"kpi.progress.total_sites")) || 1;
+  box.innerHTML = `<div>${f.map(x => {
+    const v = Number(x.value);
+    const w = Number.isFinite(v) ? Math.max(1.5, v / total * 100) : 0;
+    return `
+    <div class="row">
+      <span class="fn">${esc(text(x.name))}</span>
+      <span class="track"><span class="fill" style="width:${w}%">${Number.isFinite(v)?v:NA}</span></span>
+      <span class="fv">${pct(Number.isFinite(v) ? v/total*100 : NaN)}</span>
+    </div>`;
+  }).join("")}</div>`;
+}
+
+/* ---------- 渲染：分布条 ---------- */
+const STATUS_COLOR = {
+  "已完成":"#10b981", "进行中":"#2563eb", "待开始":"#cbd5e1",
+  "延期":"#f59e0b", "暂不推进":"#9aa3b2", "关闭":"#ef4444", "未填写":"#e5e7eb"
+};
+function renderDist(elId, obj, colorMap){
+  const el = document.getElementById(elId);
+  const entries = obj && typeof obj === "object"
+    ? Object.entries(obj).sort((a,b) => b[1]-a[1]) : [];
+  if (!entries.length){ el.innerHTML = `<div class="na">${NA} 暂无数据</div>`; return; }
+  const max = Math.max(1, ...entries.map(e => Number(e[1]) || 0));
+  el.innerHTML = entries.map(([k,v]) => {
+    const n = Number(v) || 0;
+    const c = (colorMap && colorMap[k]) || "#3b82f6";
+    return `
+    <div class="d">
+      <span class="n">${esc(k)}</span>
+      <span class="t"><i style="width:${n/max*100}%;background:${c}"></i></span>
+      <span class="v">${fmt(n)}</span>
+    </div>`;
+  }).join("");
+}
+
+/* ---------- 渲染：站点明细 ---------- */
+function renderDetail(d){
+  const recs = requirePath(d,"progress.records");
+  const tb = document.getElementById("detail");
+  if (!Array.isArray(recs) || !recs.length){
+    tb.innerHTML = `<tr><td colspan="7" class="na">${NA} 暂无站点数据</td></tr>`;
+    return;
+  }
+  tb.innerHTML = recs.map(r => {
+    const cell = (v) => {
+      const s = text(v);
+      if (s === NA) return `<td class="na">${NA}</td>`;
+      const cls = ["完成","进行中","未开始","暂不推进"].includes(s) ? "t-" + s : "t-其他";
+      return `<td><span class="tag ${cls}">${esc(s)}</span></td>`;
+    };
+    const st = r.states || {};
+    return `<tr>
+      <td class="site">${esc(text(r.site))}</td>
+      <td>${esc(text(r.region))}</td>
+      ${cell(st["文员提需"])}${cell(st["HR发单"])}${cell(st["供应商+业务培训"])}
+      ${cell(st["推广结束"])}${cell(st["运营数据晾晒"])}
+    </tr>`;
+  }).join("");
+}
+
+/* ---------- 顶部新鲜度标记 ---------- */
+function renderFreshness(updatedAt, failed){
+  const dot = document.getElementById("dot");
+  const txt = document.getElementById("fresh-text");
+  dot.className = "dot";
+
+  if (failed){
+    dot.classList.add("err");
+    txt.textContent = updatedAt
+      ? "同步失败 · 显示 " + updatedAt + " 的数据"
+      : "同步失败 · 无可用数据";
+    return "err";
+  }
+  if (!updatedAt){
+    dot.classList.add("err");
+    txt.textContent = "数据时间缺失";
+    return "err";
+  }
+  const t = new Date(updatedAt).getTime();
+  if (!Number.isFinite(t)){
+    dot.classList.add("err");
+    txt.textContent = "数据时间格式异常";
+    return "err";
+  }
+  const mins = Math.floor((Date.now() - t) / 60000);
+  const rel = mins <= 0 ? "刚刚" : mins + " 分钟前";
+  txt.textContent = "最后更新 " + rel + "（" + updatedAt.slice(11,16) + "）";
+  if (mins > STALE_MIN){ dot.classList.add("stale"); return "stale"; }
+  return "ok";
+}
+
+function renderBanner(state, updatedAt){
+  const b = document.getElementById("banner");
+  if (state === "err"){
+    b.className = "banner err show";
+    b.textContent = "⚠ 数据同步失败，页面保留上一次成功加载的数据" + (updatedAt ? "（" + updatedAt + "）" : "") + "。请检查定时任务运行记录。";
+  } else if (state === "stale"){
+    b.className = "banner warn show";
+    b.textContent = "⚠ 数据已超过 " + STALE_MIN + " 分钟未更新，请留意是否为旧数据。";
+  } else {
+    b.className = "banner";
+    b.textContent = "";
+  }
+}
+
+/* ---------- 契约校验 ---------- */
+function validate(d){
+  const required = [
+    "updated_at","kpi.progress.total_sites","kpi.progress.region_count","kpi.progress.overall_rate",
+    "kpi.plan.total_tasks","kpi.plan.site_count","kpi.plan.supplier_count",
+    "progress.regions","progress.funnel","progress.records","plan.status_dist","plan.region_dist"
+  ];
+  const miss = required.filter(p => requirePath(d,p) === undefined);
+  if (miss.length) console.warn("[契约校验] 缺失字段，将渲染占位符:", miss.join(", "));
+  return miss;
+}
+
+/* ---------- 主渲染 ---------- */
+function render(d, failed){
+  if (d){
+    validate(d);
+    renderCards(d);
+    renderRegions(d);
+    renderFunnel(d);
+    renderDist("status-dist", requirePath(d,"plan.status_dist"), STATUS_COLOR);
+    renderDist("region-dist", requirePath(d,"plan.region_dist"), null);
+    renderDetail(d);
+    const pt = requirePath(d,"kpi.plan.total_tasks");
+    document.getElementById("plan-total").textContent =
+      Number.isFinite(Number(pt)) ? "共 " + fmt(pt) + " 条" : "";
+    lastGood = d;
+  }
+  const updatedAt = lastGood ? String(lastGood.updated_at || "").slice(0,19).replace("T"," ") : "";
+  const state = renderFreshness(updatedAt, !!failed);
+  renderBanner(failed ? "err" : state, updatedAt);
+}
+
+/* ---------- 拉取 data.json ---------- */
+async function load(manual){
+  const btn = document.getElementById("refresh");
+  if (manual){ btn.disabled = true; document.getElementById("dot").className = "dot load"; }
+  try{
+    const res = await fetch("./data.json?t=" + Date.now(), { cache:"no-store" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const d = await res.json();
+    render(d, false);
+    return true;
+  }catch(e){
+    console.error("拉取 data.json 失败:", e);
+    render(null, true);   // 保留 lastGood，只改状态标记
+    return false;
+  }finally{
+    if (manual) btn.disabled = false;
+  }
+}
+
+document.getElementById("refresh").addEventListener("click", () => load(true));
+load(false);
+setInterval(() => load(false), POLL_MS);
+</script>
+</body>
+</html>
