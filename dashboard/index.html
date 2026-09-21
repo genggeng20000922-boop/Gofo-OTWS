@@ -204,7 +204,8 @@ footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11
    数据契约（字段名以多维表为准）
    - kpi.progress.total_sites   -> HUB 总数
    - kpi.progress.region_count  -> 覆盖区域数
-   - kpi.progress.overall_rate  -> 整体完成率
+   - kpi.progress.overall_rate  -> 整体完成率（各区域完成率等权平均）
+   - kpi.progress.weighted_rate -> 对照口径（按 HUB 数加权）
    - kpi.plan.total_tasks       -> 推广任务总数
    - kpi.plan.supplier_count    -> 供应商数
    - progress.regions[]         -> 区域完成率堆叠条
@@ -250,11 +251,13 @@ function requirePath(obj, path){
 
 /* ---------- 渲染：指标卡 ---------- */
 function renderCards(d){
+  const w = requirePath(d,"kpi.progress.weighted_rate");
   const cards = [
     { lbl:"HUB 总数",       val:num(requirePath(d,"kpi.progress.total_sites")),  unit:"个",
       foot:"覆盖 " + num(requirePath(d,"kpi.progress.region_count")) + " 个区域", cls:"c-ok" },
     { lbl:"整体完成率",     val:pct(requirePath(d,"kpi.progress.overall_rate")), unit:"",
-      foot:"五环节完成占比", cls:"", bar:Number(requirePath(d,"kpi.progress.overall_rate")) },
+      foot:"各区域进度等权平均" + (Number.isFinite(Number(w)) ? " · HUB 加权 " + pct(w) : ""),
+      cls:"", bar:Number(requirePath(d,"kpi.progress.overall_rate")) },
     { lbl:"推广任务总数",   val:num(requirePath(d,"kpi.plan.total_tasks")),     unit:"条",
       foot:"覆盖 " + num(requirePath(d,"kpi.plan.site_count")) + " 个 HUB", cls:"c-warn" },
     { lbl:"合作供应商数",   val:num(requirePath(d,"kpi.plan.supplier_count")),  unit:"家",

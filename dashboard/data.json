@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-09-21T09:24:18+08:00",
-  "generated_ts": 1789953858,
+  "updated_at": "2026-09-21T14:07:35+08:00",
+  "generated_ts": 1789970855,
   "source": {
     "base_token": "TorLbanFNaFDussPBckcwdvvnhc",
     "tables": [
       {
         "id": "tbl6Z0fPeMdHw61W",
         "name": "2、区域推广进度",
-        "rows": 27
+        "rows": 30
       },
       {
         "id": "tbl3mOJhdyedSGZH",
@@ -18,33 +18,35 @@
   },
   "kpi": {
     "progress": {
-      "total_sites": 27,
-      "region_count": 8,
-      "overall_rate": 41.5,
+      "total_sites": 30,
+      "region_count": 11,
+      "overall_rate": 20.7,
+      "weighted_rate": 26.7,
       "stage_done": {
-        "文员提需": 12,
-        "HR发单": 12,
-        "供应商+业务培训": 14,
+        "文员提需": 13,
+        "HR发单": 13,
+        "供应商+业务培训": 15,
         "推广结束": 8,
-        "运营数据晾晒": 10
+        "运营数据晾晒": 11
       }
     },
     "plan": {
       "total_tasks": 188,
       "site_count": 105,
-      "supplier_count": 64
+      "supplier_count": 0
     }
   },
   "progress": {
-    "total_sites": 27,
-    "region_count": 8,
-    "overall_rate": 41.5,
+    "total_sites": 30,
+    "region_count": 11,
+    "overall_rate": 20.7,
+    "weighted_rate": 26.7,
     "stage_done": {
-      "文员提需": 12,
-      "HR发单": 12,
-      "供应商+业务培训": 14,
+      "文员提需": 13,
+      "HR发单": 13,
+      "供应商+业务培训": 15,
       "推广结束": 8,
-      "运营数据晾晒": 10
+      "运营数据晾晒": 11
     },
     "regions": [
       {
@@ -118,20 +120,47 @@
         "todo": 0,
         "hold": 2,
         "rate": 0.0
+      },
+      {
+        "name": "荷兰",
+        "total": 1,
+        "done": 0,
+        "doing": 1,
+        "todo": 0,
+        "hold": 0,
+        "rate": 0.0
+      },
+      {
+        "name": "意大利",
+        "total": 1,
+        "done": 0,
+        "doing": 0,
+        "todo": 1,
+        "hold": 0,
+        "rate": 0.0
+      },
+      {
+        "name": "西班牙",
+        "total": 1,
+        "done": 0,
+        "doing": 0,
+        "todo": 1,
+        "hold": 0,
+        "rate": 0.0
       }
     ],
     "funnel": [
       {
         "name": "文员提需",
-        "value": 12
+        "value": 13
       },
       {
         "name": "HR发单",
-        "value": 12
+        "value": 13
       },
       {
         "name": "供应商+业务培训",
-        "value": 14
+        "value": 15
       },
       {
         "name": "推广结束",
@@ -139,49 +168,49 @@
       },
       {
         "name": "运营数据晾晒",
-        "value": 10
+        "value": 11
       }
     ],
     "stage_matrix": [
       {
         "name": "文员提需",
-        "完成": 12,
+        "完成": 13,
         "进行中": 0,
-        "未开始": 10,
+        "未开始": 12,
         "暂不推进": 5
       },
       {
         "name": "HR发单",
-        "完成": 12,
+        "完成": 13,
         "进行中": 0,
-        "未开始": 10,
+        "未开始": 12,
         "暂不推进": 5
       },
       {
         "name": "供应商+业务培训",
-        "完成": 14,
+        "完成": 15,
         "进行中": 0,
-        "未开始": 8,
+        "未开始": 10,
         "暂不推进": 5
       },
       {
         "name": "推广结束",
         "完成": 8,
-        "进行中": 4,
-        "未开始": 10,
+        "进行中": 5,
+        "未开始": 12,
         "暂不推进": 5
       },
       {
         "name": "运营数据晾晒",
-        "完成": 10,
+        "完成": 11,
         "进行中": 2,
-        "未开始": 10,
+        "未开始": 12,
         "暂不推进": 5
       }
     ],
     "records": [
       {
-        "code": "14",
+        "code": "GUS",
         "region": "Ground",
         "site": "ATL.G",
         "states": {
@@ -193,7 +222,7 @@
         }
       },
       {
-        "code": "18",
+        "code": "GUS",
         "region": "Ground",
         "site": "CNO.G",
         "states": {
@@ -205,7 +234,7 @@
         }
       },
       {
-        "code": "19",
+        "code": "GUS",
         "region": "Ground",
         "site": "DFW.G",
         "states": {
@@ -217,7 +246,7 @@
         }
       },
       {
-        "code": "12",
+        "code": "GUS",
         "region": "Ground",
         "site": "EWR.G",
         "states": {
@@ -229,7 +258,7 @@
         }
       },
       {
-        "code": "20",
+        "code": "GUS",
         "region": "Ground",
         "site": "IAH.G",
         "states": {
@@ -241,7 +270,7 @@
         }
       },
       {
-        "code": "16",
+        "code": "GUS",
         "region": "Ground",
         "site": "ONT.G",
         "states": {
@@ -253,7 +282,7 @@
         }
       },
       {
-        "code": "13",
+        "code": "GUS",
         "region": "Ground",
         "site": "ORD.G",
         "states": {
@@ -265,7 +294,7 @@
         }
       },
       {
-        "code": "15",
+        "code": "GUS",
         "region": "Ground",
         "site": "SAV.G",
         "states": {
@@ -277,7 +306,7 @@
         }
       },
       {
-        "code": "17",
+        "code": "GUS",
         "region": "Ground",
         "site": "SFO.G",
         "states": {
@@ -289,7 +318,7 @@
         }
       },
       {
-        "code": "5",
+        "code": "GUS",
         "region": "东北",
         "site": "BWI.H",
         "states": {
@@ -301,7 +330,7 @@
         }
       },
       {
-        "code": "6",
+        "code": "GUS",
         "region": "东北",
         "site": "EWR.H",
         "states": {
@@ -313,7 +342,7 @@
         }
       },
       {
-        "code": "7",
+        "code": "GUS",
         "region": "东北",
         "site": "JFK.H",
         "states": {
@@ -325,7 +354,7 @@
         }
       },
       {
-        "code": "23",
+        "code": "GUS",
         "region": "中南",
         "site": "ATL.H",
         "states": {
@@ -337,7 +366,7 @@
         }
       },
       {
-        "code": "24",
+        "code": "GUS",
         "region": "中南",
         "site": "CLT.H",
         "states": {
@@ -349,7 +378,7 @@
         }
       },
       {
-        "code": "25",
+        "code": "GUS",
         "region": "中南",
         "site": "PDK.H",
         "states": {
@@ -361,7 +390,7 @@
         }
       },
       {
-        "code": "27",
+        "code": "GUS",
         "region": "佛州",
         "site": "MCO.H",
         "states": {
@@ -373,7 +402,7 @@
         }
       },
       {
-        "code": "26",
+        "code": "GUS",
         "region": "佛州",
         "site": "MIA.H",
         "states": {
@@ -385,7 +414,7 @@
         }
       },
       {
-        "code": "22",
+        "code": "GUS",
         "region": "加拿大",
         "site": "YVR.H",
         "states": {
@@ -397,7 +426,7 @@
         }
       },
       {
-        "code": "21",
+        "code": "GUS",
         "region": "加拿大",
         "site": "YYZ.H",
         "states": {
@@ -409,7 +438,7 @@
         }
       },
       {
-        "code": "10",
+        "code": "GUS",
         "region": "大湖",
         "site": "IND.H",
         "states": {
@@ -421,7 +450,7 @@
         }
       },
       {
-        "code": "11",
+        "code": "GUS",
         "region": "大湖",
         "site": "ORD.H",
         "states": {
@@ -433,7 +462,7 @@
         }
       },
       {
-        "code": "9",
+        "code": "GUS",
         "region": "德州",
         "site": "DFW.H",
         "states": {
@@ -445,7 +474,7 @@
         }
       },
       {
-        "code": "8",
+        "code": "GUS",
         "region": "德州",
         "site": "IAH.H",
         "states": {
@@ -457,7 +486,19 @@
         }
       },
       {
-        "code": "1",
+        "code": "GEU",
+        "region": "意大利",
+        "site": "—",
+        "states": {
+          "文员提需": "未开始",
+          "HR发单": "未开始",
+          "供应商+业务培训": "未开始",
+          "推广结束": "未开始",
+          "运营数据晾晒": "未开始"
+        }
+      },
+      {
+        "code": "GUS",
         "region": "美西",
         "site": "CNO.H",
         "states": {
@@ -469,7 +510,7 @@
         }
       },
       {
-        "code": "4",
+        "code": "GUS",
         "region": "美西",
         "site": "LAV.H",
         "states": {
@@ -481,7 +522,7 @@
         }
       },
       {
-        "code": "3",
+        "code": "GUS",
         "region": "美西",
         "site": "SEA.H",
         "states": {
@@ -493,7 +534,7 @@
         }
       },
       {
-        "code": "2",
+        "code": "GUS",
         "region": "美西",
         "site": "SFO.H",
         "states": {
@@ -503,13 +544,37 @@
           "推广结束": "完成",
           "运营数据晾晒": "完成"
         }
+      },
+      {
+        "code": "GEU",
+        "region": "荷兰",
+        "site": "阿姆仓",
+        "states": {
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "供应商+业务培训": "完成",
+          "推广结束": "进行中",
+          "运营数据晾晒": "完成"
+        }
+      },
+      {
+        "code": "GEU",
+        "region": "西班牙",
+        "site": "—",
+        "states": {
+          "文员提需": "未开始",
+          "HR发单": "未开始",
+          "供应商+业务培训": "未开始",
+          "推广结束": "未开始",
+          "运营数据晾晒": "未开始"
+        }
       }
     ]
   },
   "plan": {
     "total_tasks": 188,
     "site_count": 105,
-    "supplier_count": 64,
+    "supplier_count": 0,
     "status_dist": {
       "已完成": 30,
       "关闭": 3,

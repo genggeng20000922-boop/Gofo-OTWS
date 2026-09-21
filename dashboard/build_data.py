@@ -272,11 +272,6 @@ def build_progress(rows):
     def stage_count(stage, value):
         return sum(1 for x in records if x["states"].get(stage) == value)
 
-    # 整体完成率 = 五个环节中「完成」状态占比（环节级口径）
-    cell_total = total * len(STAGES)
-    cell_done = sum(stage_count(s, STAGE_DONE) for s in STAGES)
-    overall = round(cell_done / cell_total * 100, 1) if cell_total else 0.0
-
     # 按区域聚合：已完成 HUB = 五个环节全部为「完成」
     by_region = collections.defaultdict(lambda: {"total": 0, "done": 0, "doing": 0, "todo": 0, "hold": 0})
     for x in records:
@@ -305,6 +300,12 @@ def build_progress(rows):
         })
     regions.sort(key=lambda x: (-x["rate"], -x["total"]))
 
+    # 整体完成率 = 各区域完成率的等权平均（每个区域权重相同，不论 HUB 多少）
+    overall = round(sum(x["rate"] for x in regions) / len(regions), 1) if regions else 0.0
+
+    # 参考口径：按 HUB 数加权的完成率，用于对照说明
+    weighted = round(sum(x["done"] for x in regions) / total * 100, 1) if total else 0.0
+
     # 漏斗：每个环节的完成数
     funnel = [{"name": s, "value": stage_count(s, STAGE_DONE)} for s in STAGES]
 
@@ -322,7 +323,8 @@ def build_progress(rows):
     return {
         "total_sites": total,
         "region_count": len(by_region),
-        "overall_rate": overall,
+        "overall_rate": overall,      # 区域等权平均（看板主口径）
+        "weighted_rate": weighted,    # HUB 加权（对照口径）
         "stage_done": {s: stage_count(s, STAGE_DONE) for s in STAGES},
         "regions": regions,
         "funnel": funnel,
@@ -415,6 +417,7 @@ def main():
                 "total_sites": prog["total_sites"],
                 "region_count": prog["region_count"],
                 "overall_rate": prog["overall_rate"],
+                "weighted_rate": prog["weighted_rate"],
                 "stage_done": prog["stage_done"],
             },
             "plan": {

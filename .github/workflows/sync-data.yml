@@ -63,7 +63,8 @@ jobs:
           d = json.load(open('data.json', encoding='utf-8'))
           required = [
               "updated_at","kpi.progress.total_sites","kpi.progress.region_count",
-              "kpi.progress.overall_rate","kpi.plan.total_tasks","kpi.plan.site_count",
+              "kpi.progress.overall_rate","kpi.progress.weighted_rate",
+              "kpi.plan.total_tasks","kpi.plan.site_count",
               "kpi.plan.supplier_count","progress.regions","progress.funnel",
               "progress.records","plan.status_dist","plan.region_dist",
           ]
