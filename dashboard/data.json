@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-09-21T14:07:35+08:00",
-  "generated_ts": 1789970855,
+  "updated_at": "2026-09-21T14:45:19+08:00",
+  "generated_ts": 1789973119,
   "source": {
     "base_token": "TorLbanFNaFDussPBckcwdvvnhc",
     "tables": [
       {
         "id": "tbl6Z0fPeMdHw61W",
         "name": "2、区域推广进度",
-        "rows": 30
+        "rows": 31
       },
       {
         "id": "tbl3mOJhdyedSGZH",
@@ -18,10 +18,10 @@
   },
   "kpi": {
     "progress": {
-      "total_sites": 30,
+      "total_sites": 31,
       "region_count": 11,
       "overall_rate": 20.7,
-      "weighted_rate": 26.7,
+      "weighted_rate": 25.8,
       "stage_done": {
         "文员提需": 13,
         "HR发单": 13,
@@ -37,10 +37,10 @@
     }
   },
   "progress": {
-    "total_sites": 30,
+    "total_sites": 31,
     "region_count": 11,
     "overall_rate": 20.7,
-    "weighted_rate": 26.7,
+    "weighted_rate": 25.8,
     "stage_done": {
       "文员提需": 13,
       "HR发单": 13,
@@ -122,20 +122,20 @@
         "rate": 0.0
       },
       {
+        "name": "意大利",
+        "total": 2,
+        "done": 0,
+        "doing": 0,
+        "todo": 2,
+        "hold": 0,
+        "rate": 0.0
+      },
+      {
         "name": "荷兰",
         "total": 1,
         "done": 0,
         "doing": 1,
         "todo": 0,
-        "hold": 0,
-        "rate": 0.0
-      },
-      {
-        "name": "意大利",
-        "total": 1,
-        "done": 0,
-        "doing": 0,
-        "todo": 1,
         "hold": 0,
         "rate": 0.0
       },
@@ -176,35 +176,35 @@
         "name": "文员提需",
         "完成": 13,
         "进行中": 0,
-        "未开始": 12,
+        "未开始": 13,
         "暂不推进": 5
       },
       {
         "name": "HR发单",
         "完成": 13,
         "进行中": 0,
-        "未开始": 12,
+        "未开始": 13,
         "暂不推进": 5
       },
       {
         "name": "供应商+业务培训",
         "完成": 15,
         "进行中": 0,
-        "未开始": 10,
+        "未开始": 11,
         "暂不推进": 5
       },
       {
         "name": "推广结束",
         "完成": 8,
         "进行中": 5,
-        "未开始": 12,
+        "未开始": 13,
         "暂不推进": 5
       },
       {
         "name": "运营数据晾晒",
         "完成": 11,
         "进行中": 2,
-        "未开始": 12,
+        "未开始": 13,
         "暂不推进": 5
       }
     ],
@@ -488,7 +488,19 @@
       {
         "code": "GEU",
         "region": "意大利",
-        "site": "—",
+        "site": "米兰仓",
+        "states": {
+          "文员提需": "未开始",
+          "HR发单": "未开始",
+          "供应商+业务培训": "未开始",
+          "推广结束": "未开始",
+          "运营数据晾晒": "未开始"
+        }
+      },
+      {
+        "code": "GEU",
+        "region": "意大利",
+        "site": "罗马仓",
         "states": {
           "文员提需": "未开始",
           "HR发单": "未开始",
@@ -560,7 +572,7 @@
       {
         "code": "GEU",
         "region": "西班牙",
-        "site": "—",
+        "site": "马德里仓",
         "states": {
           "文员提需": "未开始",
           "HR发单": "未开始",
