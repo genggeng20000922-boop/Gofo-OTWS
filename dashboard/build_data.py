@@ -260,77 +260,88 @@ def build_progress(rows):
     records = []
     for r in rows:
         states = {s: pick_str(r.get(s), STAGE_TODO) for s in STAGES}
+        # 业务单元取自「编码」字段：GUS / GEU
+        unit = (pick_str(r.get("编码"), "") or "").strip().upper()
         records.append({
-            "code": pick_str(r.get("编码"), "—"),
+            "code": unit or "—",
+            "unit": unit or "未分类",
             "region": pick_str(r.get("区域"), "未分类"),
             "site": pick_str(r.get("站点/HUB"), "—"),
             "states": states,
         })
 
-    total = len(records)
+    def aggregate(subset):
+        """对给定的 HUB 子集计算区域聚合与各项指标。"""
+        total = len(subset)
 
-    def stage_count(stage, value):
-        return sum(1 for x in records if x["states"].get(stage) == value)
+        def stage_count(stage, value):
+            return sum(1 for x in subset if x["states"].get(stage) == value)
 
-    # 按区域聚合：已完成 HUB = 五个环节全部为「完成」
-    by_region = collections.defaultdict(lambda: {"total": 0, "done": 0, "doing": 0, "todo": 0, "hold": 0})
+        # 按区域聚合：已完成 HUB = 五个环节全部为「完成」
+        by_region = collections.defaultdict(lambda: {"total": 0, "done": 0, "doing": 0, "todo": 0, "hold": 0})
+        for x in subset:
+            b = by_region[x["region"]]
+            b["total"] += 1
+            vals = list(x["states"].values())
+            if all(v == STAGE_DONE for v in vals):
+                b["done"] += 1
+            elif any(v == STAGE_HOLD for v in vals):
+                b["hold"] += 1
+            elif any(v == STAGE_DOING for v in vals):
+                b["doing"] += 1
+            else:
+                b["todo"] += 1
+
+        regions = []
+        for name, b in by_region.items():
+            regions.append({
+                "name": name,
+                "total": b["total"],
+                "done": b["done"],
+                "doing": b["doing"],
+                "todo": b["todo"],
+                "hold": b["hold"],
+                "rate": round(b["done"] / b["total"] * 100, 1) if b["total"] else 0.0,
+            })
+        regions.sort(key=lambda x: (-x["rate"], -x["total"]))
+
+        # 整体完成率 = 各区域完成率的等权平均（每个区域权重相同，不论 HUB 多少）
+        overall = round(sum(x["rate"] for x in regions) / len(regions), 1) if regions else 0.0
+        # 参考口径：按 HUB 数加权的完成率
+        weighted = round(sum(x["done"] for x in regions) / total * 100, 1) if total else 0.0
+
+        return {
+            "total_sites": total,
+            "region_count": len(by_region),
+            "overall_rate": overall,
+            "weighted_rate": weighted,
+            "stage_done": {s: stage_count(s, STAGE_DONE) for s in STAGES},
+            "regions": regions,
+            "funnel": [{"name": s, "value": stage_count(s, STAGE_DONE)} for s in STAGES],
+            "stage_matrix": [{
+                "name": s,
+                "完成": stage_count(s, STAGE_DONE),
+                "进行中": stage_count(s, STAGE_DOING),
+                "未开始": stage_count(s, STAGE_TODO),
+                "暂不推进": stage_count(s, STAGE_HOLD),
+            } for s in STAGES],
+        }
+
+    # 按业务单元分组：GUS / GEU / 其他
+    units = collections.defaultdict(list)
     for x in records:
-        b = by_region[x["region"]]
-        b["total"] += 1
-        vals = list(x["states"].values())
-        if all(v == STAGE_DONE for v in vals):
-            b["done"] += 1
-        elif any(v == STAGE_HOLD for v in vals):
-            b["hold"] += 1
-        elif any(v == STAGE_DOING for v in vals):
-            b["doing"] += 1
-        else:
-            b["todo"] += 1
+        units[x["unit"]].append(x)
 
-    regions = []
-    for name, b in by_region.items():
-        regions.append({
-            "name": name,
-            "total": b["total"],
-            "done": b["done"],
-            "doing": b["doing"],
-            "todo": b["todo"],
-            "hold": b["hold"],
-            "rate": round(b["done"] / b["total"] * 100, 1) if b["total"] else 0.0,
-        })
-    regions.sort(key=lambda x: (-x["rate"], -x["total"]))
+    by_unit = {u: aggregate(items) for u, items in sorted(units.items())}
+    by_unit["全部"] = aggregate(records)
 
-    # 整体完成率 = 各区域完成率的等权平均（每个区域权重相同，不论 HUB 多少）
-    overall = round(sum(x["rate"] for x in regions) / len(regions), 1) if regions else 0.0
-
-    # 参考口径：按 HUB 数加权的完成率，用于对照说明
-    weighted = round(sum(x["done"] for x in regions) / total * 100, 1) if total else 0.0
-
-    # 漏斗：每个环节的完成数
-    funnel = [{"name": s, "value": stage_count(s, STAGE_DONE)} for s in STAGES]
-
-    # 每个环节的状态构成
-    stage_matrix = []
-    for s in STAGES:
-        stage_matrix.append({
-            "name": s,
-            "完成": stage_count(s, STAGE_DONE),
-            "进行中": stage_count(s, STAGE_DOING),
-            "未开始": stage_count(s, STAGE_TODO),
-            "暂不推进": stage_count(s, STAGE_HOLD),
-        })
-
-    return {
-        "total_sites": total,
-        "region_count": len(by_region),
-        "overall_rate": overall,      # 区域等权平均（看板主口径）
-        "weighted_rate": weighted,    # HUB 加权（对照口径）
-        "stage_done": {s: stage_count(s, STAGE_DONE) for s in STAGES},
-        "regions": regions,
-        "funnel": funnel,
-        "stage_matrix": stage_matrix,
-        "records": sorted(records, key=lambda x: (x["region"], x["site"])),
-    }
+    # 顶层字段保持与「全部」一致，兼容既有前端契约
+    merged = dict(by_unit["全部"])
+    merged["by_unit"] = by_unit
+    merged["unit_order"] = [u for u in ["GUS", "GEU"] if u in by_unit] + \
+                           [u for u in by_unit if u not in ("GUS", "GEU", "全部")]
+    merged["records"] = sorted(records, key=lambda x: (x["unit"], x["region"], x["site"]))
+    return merged
 
 
 def build_plan(rows):

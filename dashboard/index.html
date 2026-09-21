@@ -67,6 +67,20 @@ h1{margin:0 0 6px; font-size:23px; font-weight:650; letter-spacing:-.2px}
 .bar>i{display:block; height:100%; border-radius:2px; background:var(--brand); transition:width .5s}
 
 /* ---------- 区块 ---------- */
+.unitbar{display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap}
+.ub-lbl{font-size:12.5px; color:var(--ink-3)}
+.tabs{display:inline-flex; gap:4px; background:var(--panel); border:1px solid var(--line);
+      border-radius:999px; padding:4px; box-shadow:var(--shadow)}
+.tab{
+  border:none; background:transparent; color:var(--ink-2); font-size:13px; font-family:inherit;
+  padding:6px 16px; border-radius:999px; cursor:pointer; transition:.15s; white-space:nowrap;
+  display:inline-flex; align-items:center; gap:6px;
+}
+.tab:hover{color:var(--brand)}
+.tab.on{background:var(--brand); color:#fff; font-weight:600}
+.tab i{font-style:normal; font-size:11px; opacity:.7}
+.tab.on i{opacity:.85}
+
 .grid{display:grid; gap:14px; margin-bottom:16px}
 .g-2{grid-template-columns:1.25fr 1fr}
 .g-2b{grid-template-columns:1fr 1fr}
@@ -152,6 +166,11 @@ footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11
   </header>
 
   <div class="banner" id="banner"></div>
+
+  <div class="unitbar">
+    <span class="ub-lbl">业务单元</span>
+    <div class="tabs" id="unit-tabs"></div>
+  </div>
 
   <div class="cards" id="cards"></div>
 
@@ -249,15 +268,52 @@ function requirePath(obj, path){
   return path.split(".").reduce((o,k) => (o && o[k] !== undefined ? o[k] : undefined), obj);
 }
 
+/* ---------- 业务单元（GUS / GEU）切换 ---------- */
+let currentUnit = "全部";
+let lastData = null;
+
+/** 取当前选中业务单元的数据切片；缺失时回退到「全部」 */
+function viewData(){
+  if (!lastData) return null;
+  const byUnit = requirePath(lastData, "progress.by_unit");
+  if (!byUnit) return lastData;   // 老结构兼容
+  return byUnit[currentUnit] || byUnit["全部"] || null;
+}
+
+function renderUnitTabs(){
+  const box = document.getElementById("unit-tabs");
+  if (!box) return;
+  const byUnit = requirePath(lastData, "progress.by_unit");
+  if (!byUnit){
+    box.innerHTML = "";
+    return;
+  }
+  const order = requirePath(lastData, "progress.unit_order") || [];
+  const tabs = order.concat(["全部"]);
+  box.innerHTML = tabs.map(u => {
+    const b = byUnit[u] || {};
+    const on = (u === currentUnit) ? " on" : "";
+    const cnt = Number.isFinite(Number(b.total_sites)) ? `<i>${b.total_sites}</i>` : "";
+    return `<button class="tab${on}" data-unit="${esc(u)}">${esc(u)}${cnt}</button>`;
+  }).join("");
+  box.querySelectorAll(".tab").forEach(el => {
+    el.addEventListener("click", () => {
+      currentUnit = el.getAttribute("data-unit");
+      render(lastData, false);
+    });
+  });
+}
+
 /* ---------- 渲染：指标卡 ---------- */
 function renderCards(d){
-  const w = requirePath(d,"kpi.progress.weighted_rate");
+  const v = viewData() || {};
+  const w = v.weighted_rate;
   const cards = [
-    { lbl:"HUB 总数",       val:num(requirePath(d,"kpi.progress.total_sites")),  unit:"个",
-      foot:"覆盖 " + num(requirePath(d,"kpi.progress.region_count")) + " 个区域", cls:"c-ok" },
-    { lbl:"整体完成率",     val:pct(requirePath(d,"kpi.progress.overall_rate")), unit:"",
+    { lbl:"HUB 总数",       val:num(v.total_sites),  unit:"个",
+      foot:"覆盖 " + num(v.region_count) + " 个区域", cls:"c-ok" },
+    { lbl:"整体完成率",     val:pct(v.overall_rate), unit:"",
       foot:"各区域进度等权平均" + (Number.isFinite(Number(w)) ? " · HUB 加权 " + pct(w) : ""),
-      cls:"", bar:Number(requirePath(d,"kpi.progress.overall_rate")) },
+      cls:"", bar:Number(v.overall_rate) },
     { lbl:"推广任务总数",   val:num(requirePath(d,"kpi.plan.total_tasks")),     unit:"条",
       foot:"覆盖 " + num(requirePath(d,"kpi.plan.site_count")) + " 个 HUB", cls:"c-warn" },
     { lbl:"合作供应商数",   val:num(requirePath(d,"kpi.plan.supplier_count")),  unit:"家",
@@ -275,7 +331,8 @@ function renderCards(d){
 
 /* ---------- 渲染：区域完成率堆叠条 ---------- */
 function renderRegions(d){
-  const regs = requirePath(d,"progress.regions");
+  const v = viewData() || {};
+  const regs = v.regions;
   const box = document.getElementById("regions");
   if (!Array.isArray(regs) || !regs.length){
     box.innerHTML = `<div class="na">${NA} 暂无区域数据</div>`;
@@ -284,7 +341,7 @@ function renderRegions(d){
   const max = Math.max(1, ...regs.map(r => Number(r.total) || 0));
   box.innerHTML = regs.map(r => {
     const t = Number(r.total) || 0;
-    const seg = (v) => t ? (v / t * 100) : 0;
+    const seg = (v2) => t ? (v2 / t * 100) : 0;
     return `
     <div class="region">
       <div class="top">
@@ -309,21 +366,22 @@ function renderRegions(d){
 
 /* ---------- 渲染：漏斗 ---------- */
 function renderFunnel(d){
-  const f = requirePath(d,"progress.funnel");
+  const v = viewData() || {};
+  const f = v.funnel;
   const box = document.getElementById("funnel");
   if (!Array.isArray(f) || !f.length){
     box.innerHTML = `<div class="na">${NA} 暂无环节数据</div>`;
     return;
   }
-  const total = Number(requirePath(d,"kpi.progress.total_sites")) || 1;
+  const total = Number(v.total_sites) || 1;
   box.innerHTML = `<div>${f.map(x => {
-    const v = Number(x.value);
-    const w = Number.isFinite(v) ? Math.max(1.5, v / total * 100) : 0;
+    const v2 = Number(x.value);
+    const w = Number.isFinite(v2) ? Math.max(1.5, v2 / total * 100) : 0;
     return `
     <div class="row">
       <span class="fn">${esc(text(x.name))}</span>
-      <span class="track"><span class="fill" style="width:${w}%">${Number.isFinite(v)?v:NA}</span></span>
-      <span class="fv">${pct(Number.isFinite(v) ? v/total*100 : NaN)}</span>
+      <span class="track"><span class="fill" style="width:${w}%">${Number.isFinite(v2)?v2:NA}</span></span>
+      <span class="fv">${pct(Number.isFinite(v2) ? v2/total*100 : NaN)}</span>
     </div>`;
   }).join("")}</div>`;
 }
@@ -353,7 +411,11 @@ function renderDist(elId, obj, colorMap){
 
 /* ---------- 渲染：HUB 明细 ---------- */
 function renderDetail(d){
-  const recs = requirePath(d,"progress.records");
+  const all = requirePath(d,"progress.records");
+  // 按当前选中的业务单元过滤
+  const recs = Array.isArray(all)
+    ? (currentUnit === "全部" ? all : all.filter(r => (r.unit || "") === currentUnit))
+    : all;
   const tb = document.getElementById("detail");
   if (!Array.isArray(recs) || !recs.length){
     tb.innerHTML = `<tr><td colspan="7" class="na">${NA} 暂无 HUB 数据</td></tr>`;
@@ -436,7 +498,12 @@ function validate(d){
 /* ---------- 主渲染 ---------- */
 function render(d, failed){
   if (d){
+    lastData = d;
     validate(d);
+    // 若当前选中的单元已不存在，回退到「全部」
+    const byUnit = requirePath(d, "progress.by_unit");
+    if (byUnit && currentUnit !== "全部" && !byUnit[currentUnit]) currentUnit = "全部";
+    renderUnitTabs();
     renderCards(d);
     renderRegions(d);
     renderFunnel(d);

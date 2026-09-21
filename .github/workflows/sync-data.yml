@@ -67,6 +67,7 @@ jobs:
               "kpi.plan.total_tasks","kpi.plan.site_count",
               "kpi.plan.supplier_count","progress.regions","progress.funnel",
               "progress.records","plan.status_dist","plan.region_dist",
+              "progress.by_unit","progress.unit_order",
           ]
           def get(o, p):
               for k in p.split('.'):
