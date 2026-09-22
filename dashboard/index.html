@@ -94,6 +94,18 @@ h1{margin:0 0 6px; font-size:23px; font-weight:650; letter-spacing:-.2px}
 .panel .body{padding:16px 18px 18px}
 .panel .body.tight{padding:8px 0 4px}
 
+/* ---------- 筛选器 ---------- */
+.filters{display:inline-flex; align-items:center; gap:10px; flex-wrap:wrap; font-weight:400}
+.fl{display:inline-flex; align-items:center; gap:6px; font-size:11.5px; color:var(--ink-3)}
+.fl select{
+  font-family:inherit; font-size:12.5px; color:var(--ink); background:var(--panel);
+  border:1px solid var(--line); border-radius:8px; padding:5px 9px; cursor:pointer;
+  min-width:88px; transition:.15s;
+}
+.fl select:hover{border-color:var(--brand)}
+.fl select:focus{outline:none; border-color:var(--brand); box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.btn.sm{padding:5px 12px; font-size:12px}
+
 /* ---------- 区域进度 ---------- */
 .region{margin-bottom:15px}
 .region:last-child{margin-bottom:2px}
@@ -197,7 +209,26 @@ footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11
   </div>
 
   <section class="panel">
-    <h2>HUB 推进明细 <span class="hint">27 个 HUB · 悬停查看状态</span></h2>
+    <h2>
+      <span>HUB 推进明细 <span class="hint" id="detail-count"></span></span>
+      <span class="filters">
+        <label class="fl">
+          <span>区域</span>
+          <select id="filter-region"><option value="">全部</option></select>
+        </label>
+        <label class="fl">
+          <span>状态</span>
+          <select id="filter-status">
+            <option value="">全部</option>
+            <option value="完成">完成</option>
+            <option value="进行中">进行中</option>
+            <option value="未开始">未开始</option>
+            <option value="暂不推进">暂不推进</option>
+          </select>
+        </label>
+        <button class="btn sm" id="filter-reset">重置</button>
+      </span>
+    </h2>
     <div class="tbl-scroll">
       <table>
         <thead>
@@ -409,16 +440,56 @@ function renderDist(elId, obj, colorMap){
   }).join("");
 }
 
+/* ---------- 明细表筛选状态 ---------- */
+let filterRegion = "";
+let filterStatus = "";
+
+/** 按当前业务单元 + 区域 + 状态筛选明细 */
+function detailRows(){
+  const all = requirePath(lastData,"progress.records");
+  if (!Array.isArray(all)) return all;
+  return all.filter(r => {
+    if (currentUnit !== "全部" && (r.unit || "") !== currentUnit) return false;
+    if (filterRegion && (r.region || "") !== filterRegion) return false;
+    if (filterStatus){
+      const vals = Object.values(r.states || {});
+      if (!vals.includes(filterStatus)) return false;
+    }
+    return true;
+  });
+}
+
+/** 重建区域下拉选项（选项随业务单元变化） */
+function syncRegionOptions(){
+  const sel = document.getElementById("filter-region");
+  if (!sel) return;
+  const all = requirePath(lastData,"progress.records");
+  if (!Array.isArray(all)){ sel.innerHTML = `<option value="">全部</option>`; return; }
+  const pool = all.filter(r => currentUnit === "全部" || (r.unit || "") === currentUnit);
+  const names = [...new Set(pool.map(r => r.region).filter(Boolean))].sort((a,b) => a.localeCompare(b,"zh"));
+  const prev = filterRegion;
+  sel.innerHTML = `<option value="">全部</option>` +
+    names.map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join("");
+  // 原选项仍存在则保留，否则回退到「全部」
+  if (prev && names.includes(prev)) sel.value = prev;
+  else filterRegion = "";
+  sel.value = filterRegion;
+}
+
 /* ---------- 渲染：HUB 明细 ---------- */
 function renderDetail(d){
-  const all = requirePath(d,"progress.records");
-  // 按当前选中的业务单元过滤
-  const recs = Array.isArray(all)
-    ? (currentUnit === "全部" ? all : all.filter(r => (r.unit || "") === currentUnit))
-    : all;
+  const recs = detailRows();
   const tb = document.getElementById("detail");
+  const cnt = document.getElementById("detail-count");
+  const total = Array.isArray(requirePath(d,"progress.records")) ? requirePath(d,"progress.records").length : 0;
+  const shown = Array.isArray(recs) ? recs.length : 0;
+  if (cnt){
+    cnt.textContent = (shown === total)
+      ? `${shown} 个 HUB`
+      : `${shown} / ${total} 个 HUB（已筛选）`;
+  }
   if (!Array.isArray(recs) || !recs.length){
-    tb.innerHTML = `<tr><td colspan="7" class="na">${NA} 暂无 HUB 数据</td></tr>`;
+    tb.innerHTML = `<tr><td colspan="7" class="na">${NA} 无符合筛选条件的 HUB</td></tr>`;
     return;
   }
   tb.innerHTML = recs.map(r => {
@@ -437,6 +508,21 @@ function renderDetail(d){
     </tr>`;
   }).join("");
 }
+
+/* ---------- 绑定筛选事件（仅绑定一次） ---------- */
+(function bindFilters(){
+  const fr = document.getElementById("filter-region");
+  const fs = document.getElementById("filter-status");
+  const rs = document.getElementById("filter-reset");
+  if (!fr || !fs || !rs) return;
+  fr.addEventListener("change", () => { filterRegion = fr.value; if (lastData) renderDetail(lastData); });
+  fs.addEventListener("change", () => { filterStatus = fs.value; if (lastData) renderDetail(lastData); });
+  rs.addEventListener("click", () => {
+    filterRegion = ""; filterStatus = "";
+    fr.value = ""; fs.value = "";
+    if (lastData) renderDetail(lastData);
+  });
+})();
 
 /* ---------- 顶部新鲜度标记 ---------- */
 function renderFreshness(updatedAt, failed){
@@ -504,6 +590,7 @@ function render(d, failed){
     const byUnit = requirePath(d, "progress.by_unit");
     if (byUnit && currentUnit !== "全部" && !byUnit[currentUnit]) currentUnit = "全部";
     renderUnitTabs();
+    syncRegionOptions();   // 区域下拉需随业务单元重建
     renderCards(d);
     renderRegions(d);
     renderFunnel(d);
