@@ -258,11 +258,12 @@ STAGES = ["文员提需", "HR发单", "供应商+业务培训", "推广结束", 
 
 def build_progress(rows):
     records = []
-    for r in rows:
+    for idx, r in enumerate(rows):
         states = {s: pick_str(r.get(s), STAGE_TODO) for s in STAGES}
         # 业务单元取自「编码」字段：GUS / GEU
         unit = (pick_str(r.get("编码"), "") or "").strip().upper()
         records.append({
+            "order": idx,          # 多维表原始行序，用于明细表展示排序
             "code": unit or "—",
             "unit": unit or "未分类",
             "region": pick_str(r.get("区域"), "未分类"),
@@ -347,7 +348,8 @@ def build_progress(rows):
     merged["by_unit"] = by_unit
     merged["unit_order"] = [u for u in ["GUS", "GEU"] if u in by_unit] + \
                            [u for u in by_unit if u not in ("GUS", "GEU", "全部")]
-    merged["records"] = sorted(records, key=lambda x: (x["unit"], x["region"], x["site"]))
+    # 明细按多维表原始行序展示（不重排，保持与表内顺序一致）
+    merged["records"] = sorted(records, key=lambda x: x["order"])
     return merged
 
 
