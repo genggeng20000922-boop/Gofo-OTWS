@@ -176,7 +176,7 @@ footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11
 
   <div class="grid g-2">
     <section class="panel">
-      <h2>区域推广完成率 <span class="hint">HUB 维度 · 五环节全完成计为已完成</span></h2>
+      <h2>区域推广完成率 <span class="hint">按仓折算 · 每仓完成阶段数 ÷ 5 后取平均</span></h2>
       <div class="body" id="regions"></div>
     </section>
     <section class="panel funnel">
@@ -223,8 +223,8 @@ footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11
    数据契约（字段名以多维表为准）
    - kpi.progress.total_sites   -> HUB 总数
    - kpi.progress.region_count  -> 覆盖区域数
-   - kpi.progress.overall_rate  -> 整体完成率（各区域完成率等权平均）
-   - kpi.progress.weighted_rate -> 对照口径（按 HUB 数加权）
+   - kpi.progress.overall_rate  -> 整体完成率（按仓折算：每仓完成阶段数÷5 后平均）
+   - kpi.progress.weighted_rate -> 对照口径（五阶段全完成的仓占比）
    - kpi.plan.total_tasks       -> 推广任务总数
    - kpi.plan.supplier_count    -> 供应商数
    - progress.regions[]         -> 区域完成率堆叠条
@@ -312,7 +312,7 @@ function renderCards(d){
     { lbl:"HUB 总数",       val:num(v.total_sites),  unit:"个",
       foot:"覆盖 " + num(v.region_count) + " 个区域", cls:"c-ok" },
     { lbl:"整体完成率",     val:pct(v.overall_rate), unit:"",
-      foot:"各区域进度等权平均" + (Number.isFinite(Number(w)) ? " · HUB 加权 " + pct(w) : ""),
+      foot:"按仓折算（每仓完成阶段数÷5 后平均）" + (Number.isFinite(Number(w)) ? " · 五阶段全完成占 " + pct(w) : ""),
       cls:"", bar:Number(v.overall_rate) },
     { lbl:"推广任务总数",   val:num(requirePath(d,"kpi.plan.total_tasks")),     unit:"条",
       foot:"覆盖 " + num(requirePath(d,"kpi.plan.site_count")) + " 个 HUB", cls:"c-warn" },

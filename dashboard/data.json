@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-09-22T13:58:04+08:00",
-  "generated_ts": 1790056684,
+  "updated_at": "2026-09-22T14:54:03+08:00",
+  "generated_ts": 1790060043,
   "source": {
     "base_token": "TorLbanFNaFDussPBckcwdvvnhc",
     "tables": [
@@ -20,7 +20,7 @@
     "progress": {
       "total_sites": 31,
       "region_count": 11,
-      "overall_rate": 20.7,
+      "overall_rate": 38.7,
       "weighted_rate": 25.8,
       "stage_done": {
         "文员提需": 13,
@@ -39,7 +39,7 @@
   "progress": {
     "total_sites": 31,
     "region_count": 11,
-    "overall_rate": 20.7,
+    "overall_rate": 38.7,
     "weighted_rate": 25.8,
     "stage_done": {
       "文员提需": 13,
@@ -59,6 +59,15 @@
         "rate": 100.0
       },
       {
+        "name": "荷兰",
+        "total": 1,
+        "done": 0,
+        "doing": 1,
+        "todo": 0,
+        "hold": 0,
+        "rate": 80.0
+      },
+      {
         "name": "东北",
         "total": 3,
         "done": 2,
@@ -66,6 +75,15 @@
         "todo": 1,
         "hold": 0,
         "rate": 66.7
+      },
+      {
+        "name": "德州",
+        "total": 2,
+        "done": 0,
+        "doing": 2,
+        "todo": 0,
+        "hold": 0,
+        "rate": 60.0
       },
       {
         "name": "大湖",
@@ -83,25 +101,7 @@
         "doing": 2,
         "todo": 6,
         "hold": 0,
-        "rate": 11.1
-      },
-      {
-        "name": "中南",
-        "total": 3,
-        "done": 0,
-        "doing": 0,
-        "todo": 0,
-        "hold": 3,
-        "rate": 0.0
-      },
-      {
-        "name": "德州",
-        "total": 2,
-        "done": 0,
-        "doing": 2,
-        "todo": 0,
-        "hold": 0,
-        "rate": 0.0
+        "rate": 28.9
       },
       {
         "name": "加拿大",
@@ -110,6 +110,15 @@
         "doing": 0,
         "todo": 2,
         "hold": 0,
+        "rate": 20.0
+      },
+      {
+        "name": "中南",
+        "total": 3,
+        "done": 0,
+        "doing": 0,
+        "todo": 0,
+        "hold": 3,
         "rate": 0.0
       },
       {
@@ -127,15 +136,6 @@
         "done": 0,
         "doing": 0,
         "todo": 2,
-        "hold": 0,
-        "rate": 0.0
-      },
-      {
-        "name": "荷兰",
-        "total": 1,
-        "done": 0,
-        "doing": 1,
-        "todo": 0,
         "hold": 0,
         "rate": 0.0
       },
@@ -212,7 +212,7 @@
       "GEU": {
         "total_sites": 4,
         "region_count": 3,
-        "overall_rate": 0.0,
+        "overall_rate": 20.0,
         "weighted_rate": 0.0,
         "stage_done": {
           "文员提需": 1,
@@ -223,20 +223,20 @@
         },
         "regions": [
           {
-            "name": "意大利",
-            "total": 2,
-            "done": 0,
-            "doing": 0,
-            "todo": 2,
-            "hold": 0,
-            "rate": 0.0
-          },
-          {
             "name": "荷兰",
             "total": 1,
             "done": 0,
             "doing": 1,
             "todo": 0,
+            "hold": 0,
+            "rate": 80.0
+          },
+          {
+            "name": "意大利",
+            "total": 2,
+            "done": 0,
+            "doing": 0,
+            "todo": 2,
             "hold": 0,
             "rate": 0.0
           },
@@ -313,7 +313,7 @@
       "GUS": {
         "total_sites": 27,
         "region_count": 8,
-        "overall_rate": 28.5,
+        "overall_rate": 41.5,
         "weighted_rate": 29.6,
         "stage_done": {
           "文员提需": 12,
@@ -342,6 +342,15 @@
             "rate": 66.7
           },
           {
+            "name": "德州",
+            "total": 2,
+            "done": 0,
+            "doing": 2,
+            "todo": 0,
+            "hold": 0,
+            "rate": 60.0
+          },
+          {
             "name": "大湖",
             "total": 2,
             "done": 1,
@@ -357,25 +366,7 @@
             "doing": 2,
             "todo": 6,
             "hold": 0,
-            "rate": 11.1
-          },
-          {
-            "name": "中南",
-            "total": 3,
-            "done": 0,
-            "doing": 0,
-            "todo": 0,
-            "hold": 3,
-            "rate": 0.0
-          },
-          {
-            "name": "德州",
-            "total": 2,
-            "done": 0,
-            "doing": 2,
-            "todo": 0,
-            "hold": 0,
-            "rate": 0.0
+            "rate": 28.9
           },
           {
             "name": "加拿大",
@@ -384,6 +375,15 @@
             "doing": 0,
             "todo": 2,
             "hold": 0,
+            "rate": 20.0
+          },
+          {
+            "name": "中南",
+            "total": 3,
+            "done": 0,
+            "doing": 0,
+            "todo": 0,
+            "hold": 3,
             "rate": 0.0
           },
           {
@@ -459,7 +459,7 @@
       "全部": {
         "total_sites": 31,
         "region_count": 11,
-        "overall_rate": 20.7,
+        "overall_rate": 38.7,
         "weighted_rate": 25.8,
         "stage_done": {
           "文员提需": 13,
@@ -479,6 +479,15 @@
             "rate": 100.0
           },
           {
+            "name": "荷兰",
+            "total": 1,
+            "done": 0,
+            "doing": 1,
+            "todo": 0,
+            "hold": 0,
+            "rate": 80.0
+          },
+          {
             "name": "东北",
             "total": 3,
             "done": 2,
@@ -486,6 +495,15 @@
             "todo": 1,
             "hold": 0,
             "rate": 66.7
+          },
+          {
+            "name": "德州",
+            "total": 2,
+            "done": 0,
+            "doing": 2,
+            "todo": 0,
+            "hold": 0,
+            "rate": 60.0
           },
           {
             "name": "大湖",
@@ -503,25 +521,7 @@
             "doing": 2,
             "todo": 6,
             "hold": 0,
-            "rate": 11.1
-          },
-          {
-            "name": "中南",
-            "total": 3,
-            "done": 0,
-            "doing": 0,
-            "todo": 0,
-            "hold": 3,
-            "rate": 0.0
-          },
-          {
-            "name": "德州",
-            "total": 2,
-            "done": 0,
-            "doing": 2,
-            "todo": 0,
-            "hold": 0,
-            "rate": 0.0
+            "rate": 28.9
           },
           {
             "name": "加拿大",
@@ -530,6 +530,15 @@
             "doing": 0,
             "todo": 2,
             "hold": 0,
+            "rate": 20.0
+          },
+          {
+            "name": "中南",
+            "total": 3,
+            "done": 0,
+            "doing": 0,
+            "todo": 0,
+            "hold": 3,
             "rate": 0.0
           },
           {
@@ -547,15 +556,6 @@
             "done": 0,
             "doing": 0,
             "todo": 2,
-            "hold": 0,
-            "rate": 0.0
-          },
-          {
-            "name": "荷兰",
-            "total": 1,
-            "done": 0,
-            "doing": 1,
-            "todo": 0,
             "hold": 0,
             "rate": 0.0
           },

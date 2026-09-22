@@ -277,11 +277,17 @@ def build_progress(rows):
         def stage_count(stage, value):
             return sum(1 for x in subset if x["states"].get(stage) == value)
 
-        # 按区域聚合：已完成 HUB = 五个环节全部为「完成」
-        by_region = collections.defaultdict(lambda: {"total": 0, "done": 0, "doing": 0, "todo": 0, "hold": 0})
+        def site_score(x):
+            """单仓完成度 = 该仓「完成」的阶段数 ÷ 阶段总数（5）。仅「完成」计分。"""
+            done = sum(1 for s in STAGES if x["states"].get(s) == STAGE_DONE)
+            return done / len(STAGES)
+
+        # 按区域聚合
+        by_region = collections.defaultdict(lambda: {"total": 0, "done": 0, "doing": 0, "todo": 0, "hold": 0, "score": 0.0})
         for x in subset:
             b = by_region[x["region"]]
             b["total"] += 1
+            b["score"] += site_score(x)
             vals = list(x["states"].values())
             if all(v == STAGE_DONE for v in vals):
                 b["done"] += 1
@@ -301,20 +307,21 @@ def build_progress(rows):
                 "doing": b["doing"],
                 "todo": b["todo"],
                 "hold": b["hold"],
-                "rate": round(b["done"] / b["total"] * 100, 1) if b["total"] else 0.0,
+                # 区域完成率 = 该区域内各仓完成度的平均
+                "rate": round(b["score"] / b["total"] * 100, 1) if b["total"] else 0.0,
             })
         regions.sort(key=lambda x: (-x["rate"], -x["total"]))
 
-        # 整体完成率 = 各区域完成率的等权平均（每个区域权重相同，不论 HUB 多少）
-        overall = round(sum(x["rate"] for x in regions) / len(regions), 1) if regions else 0.0
-        # 参考口径：按 HUB 数加权的完成率
-        weighted = round(sum(x["done"] for x in regions) / total * 100, 1) if total else 0.0
+        # 整体完成率 = 各仓完成度的等权平均（按仓折算：每仓完成环节数÷5，再对仓取平均）
+        overall = round(sum(site_score(x) for x in subset) / total * 100, 1) if total else 0.0
+        # 对照口径：五环节全部完成的仓占比（全有或全无）
+        full_done = round(sum(1 for x in subset if site_score(x) == 1.0) / total * 100, 1) if total else 0.0
 
         return {
             "total_sites": total,
             "region_count": len(by_region),
-            "overall_rate": overall,
-            "weighted_rate": weighted,
+            "overall_rate": overall,        # 主口径：按仓折算
+            "weighted_rate": full_done,     # 对照：五环节全完成的仓占比
             "stage_done": {s: stage_count(s, STAGE_DONE) for s in STAGES},
             "regions": regions,
             "funnel": [{"name": s, "value": stage_count(s, STAGE_DONE)} for s in STAGES],
