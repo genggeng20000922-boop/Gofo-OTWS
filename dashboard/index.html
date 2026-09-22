@@ -234,7 +234,7 @@ footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11
         <thead>
           <tr>
             <th>HUB</th><th>区域</th>
-            <th>文员提需</th><th>HR发单</th><th>供应商+业务培训</th><th>推广结束</th><th>运营数据晾晒</th>
+            <th>供应商+业务培训</th><th>文员提需</th><th>HR发单</th><th>运营数据晾晒</th><th>推广结束</th>
           </tr>
         </thead>
         <tbody id="detail"></tbody>
@@ -503,8 +503,8 @@ function renderDetail(d){
     return `<tr>
       <td class="site">${esc(text(r.site))}</td>
       <td>${esc(text(r.region))}</td>
-      ${cell(st["文员提需"])}${cell(st["HR发单"])}${cell(st["供应商+业务培训"])}
-      ${cell(st["推广结束"])}${cell(st["运营数据晾晒"])}
+      ${cell(st["供应商+业务培训"])}${cell(st["文员提需"])}${cell(st["HR发单"])}
+      ${cell(st["运营数据晾晒"])}${cell(st["推广结束"])}
     </tr>`;
   }).join("");
 }
