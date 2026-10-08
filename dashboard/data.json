@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-10-08T16:25:22+08:00",
-  "generated_ts": 1791447922,
+  "updated_at": "2026-10-08T18:25:38+08:00",
+  "generated_ts": 1791455138,
   "schedule": {
     "cron": "*/5 * * * *",
     "interval_minutes": 5,
@@ -25,14 +25,14 @@
     "progress": {
       "total_sites": 31,
       "region_count": 11,
-      "overall_rate": 40.0,
-      "weighted_rate": 25.8,
+      "overall_rate": 40.6,
+      "weighted_rate": 29.0,
       "stage_done": {
         "供应商+业务培训": 15,
         "文员提需": 14,
         "HR发单": 14,
         "运营数据晾晒": 11,
-        "推广结束": 8
+        "推广结束": 9
       }
     },
     "plan": {
@@ -44,14 +44,14 @@
   "progress": {
     "total_sites": 31,
     "region_count": 11,
-    "overall_rate": 40.0,
-    "weighted_rate": 25.8,
+    "overall_rate": 40.6,
+    "weighted_rate": 29.0,
     "stage_done": {
       "供应商+业务培训": 15,
       "文员提需": 14,
       "HR发单": 14,
       "运营数据晾晒": 11,
-      "推广结束": 8
+      "推广结束": 9
     },
     "regions": [
       {
@@ -111,11 +111,11 @@
       {
         "name": "Ground",
         "total": 9,
-        "done": 1,
-        "doing": 2,
+        "done": 2,
+        "doing": 1,
         "todo": 6,
         "hold": 0,
-        "rate": 28.9
+        "rate": 31.1
       },
       {
         "name": "中南",
@@ -173,7 +173,7 @@
       },
       {
         "name": "推广结束",
-        "value": 8
+        "value": 9
       }
     ],
     "stage_matrix": [
@@ -207,8 +207,8 @@
       },
       {
         "name": "推广结束",
-        "完成": 8,
-        "进行中": 5,
+        "完成": 9,
+        "进行中": 4,
         "未开始": 13,
         "暂不推进": 5
       }
@@ -318,14 +318,14 @@
       "GUS": {
         "total_sites": 27,
         "region_count": 8,
-        "overall_rate": 43.0,
-        "weighted_rate": 29.6,
+        "overall_rate": 43.7,
+        "weighted_rate": 33.3,
         "stage_done": {
           "供应商+业务培训": 14,
           "文员提需": 13,
           "HR发单": 13,
           "运营数据晾晒": 10,
-          "推广结束": 8
+          "推广结束": 9
         },
         "regions": [
           {
@@ -376,11 +376,11 @@
           {
             "name": "Ground",
             "total": 9,
-            "done": 1,
-            "doing": 2,
+            "done": 2,
+            "doing": 1,
             "todo": 6,
             "hold": 0,
-            "rate": 28.9
+            "rate": 31.1
           },
           {
             "name": "中南",
@@ -420,7 +420,7 @@
           },
           {
             "name": "推广结束",
-            "value": 8
+            "value": 9
           }
         ],
         "stage_matrix": [
@@ -454,8 +454,8 @@
           },
           {
             "name": "推广结束",
-            "完成": 8,
-            "进行中": 4,
+            "完成": 9,
+            "进行中": 3,
             "未开始": 10,
             "暂不推进": 5
           }
@@ -464,14 +464,14 @@
       "全部": {
         "total_sites": 31,
         "region_count": 11,
-        "overall_rate": 40.0,
-        "weighted_rate": 25.8,
+        "overall_rate": 40.6,
+        "weighted_rate": 29.0,
         "stage_done": {
           "供应商+业务培训": 15,
           "文员提需": 14,
           "HR发单": 14,
           "运营数据晾晒": 11,
-          "推广结束": 8
+          "推广结束": 9
         },
         "regions": [
           {
@@ -531,11 +531,11 @@
           {
             "name": "Ground",
             "total": 9,
-            "done": 1,
-            "doing": 2,
+            "done": 2,
+            "doing": 1,
             "todo": 6,
             "hold": 0,
-            "rate": 28.9
+            "rate": 31.1
           },
           {
             "name": "中南",
@@ -593,7 +593,7 @@
           },
           {
             "name": "推广结束",
-            "value": 8
+            "value": 9
           }
         ],
         "stage_matrix": [
@@ -627,8 +627,8 @@
           },
           {
             "name": "推广结束",
-            "完成": 8,
-            "进行中": 5,
+            "完成": 9,
+            "进行中": 4,
             "未开始": 13,
             "暂不推进": 5
           }
@@ -889,7 +889,7 @@
           "文员提需": "完成",
           "HR发单": "完成",
           "运营数据晾晒": "完成",
-          "推广结束": "进行中"
+          "推广结束": "完成"
         }
       },
       {
