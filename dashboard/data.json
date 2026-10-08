@@ -1,6 +1,11 @@
 {
-  "updated_at": "2026-10-08T16:16:56+08:00",
-  "generated_ts": 1791447416,
+  "updated_at": "2026-10-08T16:25:22+08:00",
+  "generated_ts": 1791447922,
+  "schedule": {
+    "cron": "*/5 * * * *",
+    "interval_minutes": 5,
+    "note": "GitHub Actions 定时任务，高峰期可能排队延迟"
+  },
   "source": {
     "base_token": "TorLbanFNaFDussPBckcwdvvnhc",
     "tables": [
@@ -1135,10 +1140,5 @@
       "第八批": 60,
       "第六批": 33
     }
-  },
-  "schedule": {
-    "cron": "*/5 * * * *",
-    "interval_minutes": 5,
-    "note": "GitHub Actions 定时任务，高峰期可能排队延迟"
   }
 }
