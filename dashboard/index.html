@@ -23,6 +23,10 @@ body{
 header{display:flex; align-items:flex-start; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:22px}
 h1{margin:0 0 6px; font-size:23px; font-weight:650; letter-spacing:-.2px}
 .sub{color:var(--ink-3); font-size:12.5px}
+.sub2{margin-top:7px; display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--ink-3)}
+.sub2 b{color:var(--ink-2); font-weight:600}
+.sub2 b.warn{color:#b45309}
+.sub2 .sep{color:#d7dce5}
 .stamp{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
 .pill{
   display:inline-flex; align-items:center; gap:7px; padding:7px 13px; border-radius:999px;
@@ -170,6 +174,7 @@ footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11
     <div>
       <h1>推广运营数据看板</h1>
       <div class="sub">数据源：飞书多维表 · 推广计划 / 区域推广进度 &nbsp;|&nbsp; 链路 A（构建时拉取）</div>
+      <div class="sub2" id="sync-info"></div>
     </div>
     <div class="stamp">
       <span class="pill" id="freshness"><i class="dot load" id="dot"></i><span id="fresh-text">数据加载中…</span></span>
@@ -524,6 +529,42 @@ function renderDetail(d){
   });
 })();
 
+/* ---------- 同步频率与数据新鲜度信息 ---------- */
+function renderSyncInfo(d){
+  const el = document.getElementById("sync-info");
+  if (!el) return;
+  const sched = requirePath(d, "schedule") || {};
+  const mins = Number(sched.interval_minutes);
+  const cron = sched.cron;
+
+  // 配置频率
+  let freq = NA;
+  if (Number.isFinite(mins) && mins > 0){
+    freq = mins >= 60 ? (mins/60) + " 小时" : mins + " 分钟";
+  } else if (cron){
+    freq = cron;
+  }
+
+  // 数据新鲜度：距今多久
+  let fresh = NA, cls = "";
+  const ts = Number(requirePath(d, "generated_ts"));
+  const t = Number.isFinite(ts) ? ts*1000 : new Date(String(requirePath(d,"updated_at")||"")).getTime();
+  if (Number.isFinite(t)){
+    const minsAgo = Math.floor((Date.now() - t) / 60000);
+    if (minsAgo < 0) fresh = "刚刚";
+    else if (minsAgo < 60) fresh = minsAgo + " 分钟前";
+    else if (minsAgo < 1440){ fresh = Math.floor(minsAgo/60) + " 小时前"; cls = minsAgo > 360 ? "warn" : ""; }
+    else { fresh = Math.floor(minsAgo/1440) + " 天前"; cls = "warn"; }
+  }
+
+  const arr = [];
+  arr.push(`同步频率 <b>${esc(String(freq))}</b>`);
+  arr.push(`<span class="sep">·</span>`);
+  arr.push(`数据更新于 <b class="${cls}">${esc(fresh)}</b>`);
+  if (cron) { arr.push(`<span class="sep">·</span>`); arr.push(`<span>cron <b>${esc(cron)}</b></span>`); }
+  el.innerHTML = arr.join(" ");
+}
+
 /* ---------- 顶部新鲜度标记 ---------- */
 function renderFreshness(updatedAt, failed){
   const dot = document.getElementById("dot");
@@ -590,6 +631,7 @@ function render(d, failed){
     const byUnit = requirePath(d, "progress.by_unit");
     if (byUnit && currentUnit !== "全部" && !byUnit[currentUnit]) currentUnit = "全部";
     renderUnitTabs();
+    renderSyncInfo(d);
     syncRegionOptions();   // 区域下拉需随业务单元重建
     renderCards(d);
     renderRegions(d);

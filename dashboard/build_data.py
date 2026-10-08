@@ -426,6 +426,12 @@ def main():
     payload = {
         "updated_at": now.isoformat(timespec="seconds"),
         "generated_ts": int(now.timestamp()),
+        "schedule": {
+            # 与 .github/workflows/sync-data.yml 的 cron 保持一致
+            "cron": "*/5 * * * *",
+            "interval_minutes": 5,
+            "note": "GitHub Actions 定时任务，高峰期可能排队延迟",
+        },
         "source": {
             "base_token": BASE_TOKEN,
             "tables": [

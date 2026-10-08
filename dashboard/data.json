@@ -1135,5 +1135,10 @@
       "第八批": 60,
       "第六批": 33
     }
+  },
+  "schedule": {
+    "cron": "*/5 * * * *",
+    "interval_minutes": 5,
+    "note": "GitHub Actions 定时任务，高峰期可能排队延迟"
   }
 }

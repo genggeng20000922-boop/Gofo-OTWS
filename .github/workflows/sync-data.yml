@@ -68,6 +68,7 @@ jobs:
               "kpi.plan.supplier_count","progress.regions","progress.funnel",
               "progress.records","plan.status_dist","plan.region_dist",
               "progress.by_unit","progress.unit_order",
+              "schedule","schedule.interval_minutes","schedule.cron",
           ]
           def get(o, p):
               for k in p.split('.'):
