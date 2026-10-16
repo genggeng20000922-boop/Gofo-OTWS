@@ -155,6 +155,17 @@ tbody tr:hover{background:#fbfcfe}
 .t-暂不推进{background:#f9fafb; color:#9aa3b2}
 .t-其他{background:#f5f3ff; color:#6d28d9}
 
+/* ---------- 已剔除（无需推广）行 ---------- */
+tbody tr.row-exc{opacity:.5}
+tbody tr.row-exc:hover{background:transparent}
+tbody tr.row-exc .site{color:var(--ink-3); font-weight:500}
+tbody tr.row-exc .tag{filter:grayscale(1)}
+.exc-badge{
+  display:inline-block; margin-left:6px; padding:1px 7px; border-radius:999px;
+  background:#f3f4f6; color:#6b7280; font-size:10.5px; font-weight:500;
+  border:1px dashed #d1d5db; vertical-align:middle; white-space:nowrap;
+}
+
 /* ---------- 状态分布 ---------- */
 .dist{display:flex; flex-direction:column; gap:9px}
 .dist .d{display:flex; align-items:center; gap:10px}
@@ -267,7 +278,8 @@ footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11
    - progress.funnel[]          -> 环节漏斗
    - plan.status_dist           -> 任务状态分布
    - plan.region_dist           -> 区域任务分布
-   - progress.records[]         -> HUB 明细
+   - progress.records[]         -> HUB 明细（含 excluded 标记）
+   - progress.excluded.sites[]  -> 无需推广、已从统计中剔除的仓
    缺失/异常一律渲染 "—"，不显示 NaN。
    ============================================================ */
 
@@ -488,10 +500,11 @@ function renderDetail(d){
   const cnt = document.getElementById("detail-count");
   const total = Array.isArray(requirePath(d,"progress.records")) ? requirePath(d,"progress.records").length : 0;
   const shown = Array.isArray(recs) ? recs.length : 0;
+  const excAll = Number(requirePath(d,"progress.excluded.count")) || 0;
   if (cnt){
-    cnt.textContent = (shown === total)
-      ? `${shown} 个 HUB`
-      : `${shown} / ${total} 个 HUB（已筛选）`;
+    let s = (shown === total) ? `${shown} 个 HUB` : `${shown} / ${total} 个 HUB（已筛选）`;
+    if (excAll > 0) s += ` · 已剔除 ${excAll} 个无需推广`;
+    cnt.textContent = s;
   }
   if (!Array.isArray(recs) || !recs.length){
     tb.innerHTML = `<tr><td colspan="7" class="na">${NA} 无符合筛选条件的 HUB</td></tr>`;
@@ -505,8 +518,10 @@ function renderDetail(d){
       return `<td><span class="tag ${cls}">${esc(s)}</span></td>`;
     };
     const st = r.states || {};
-    return `<tr>
-      <td class="site">${esc(text(r.site))}</td>
+    const isExc = !!r.excluded;
+    // 无需推广的仓：整行灰显，站点名后加标记，且不计入任何统计
+    return `<tr class="${isExc ? "row-exc" : ""}">
+      <td class="site">${esc(text(r.site))}${isExc ? `<span class="exc-badge" title="无需推广，不计入统计">无需推广</span>` : ""}</td>
       <td>${esc(text(r.region))}</td>
       ${cell(st["供应商+业务培训"])}${cell(st["文员提需"])}${cell(st["HR发单"])}
       ${cell(st["运营数据晾晒"])}${cell(st["推广结束"])}

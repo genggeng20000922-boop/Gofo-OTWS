@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-10-08T16:25:22+08:00",
-  "generated_ts": 1791447922,
+  "updated_at": "2026-10-16T16:21:44+08:00",
+  "generated_ts": 1792138904,
   "schedule": {
     "cron": "*/5 * * * *",
     "interval_minutes": 5,
@@ -23,16 +23,16 @@
   },
   "kpi": {
     "progress": {
-      "total_sites": 31,
+      "total_sites": 30,
       "region_count": 11,
-      "overall_rate": 40.0,
-      "weighted_rate": 25.8,
+      "overall_rate": 42.0,
+      "weighted_rate": 30.0,
       "stage_done": {
         "供应商+业务培训": 15,
         "文员提需": 14,
         "HR发单": 14,
         "运营数据晾晒": 11,
-        "推广结束": 8
+        "推广结束": 9
       }
     },
     "plan": {
@@ -42,22 +42,31 @@
     }
   },
   "progress": {
-    "total_sites": 31,
+    "total_sites": 30,
     "region_count": 11,
-    "overall_rate": 40.0,
-    "weighted_rate": 25.8,
+    "overall_rate": 42.0,
+    "weighted_rate": 30.0,
     "stage_done": {
       "供应商+业务培训": 15,
       "文员提需": 14,
       "HR发单": 14,
       "运营数据晾晒": 11,
-      "推广结束": 8
+      "推广结束": 9
     },
     "regions": [
       {
         "name": "美西",
         "total": 4,
         "done": 4,
+        "doing": 0,
+        "todo": 0,
+        "hold": 0,
+        "rate": 100.0
+      },
+      {
+        "name": "东北",
+        "total": 2,
+        "done": 2,
         "doing": 0,
         "todo": 0,
         "hold": 0,
@@ -71,15 +80,6 @@
         "todo": 0,
         "hold": 0,
         "rate": 80.0
-      },
-      {
-        "name": "东北",
-        "total": 3,
-        "done": 2,
-        "doing": 0,
-        "todo": 1,
-        "hold": 0,
-        "rate": 66.7
       },
       {
         "name": "德州",
@@ -111,11 +111,11 @@
       {
         "name": "Ground",
         "total": 9,
-        "done": 1,
-        "doing": 2,
+        "done": 2,
+        "doing": 1,
         "todo": 6,
         "hold": 0,
-        "rate": 28.9
+        "rate": 31.1
       },
       {
         "name": "中南",
@@ -173,7 +173,7 @@
       },
       {
         "name": "推广结束",
-        "value": 8
+        "value": 9
       }
     ],
     "stage_matrix": [
@@ -181,35 +181,35 @@
         "name": "供应商+业务培训",
         "完成": 15,
         "进行中": 0,
-        "未开始": 11,
+        "未开始": 10,
         "暂不推进": 5
       },
       {
         "name": "文员提需",
         "完成": 14,
         "进行中": 0,
-        "未开始": 12,
+        "未开始": 11,
         "暂不推进": 5
       },
       {
         "name": "HR发单",
         "完成": 14,
         "进行中": 0,
-        "未开始": 12,
+        "未开始": 11,
         "暂不推进": 5
       },
       {
         "name": "运营数据晾晒",
         "完成": 11,
         "进行中": 3,
-        "未开始": 12,
+        "未开始": 11,
         "暂不推进": 5
       },
       {
         "name": "推广结束",
-        "完成": 8,
-        "进行中": 5,
-        "未开始": 13,
+        "完成": 9,
+        "进行中": 4,
+        "未开始": 12,
         "暂不推进": 5
       }
     ],
@@ -316,16 +316,16 @@
         ]
       },
       "GUS": {
-        "total_sites": 27,
+        "total_sites": 26,
         "region_count": 8,
-        "overall_rate": 43.0,
-        "weighted_rate": 29.6,
+        "overall_rate": 45.4,
+        "weighted_rate": 34.6,
         "stage_done": {
           "供应商+业务培训": 14,
           "文员提需": 13,
           "HR发单": 13,
           "运营数据晾晒": 10,
-          "推广结束": 8
+          "推广结束": 9
         },
         "regions": [
           {
@@ -339,12 +339,12 @@
           },
           {
             "name": "东北",
-            "total": 3,
+            "total": 2,
             "done": 2,
             "doing": 0,
-            "todo": 1,
+            "todo": 0,
             "hold": 0,
-            "rate": 66.7
+            "rate": 100.0
           },
           {
             "name": "德州",
@@ -376,11 +376,11 @@
           {
             "name": "Ground",
             "total": 9,
-            "done": 1,
-            "doing": 2,
+            "done": 2,
+            "doing": 1,
             "todo": 6,
             "hold": 0,
-            "rate": 28.9
+            "rate": 31.1
           },
           {
             "name": "中南",
@@ -420,7 +420,7 @@
           },
           {
             "name": "推广结束",
-            "value": 8
+            "value": 9
           }
         ],
         "stage_matrix": [
@@ -428,56 +428,65 @@
             "name": "供应商+业务培训",
             "完成": 14,
             "进行中": 0,
-            "未开始": 8,
+            "未开始": 7,
             "暂不推进": 5
           },
           {
             "name": "文员提需",
             "完成": 13,
             "进行中": 0,
-            "未开始": 9,
+            "未开始": 8,
             "暂不推进": 5
           },
           {
             "name": "HR发单",
             "完成": 13,
             "进行中": 0,
-            "未开始": 9,
+            "未开始": 8,
             "暂不推进": 5
           },
           {
             "name": "运营数据晾晒",
             "完成": 10,
             "进行中": 3,
-            "未开始": 9,
+            "未开始": 8,
             "暂不推进": 5
           },
           {
             "name": "推广结束",
-            "完成": 8,
-            "进行中": 4,
-            "未开始": 10,
+            "完成": 9,
+            "进行中": 3,
+            "未开始": 9,
             "暂不推进": 5
           }
         ]
       },
       "全部": {
-        "total_sites": 31,
+        "total_sites": 30,
         "region_count": 11,
-        "overall_rate": 40.0,
-        "weighted_rate": 25.8,
+        "overall_rate": 42.0,
+        "weighted_rate": 30.0,
         "stage_done": {
           "供应商+业务培训": 15,
           "文员提需": 14,
           "HR发单": 14,
           "运营数据晾晒": 11,
-          "推广结束": 8
+          "推广结束": 9
         },
         "regions": [
           {
             "name": "美西",
             "total": 4,
             "done": 4,
+            "doing": 0,
+            "todo": 0,
+            "hold": 0,
+            "rate": 100.0
+          },
+          {
+            "name": "东北",
+            "total": 2,
+            "done": 2,
             "doing": 0,
             "todo": 0,
             "hold": 0,
@@ -491,15 +500,6 @@
             "todo": 0,
             "hold": 0,
             "rate": 80.0
-          },
-          {
-            "name": "东北",
-            "total": 3,
-            "done": 2,
-            "doing": 0,
-            "todo": 1,
-            "hold": 0,
-            "rate": 66.7
           },
           {
             "name": "德州",
@@ -531,11 +531,11 @@
           {
             "name": "Ground",
             "total": 9,
-            "done": 1,
-            "doing": 2,
+            "done": 2,
+            "doing": 1,
             "todo": 6,
             "hold": 0,
-            "rate": 28.9
+            "rate": 31.1
           },
           {
             "name": "中南",
@@ -593,7 +593,7 @@
           },
           {
             "name": "推广结束",
-            "value": 8
+            "value": 9
           }
         ],
         "stage_matrix": [
@@ -601,35 +601,35 @@
             "name": "供应商+业务培训",
             "完成": 15,
             "进行中": 0,
-            "未开始": 11,
+            "未开始": 10,
             "暂不推进": 5
           },
           {
             "name": "文员提需",
             "完成": 14,
             "进行中": 0,
-            "未开始": 12,
+            "未开始": 11,
             "暂不推进": 5
           },
           {
             "name": "HR发单",
             "完成": 14,
             "进行中": 0,
-            "未开始": 12,
+            "未开始": 11,
             "暂不推进": 5
           },
           {
             "name": "运营数据晾晒",
             "完成": 11,
             "进行中": 3,
-            "未开始": 12,
+            "未开始": 11,
             "暂不推进": 5
           },
           {
             "name": "推广结束",
-            "完成": 8,
-            "进行中": 5,
-            "未开始": 13,
+            "完成": 9,
+            "进行中": 4,
+            "未开始": 12,
             "暂不推进": 5
           }
         ]
@@ -646,6 +646,7 @@
         "unit": "GUS",
         "region": "美西",
         "site": "CNO.H",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "完成",
           "文员提需": "完成",
@@ -660,6 +661,7 @@
         "unit": "GUS",
         "region": "美西",
         "site": "SFO.H",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "完成",
           "文员提需": "完成",
@@ -674,6 +676,7 @@
         "unit": "GUS",
         "region": "美西",
         "site": "SEA.H",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "完成",
           "文员提需": "完成",
@@ -688,6 +691,7 @@
         "unit": "GUS",
         "region": "美西",
         "site": "LAV.H",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "完成",
           "文员提需": "完成",
@@ -702,6 +706,7 @@
         "unit": "GUS",
         "region": "东北",
         "site": "BWI.H",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "完成",
           "文员提需": "完成",
@@ -716,6 +721,7 @@
         "unit": "GUS",
         "region": "东北",
         "site": "EWR.H",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "完成",
           "文员提需": "完成",
@@ -730,12 +736,13 @@
         "unit": "GUS",
         "region": "东北",
         "site": "JFK.H",
+        "excluded": true,
         "states": {
-          "供应商+业务培训": "未开始",
-          "文员提需": "未开始",
-          "HR发单": "未开始",
-          "运营数据晾晒": "未开始",
-          "推广结束": "未开始"
+          "供应商+业务培训": "无需推广",
+          "文员提需": "无需推广",
+          "HR发单": "无需推广",
+          "运营数据晾晒": "无需推广",
+          "推广结束": "无需推广"
         }
       },
       {
@@ -744,6 +751,7 @@
         "unit": "GUS",
         "region": "德州",
         "site": "IAH.H",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "完成",
           "文员提需": "完成",
@@ -758,6 +766,7 @@
         "unit": "GUS",
         "region": "德州",
         "site": "DFW.H",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "完成",
           "文员提需": "完成",
@@ -772,6 +781,7 @@
         "unit": "GUS",
         "region": "大湖",
         "site": "IND.H",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "完成",
           "文员提需": "完成",
@@ -786,6 +796,7 @@
         "unit": "GUS",
         "region": "大湖",
         "site": "ORD.H",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "未开始",
           "文员提需": "未开始",
@@ -800,6 +811,7 @@
         "unit": "GUS",
         "region": "Ground",
         "site": "EWR.G",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "完成",
           "文员提需": "完成",
@@ -814,6 +826,7 @@
         "unit": "GUS",
         "region": "Ground",
         "site": "ORD.G",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "未开始",
           "文员提需": "未开始",
@@ -828,6 +841,7 @@
         "unit": "GUS",
         "region": "Ground",
         "site": "ATL.G",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "未开始",
           "文员提需": "未开始",
@@ -842,6 +856,7 @@
         "unit": "GUS",
         "region": "Ground",
         "site": "SAV.G",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "未开始",
           "文员提需": "未开始",
@@ -856,6 +871,7 @@
         "unit": "GUS",
         "region": "Ground",
         "site": "ONT.G",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "完成",
           "文员提需": "完成",
@@ -870,6 +886,7 @@
         "unit": "GUS",
         "region": "Ground",
         "site": "SFO.G",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "未开始",
           "文员提需": "未开始",
@@ -884,12 +901,13 @@
         "unit": "GUS",
         "region": "Ground",
         "site": "CNO.G",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "完成",
           "文员提需": "完成",
           "HR发单": "完成",
           "运营数据晾晒": "完成",
-          "推广结束": "进行中"
+          "推广结束": "完成"
         }
       },
       {
@@ -898,6 +916,7 @@
         "unit": "GUS",
         "region": "Ground",
         "site": "DFW.G",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "未开始",
           "文员提需": "未开始",
@@ -912,6 +931,7 @@
         "unit": "GUS",
         "region": "Ground",
         "site": "IAH.G",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "未开始",
           "文员提需": "未开始",
@@ -926,6 +946,7 @@
         "unit": "GUS",
         "region": "加拿大",
         "site": "YYZ.H",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "完成",
           "文员提需": "未开始",
@@ -940,6 +961,7 @@
         "unit": "GUS",
         "region": "加拿大",
         "site": "YVR.H",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "完成",
           "文员提需": "完成",
@@ -954,6 +976,7 @@
         "unit": "GUS",
         "region": "中南",
         "site": "ATL.H",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "暂不推进",
           "文员提需": "暂不推进",
@@ -968,6 +991,7 @@
         "unit": "GUS",
         "region": "中南",
         "site": "CLT.H",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "暂不推进",
           "文员提需": "暂不推进",
@@ -982,6 +1006,7 @@
         "unit": "GUS",
         "region": "中南",
         "site": "PDK.H",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "暂不推进",
           "文员提需": "暂不推进",
@@ -996,6 +1021,7 @@
         "unit": "GUS",
         "region": "佛州",
         "site": "MIA.H",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "暂不推进",
           "文员提需": "暂不推进",
@@ -1010,6 +1036,7 @@
         "unit": "GUS",
         "region": "佛州",
         "site": "MCO.H",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "暂不推进",
           "文员提需": "暂不推进",
@@ -1024,6 +1051,7 @@
         "unit": "GEU",
         "region": "荷兰",
         "site": "阿姆仓",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "完成",
           "文员提需": "完成",
@@ -1038,6 +1066,7 @@
         "unit": "GEU",
         "region": "意大利",
         "site": "米兰仓",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "未开始",
           "文员提需": "未开始",
@@ -1052,6 +1081,7 @@
         "unit": "GEU",
         "region": "西班牙",
         "site": "马德里仓",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "未开始",
           "文员提需": "未开始",
@@ -1066,6 +1096,7 @@
         "unit": "GEU",
         "region": "意大利",
         "site": "罗马仓",
+        "excluded": false,
         "states": {
           "供应商+业务培训": "未开始",
           "文员提需": "未开始",
@@ -1074,7 +1105,13 @@
           "推广结束": "未开始"
         }
       }
-    ]
+    ],
+    "excluded": {
+      "sites": [
+        "JFK.H"
+      ],
+      "count": 1
+    }
   },
   "plan": {
     "total_tasks": 188,

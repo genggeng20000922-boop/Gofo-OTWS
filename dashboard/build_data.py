@@ -256,6 +256,11 @@ STAGE_DONE, STAGE_DOING, STAGE_TODO, STAGE_HOLD = "完成", "进行中", "未开
 # 顺序为业务展示顺序（同时决定漏斗、明细表列序、阶段矩阵）
 STAGES = ["供应商+业务培训", "文员提需", "HR发单", "运营数据晾晒", "推广结束"]
 
+# 无需推广的仓：不计入任何统计（HUB 总数、完成率、区域聚合、漏斗）
+# 明细表仍会列出，但标记为「无需推广」灰显，便于追溯
+# 按「站点/HUB」名称匹配
+EXCLUDE_SITES = {"JFK.H"}
+
 
 def build_progress(rows):
     records = []
@@ -263,17 +268,21 @@ def build_progress(rows):
         states = {s: pick_str(r.get(s), STAGE_TODO) for s in STAGES}
         # 业务单元取自「编码」字段：GUS / GEU
         unit = (pick_str(r.get("编码"), "") or "").strip().upper()
+        site = pick_str(r.get("站点/HUB"), "—")
         records.append({
             "order": idx,          # 多维表原始行序，用于明细表展示排序
             "code": unit or "—",
             "unit": unit or "未分类",
             "region": pick_str(r.get("区域"), "未分类"),
-            "site": pick_str(r.get("站点/HUB"), "—"),
+            "site": site,
+            # 无需推广的仓：保留在明细表中，但不计入任何统计
+            "excluded": site in EXCLUDE_SITES,
             "states": states,
         })
 
     def aggregate(subset):
-        """对给定的 HUB 子集计算区域聚合与各项指标。"""
+        """对给定的 HUB 子集计算区域聚合与各项指标（自动排除 excluded 的仓）。"""
+        subset = [x for x in subset if not x.get("excluded")]
         total = len(subset)
 
         def stage_count(stage, value):
@@ -351,6 +360,11 @@ def build_progress(rows):
                            [u for u in by_unit if u not in ("GUS", "GEU", "全部")]
     # 明细按多维表原始行序展示（不重排，保持与表内顺序一致）
     merged["records"] = sorted(records, key=lambda x: x["order"])
+    # 已剔除（无需推广）的仓，供页面标注说明
+    merged["excluded"] = {
+        "sites": sorted(EXCLUDE_SITES),
+        "count": sum(1 for x in records if x.get("excluded")),
+    }
     return merged
 
 
