@@ -258,8 +258,11 @@ STAGES = ["供应商+业务培训", "文员提需", "HR发单", "运营数据晾
 
 # 无需推广的仓：不计入任何统计（HUB 总数、完成率、区域聚合、漏斗）
 # 明细表仍会列出，但标记为「无需推广」灰显，便于追溯
-# 按「站点/HUB」名称匹配
-EXCLUDE_SITES = {"JFK.H"}
+#
+# 判定规则（主）：5 个推进阶段全部为「无需推广」→ 视为该组织无需推广
+# 判定规则（兜底）：EXCLUDE_SITES 中显式列出的仓名，用于表内状态未及时更新时强制排除
+STAGE_SKIP = "无需推广"
+EXCLUDE_SITES = set()
 
 
 def build_progress(rows):
@@ -269,6 +272,10 @@ def build_progress(rows):
         # 业务单元取自「编码」字段：GUS / GEU
         unit = (pick_str(r.get("编码"), "") or "").strip().upper()
         site = pick_str(r.get("站点/HUB"), "—")
+        # 统计有多少个阶段标记为「无需推广」
+        skip_stages = sum(1 for v in states.values() if v == STAGE_SKIP)
+        # 五阶段全部「无需推广」视为整个组织无需推广；或命中兜底名单
+        is_skip = (skip_stages == len(STAGES)) or (site in EXCLUDE_SITES)
         records.append({
             "order": idx,          # 多维表原始行序，用于明细表展示排序
             "code": unit or "—",
@@ -276,7 +283,8 @@ def build_progress(rows):
             "region": pick_str(r.get("区域"), "未分类"),
             "site": site,
             # 无需推广的仓：保留在明细表中，但不计入任何统计
-            "excluded": site in EXCLUDE_SITES,
+            "excluded": is_skip,
+            "skip_stages": skip_stages,
             "states": states,
         })
 
@@ -342,6 +350,7 @@ def build_progress(rows):
                 "进行中": stage_count(s, STAGE_DOING),
                 "未开始": stage_count(s, STAGE_TODO),
                 "暂不推进": stage_count(s, STAGE_HOLD),
+                "无需推广": stage_count(s, STAGE_SKIP),
             } for s in STAGES],
         }
 
@@ -361,9 +370,12 @@ def build_progress(rows):
     # 明细按多维表原始行序展示（不重排，保持与表内顺序一致）
     merged["records"] = sorted(records, key=lambda x: x["order"])
     # 已剔除（无需推广）的仓，供页面标注说明
+    skip_sites = sorted(x["site"] for x in records if x.get("excluded"))
     merged["excluded"] = {
-        "sites": sorted(EXCLUDE_SITES),
-        "count": sum(1 for x in records if x.get("excluded")),
+        "sites": skip_sites,
+        "count": len(skip_sites),
+        # 判定依据：五阶段全为「无需推广」，或命中兜底名单
+        "rule": "五阶段全部为「无需推广」",
     }
     return merged
 

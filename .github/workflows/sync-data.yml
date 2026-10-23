@@ -69,7 +69,7 @@ jobs:
               "progress.records","plan.status_dist","plan.region_dist",
               "progress.by_unit","progress.unit_order",
               "schedule","schedule.interval_minutes","schedule.cron",
-              "progress.excluded","progress.excluded.count",
+              "progress.excluded","progress.excluded.count","progress.excluded.rule",
           ]
           def get(o, p):
               for k in p.split('.'):
