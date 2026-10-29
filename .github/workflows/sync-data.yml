@@ -11,9 +11,12 @@ name: Sync dashboard data
 
 on:
   schedule:
-    # 每 5 分钟同步一次（GitHub Actions 支持的最小间隔）
-    # 注意：高峰期可能有数分钟排队延迟，属平台特性
+    # 保底轮询。注意：GitHub 会对高频 cron 降频，实测约每 4 小时一次，
+    # 因此这只是兜底，主链路是下面的 repository_dispatch（飞书自动化触发）。
     - cron: '*/5 * * * *'
+  # 飞书多维表格自动化通过 HTTP 请求触发本工作流（事件驱动，准实时）
+  repository_dispatch:
+    types: [feishu-update]
   workflow_dispatch:
 
 permissions:
@@ -32,6 +35,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Log trigger source
+        run: |
+          echo "触发方式: ${{ github.event_name }}"
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            echo "飞书自动化事件类型: ${{ github.event.action }}"
+          fi
 
       - name: Setup Python
         uses: actions/setup-python@v5
