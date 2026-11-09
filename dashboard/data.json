@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-11-02T10:59:33+08:00",
-  "generated_ts": 1793588373,
+  "updated_at": "2026-11-09T11:03:56+08:00",
+  "generated_ts": 1794193436,
   "schedule": {
     "cron": "*/5 * * * *",
     "interval_minutes": 5,
@@ -12,50 +12,50 @@
       {
         "id": "tbl6Z0fPeMdHw61W",
         "name": "2、区域推广进度",
-        "rows": 31
+        "rows": 32
       },
       {
         "id": "tbl3mOJhdyedSGZH",
         "name": "1、推广计划",
-        "rows": 188
+        "rows": 510
       }
     ]
   },
   "kpi": {
     "progress": {
-      "total_sites": 26,
-      "region_count": 11,
-      "overall_rate": 51.5,
-      "weighted_rate": 42.3,
+      "total_sites": 27,
+      "region_count": 12,
+      "overall_rate": 51.9,
+      "weighted_rate": 40.7,
       "stage_done": {
-        "供应商+业务培训": 15,
-        "文员提需": 15,
-        "HR发单": 15,
+        "供应商+业务培训": 16,
+        "文员提需": 16,
+        "HR发单": 16,
         "运营数据晾晒": 11,
         "推广结束": 11
       }
     },
     "plan": {
-      "total_tasks": 188,
-      "site_count": 105,
-      "supplier_count": 0
+      "total_tasks": 510,
+      "site_count": 111,
+      "supplier_count": 109
     }
   },
   "progress": {
-    "total_sites": 26,
-    "region_count": 11,
-    "overall_rate": 51.5,
-    "weighted_rate": 42.3,
+    "total_sites": 27,
+    "region_count": 12,
+    "overall_rate": 51.9,
+    "weighted_rate": 40.7,
     "stage_done": {
-      "供应商+业务培训": 15,
-      "文员提需": 15,
-      "HR发单": 15,
+      "供应商+业务培训": 16,
+      "文员提需": 16,
+      "HR发单": 16,
       "运营数据晾晒": 11,
       "推广结束": 11
     },
     "regions": [
       {
-        "name": "美西",
+        "name": "美西大区",
         "total": 4,
         "done": 4,
         "doing": 0,
@@ -64,7 +64,7 @@
         "rate": 100.0
       },
       {
-        "name": "东北",
+        "name": "东北大区",
         "total": 2,
         "done": 2,
         "doing": 0,
@@ -82,16 +82,16 @@
         "rate": 100.0
       },
       {
-        "name": "Ground",
+        "name": "Groun项目部",
         "total": 5,
         "done": 3,
-        "doing": 0,
-        "todo": 2,
+        "doing": 1,
+        "todo": 1,
         "hold": 0,
-        "rate": 60.0
+        "rate": 72.0
       },
       {
-        "name": "德州",
+        "name": "德州大区",
         "total": 2,
         "done": 0,
         "doing": 2,
@@ -100,7 +100,7 @@
         "rate": 60.0
       },
       {
-        "name": "加拿大",
+        "name": "加拿大大区",
         "total": 2,
         "done": 0,
         "doing": 2,
@@ -109,7 +109,7 @@
         "rate": 60.0
       },
       {
-        "name": "大湖",
+        "name": "大湖大区",
         "total": 2,
         "done": 1,
         "doing": 0,
@@ -118,7 +118,7 @@
         "rate": 50.0
       },
       {
-        "name": "中南",
+        "name": "中南大区",
         "total": 3,
         "done": 0,
         "doing": 0,
@@ -127,7 +127,7 @@
         "rate": 0.0
       },
       {
-        "name": "佛州",
+        "name": "佛州大区",
         "total": 2,
         "done": 0,
         "doing": 0,
@@ -140,8 +140,8 @@
         "total": 2,
         "done": 0,
         "doing": 0,
-        "todo": 2,
-        "hold": 0,
+        "todo": 0,
+        "hold": 2,
         "rate": 0.0
       },
       {
@@ -149,23 +149,32 @@
         "total": 1,
         "done": 0,
         "doing": 0,
-        "todo": 1,
-        "hold": 0,
+        "todo": 0,
+        "hold": 1,
+        "rate": 0.0
+      },
+      {
+        "name": "法国",
+        "total": 1,
+        "done": 0,
+        "doing": 0,
+        "todo": 0,
+        "hold": 1,
         "rate": 0.0
       }
     ],
     "funnel": [
       {
         "name": "供应商+业务培训",
-        "value": 15
+        "value": 16
       },
       {
         "name": "文员提需",
-        "value": 15
+        "value": 16
       },
       {
         "name": "HR发单",
-        "value": 15
+        "value": 16
       },
       {
         "name": "运营数据晾晒",
@@ -179,51 +188,51 @@
     "stage_matrix": [
       {
         "name": "供应商+业务培训",
-        "完成": 15,
+        "完成": 16,
         "进行中": 0,
-        "未开始": 6,
-        "暂不推进": 5,
+        "未开始": 2,
+        "暂不推进": 9,
         "无需推广": 0
       },
       {
         "name": "文员提需",
-        "完成": 15,
+        "完成": 16,
         "进行中": 0,
-        "未开始": 6,
-        "暂不推进": 5,
+        "未开始": 2,
+        "暂不推进": 9,
         "无需推广": 0
       },
       {
         "name": "HR发单",
-        "完成": 15,
+        "完成": 16,
         "进行中": 0,
-        "未开始": 6,
-        "暂不推进": 5,
+        "未开始": 2,
+        "暂不推进": 9,
         "无需推广": 0
       },
       {
         "name": "运营数据晾晒",
         "完成": 11,
-        "进行中": 4,
-        "未开始": 6,
-        "暂不推进": 5,
+        "进行中": 5,
+        "未开始": 2,
+        "暂不推进": 9,
         "无需推广": 0
       },
       {
         "name": "推广结束",
         "完成": 11,
-        "进行中": 2,
-        "未开始": 8,
-        "暂不推进": 5,
+        "进行中": 5,
+        "未开始": 2,
+        "暂不推进": 9,
         "无需推广": 0
       }
     ],
     "by_unit": {
       "GEU": {
-        "total_sites": 4,
-        "region_count": 3,
-        "overall_rate": 25.0,
-        "weighted_rate": 25.0,
+        "total_sites": 5,
+        "region_count": 4,
+        "overall_rate": 20.0,
+        "weighted_rate": 20.0,
         "stage_done": {
           "供应商+业务培训": 1,
           "文员提需": 1,
@@ -246,8 +255,8 @@
             "total": 2,
             "done": 0,
             "doing": 0,
-            "todo": 2,
-            "hold": 0,
+            "todo": 0,
+            "hold": 2,
             "rate": 0.0
           },
           {
@@ -255,8 +264,17 @@
             "total": 1,
             "done": 0,
             "doing": 0,
-            "todo": 1,
-            "hold": 0,
+            "todo": 0,
+            "hold": 1,
+            "rate": 0.0
+          },
+          {
+            "name": "法国",
+            "total": 1,
+            "done": 0,
+            "doing": 0,
+            "todo": 0,
+            "hold": 1,
             "rate": 0.0
           }
         ],
@@ -287,40 +305,40 @@
             "name": "供应商+业务培训",
             "完成": 1,
             "进行中": 0,
-            "未开始": 3,
-            "暂不推进": 0,
+            "未开始": 0,
+            "暂不推进": 4,
             "无需推广": 0
           },
           {
             "name": "文员提需",
             "完成": 1,
             "进行中": 0,
-            "未开始": 3,
-            "暂不推进": 0,
+            "未开始": 0,
+            "暂不推进": 4,
             "无需推广": 0
           },
           {
             "name": "HR发单",
             "完成": 1,
             "进行中": 0,
-            "未开始": 3,
-            "暂不推进": 0,
+            "未开始": 0,
+            "暂不推进": 4,
             "无需推广": 0
           },
           {
             "name": "运营数据晾晒",
             "完成": 1,
             "进行中": 0,
-            "未开始": 3,
-            "暂不推进": 0,
+            "未开始": 0,
+            "暂不推进": 4,
             "无需推广": 0
           },
           {
             "name": "推广结束",
             "完成": 1,
             "进行中": 0,
-            "未开始": 3,
-            "暂不推进": 0,
+            "未开始": 0,
+            "暂不推进": 4,
             "无需推广": 0
           }
         ]
@@ -328,18 +346,18 @@
       "GUS": {
         "total_sites": 22,
         "region_count": 8,
-        "overall_rate": 56.4,
+        "overall_rate": 59.1,
         "weighted_rate": 45.5,
         "stage_done": {
-          "供应商+业务培训": 14,
-          "文员提需": 14,
-          "HR发单": 14,
+          "供应商+业务培训": 15,
+          "文员提需": 15,
+          "HR发单": 15,
           "运营数据晾晒": 10,
           "推广结束": 10
         },
         "regions": [
           {
-            "name": "美西",
+            "name": "美西大区",
             "total": 4,
             "done": 4,
             "doing": 0,
@@ -348,7 +366,7 @@
             "rate": 100.0
           },
           {
-            "name": "东北",
+            "name": "东北大区",
             "total": 2,
             "done": 2,
             "doing": 0,
@@ -357,16 +375,16 @@
             "rate": 100.0
           },
           {
-            "name": "Ground",
+            "name": "Groun项目部",
             "total": 5,
             "done": 3,
-            "doing": 0,
-            "todo": 2,
+            "doing": 1,
+            "todo": 1,
             "hold": 0,
-            "rate": 60.0
+            "rate": 72.0
           },
           {
-            "name": "德州",
+            "name": "德州大区",
             "total": 2,
             "done": 0,
             "doing": 2,
@@ -375,7 +393,7 @@
             "rate": 60.0
           },
           {
-            "name": "加拿大",
+            "name": "加拿大大区",
             "total": 2,
             "done": 0,
             "doing": 2,
@@ -384,7 +402,7 @@
             "rate": 60.0
           },
           {
-            "name": "大湖",
+            "name": "大湖大区",
             "total": 2,
             "done": 1,
             "doing": 0,
@@ -393,7 +411,7 @@
             "rate": 50.0
           },
           {
-            "name": "中南",
+            "name": "中南大区",
             "total": 3,
             "done": 0,
             "doing": 0,
@@ -402,7 +420,7 @@
             "rate": 0.0
           },
           {
-            "name": "佛州",
+            "name": "佛州大区",
             "total": 2,
             "done": 0,
             "doing": 0,
@@ -414,15 +432,15 @@
         "funnel": [
           {
             "name": "供应商+业务培训",
-            "value": 14
+            "value": 15
           },
           {
             "name": "文员提需",
-            "value": 14
+            "value": 15
           },
           {
             "name": "HR发单",
-            "value": 14
+            "value": 15
           },
           {
             "name": "运营数据晾晒",
@@ -436,61 +454,61 @@
         "stage_matrix": [
           {
             "name": "供应商+业务培训",
-            "完成": 14,
+            "完成": 15,
             "进行中": 0,
-            "未开始": 3,
+            "未开始": 2,
             "暂不推进": 5,
             "无需推广": 0
           },
           {
             "name": "文员提需",
-            "完成": 14,
+            "完成": 15,
             "进行中": 0,
-            "未开始": 3,
+            "未开始": 2,
             "暂不推进": 5,
             "无需推广": 0
           },
           {
             "name": "HR发单",
-            "完成": 14,
+            "完成": 15,
             "进行中": 0,
-            "未开始": 3,
+            "未开始": 2,
             "暂不推进": 5,
             "无需推广": 0
           },
           {
             "name": "运营数据晾晒",
             "完成": 10,
-            "进行中": 4,
-            "未开始": 3,
+            "进行中": 5,
+            "未开始": 2,
             "暂不推进": 5,
             "无需推广": 0
           },
           {
             "name": "推广结束",
             "完成": 10,
-            "进行中": 2,
-            "未开始": 5,
+            "进行中": 5,
+            "未开始": 2,
             "暂不推进": 5,
             "无需推广": 0
           }
         ]
       },
       "全部": {
-        "total_sites": 26,
-        "region_count": 11,
-        "overall_rate": 51.5,
-        "weighted_rate": 42.3,
+        "total_sites": 27,
+        "region_count": 12,
+        "overall_rate": 51.9,
+        "weighted_rate": 40.7,
         "stage_done": {
-          "供应商+业务培训": 15,
-          "文员提需": 15,
-          "HR发单": 15,
+          "供应商+业务培训": 16,
+          "文员提需": 16,
+          "HR发单": 16,
           "运营数据晾晒": 11,
           "推广结束": 11
         },
         "regions": [
           {
-            "name": "美西",
+            "name": "美西大区",
             "total": 4,
             "done": 4,
             "doing": 0,
@@ -499,7 +517,7 @@
             "rate": 100.0
           },
           {
-            "name": "东北",
+            "name": "东北大区",
             "total": 2,
             "done": 2,
             "doing": 0,
@@ -517,16 +535,16 @@
             "rate": 100.0
           },
           {
-            "name": "Ground",
+            "name": "Groun项目部",
             "total": 5,
             "done": 3,
-            "doing": 0,
-            "todo": 2,
+            "doing": 1,
+            "todo": 1,
             "hold": 0,
-            "rate": 60.0
+            "rate": 72.0
           },
           {
-            "name": "德州",
+            "name": "德州大区",
             "total": 2,
             "done": 0,
             "doing": 2,
@@ -535,7 +553,7 @@
             "rate": 60.0
           },
           {
-            "name": "加拿大",
+            "name": "加拿大大区",
             "total": 2,
             "done": 0,
             "doing": 2,
@@ -544,7 +562,7 @@
             "rate": 60.0
           },
           {
-            "name": "大湖",
+            "name": "大湖大区",
             "total": 2,
             "done": 1,
             "doing": 0,
@@ -553,7 +571,7 @@
             "rate": 50.0
           },
           {
-            "name": "中南",
+            "name": "中南大区",
             "total": 3,
             "done": 0,
             "doing": 0,
@@ -562,7 +580,7 @@
             "rate": 0.0
           },
           {
-            "name": "佛州",
+            "name": "佛州大区",
             "total": 2,
             "done": 0,
             "doing": 0,
@@ -575,8 +593,8 @@
             "total": 2,
             "done": 0,
             "doing": 0,
-            "todo": 2,
-            "hold": 0,
+            "todo": 0,
+            "hold": 2,
             "rate": 0.0
           },
           {
@@ -584,23 +602,32 @@
             "total": 1,
             "done": 0,
             "doing": 0,
-            "todo": 1,
-            "hold": 0,
+            "todo": 0,
+            "hold": 1,
+            "rate": 0.0
+          },
+          {
+            "name": "法国",
+            "total": 1,
+            "done": 0,
+            "doing": 0,
+            "todo": 0,
+            "hold": 1,
             "rate": 0.0
           }
         ],
         "funnel": [
           {
             "name": "供应商+业务培训",
-            "value": 15
+            "value": 16
           },
           {
             "name": "文员提需",
-            "value": 15
+            "value": 16
           },
           {
             "name": "HR发单",
-            "value": 15
+            "value": 16
           },
           {
             "name": "运营数据晾晒",
@@ -614,42 +641,42 @@
         "stage_matrix": [
           {
             "name": "供应商+业务培训",
-            "完成": 15,
+            "完成": 16,
             "进行中": 0,
-            "未开始": 6,
-            "暂不推进": 5,
+            "未开始": 2,
+            "暂不推进": 9,
             "无需推广": 0
           },
           {
             "name": "文员提需",
-            "完成": 15,
+            "完成": 16,
             "进行中": 0,
-            "未开始": 6,
-            "暂不推进": 5,
+            "未开始": 2,
+            "暂不推进": 9,
             "无需推广": 0
           },
           {
             "name": "HR发单",
-            "完成": 15,
+            "完成": 16,
             "进行中": 0,
-            "未开始": 6,
-            "暂不推进": 5,
+            "未开始": 2,
+            "暂不推进": 9,
             "无需推广": 0
           },
           {
             "name": "运营数据晾晒",
             "完成": 11,
-            "进行中": 4,
-            "未开始": 6,
-            "暂不推进": 5,
+            "进行中": 5,
+            "未开始": 2,
+            "暂不推进": 9,
             "无需推广": 0
           },
           {
             "name": "推广结束",
             "完成": 11,
-            "进行中": 2,
-            "未开始": 8,
-            "暂不推进": 5,
+            "进行中": 5,
+            "未开始": 2,
+            "暂不推进": 9,
             "无需推广": 0
           }
         ]
@@ -664,7 +691,7 @@
         "order": 0,
         "code": "GUS",
         "unit": "GUS",
-        "region": "美西",
+        "region": "美西大区",
         "site": "CNO.H",
         "excluded": false,
         "skip_stages": 0,
@@ -680,7 +707,7 @@
         "order": 1,
         "code": "GUS",
         "unit": "GUS",
-        "region": "美西",
+        "region": "美西大区",
         "site": "SFO.H",
         "excluded": false,
         "skip_stages": 0,
@@ -696,7 +723,7 @@
         "order": 2,
         "code": "GUS",
         "unit": "GUS",
-        "region": "美西",
+        "region": "美西大区",
         "site": "SEA.H",
         "excluded": false,
         "skip_stages": 0,
@@ -712,7 +739,7 @@
         "order": 3,
         "code": "GUS",
         "unit": "GUS",
-        "region": "美西",
+        "region": "美西大区",
         "site": "LAV.H",
         "excluded": false,
         "skip_stages": 0,
@@ -728,7 +755,7 @@
         "order": 4,
         "code": "GUS",
         "unit": "GUS",
-        "region": "东北",
+        "region": "东北大区",
         "site": "BWI.H",
         "excluded": false,
         "skip_stages": 0,
@@ -744,7 +771,7 @@
         "order": 5,
         "code": "GUS",
         "unit": "GUS",
-        "region": "东北",
+        "region": "东北大区",
         "site": "EWR.H",
         "excluded": false,
         "skip_stages": 0,
@@ -760,7 +787,7 @@
         "order": 6,
         "code": "GUS",
         "unit": "GUS",
-        "region": "东北",
+        "region": "东北大区",
         "site": "JFK.H",
         "excluded": true,
         "skip_stages": 5,
@@ -776,7 +803,7 @@
         "order": 7,
         "code": "GUS",
         "unit": "GUS",
-        "region": "德州",
+        "region": "德州大区",
         "site": "IAH.H",
         "excluded": false,
         "skip_stages": 0,
@@ -792,7 +819,7 @@
         "order": 8,
         "code": "GUS",
         "unit": "GUS",
-        "region": "德州",
+        "region": "德州大区",
         "site": "DFW.H",
         "excluded": false,
         "skip_stages": 0,
@@ -808,7 +835,7 @@
         "order": 9,
         "code": "GUS",
         "unit": "GUS",
-        "region": "大湖",
+        "region": "大湖大区",
         "site": "IND.H",
         "excluded": false,
         "skip_stages": 0,
@@ -824,7 +851,7 @@
         "order": 10,
         "code": "GUS",
         "unit": "GUS",
-        "region": "大湖",
+        "region": "大湖大区",
         "site": "ORD.H",
         "excluded": false,
         "skip_stages": 0,
@@ -840,7 +867,7 @@
         "order": 11,
         "code": "GUS",
         "unit": "GUS",
-        "region": "Ground",
+        "region": "Groun项目部",
         "site": "EWR.G",
         "excluded": false,
         "skip_stages": 0,
@@ -856,7 +883,7 @@
         "order": 12,
         "code": "GUS",
         "unit": "GUS",
-        "region": "Ground",
+        "region": "Groun项目部",
         "site": "ORD.G",
         "excluded": false,
         "skip_stages": 0,
@@ -872,7 +899,7 @@
         "order": 13,
         "code": "GUS",
         "unit": "GUS",
-        "region": "Ground",
+        "region": "Groun项目部",
         "site": "ATL.G",
         "excluded": true,
         "skip_stages": 5,
@@ -888,7 +915,7 @@
         "order": 14,
         "code": "GUS",
         "unit": "GUS",
-        "region": "Ground",
+        "region": "Groun项目部",
         "site": "SAV.G",
         "excluded": true,
         "skip_stages": 5,
@@ -904,7 +931,7 @@
         "order": 15,
         "code": "GUS",
         "unit": "GUS",
-        "region": "Ground",
+        "region": "Groun项目部",
         "site": "ONT.G",
         "excluded": false,
         "skip_stages": 0,
@@ -920,7 +947,7 @@
         "order": 16,
         "code": "GUS",
         "unit": "GUS",
-        "region": "Ground",
+        "region": "Groun项目部",
         "site": "SFO.G",
         "excluded": true,
         "skip_stages": 5,
@@ -936,7 +963,7 @@
         "order": 17,
         "code": "GUS",
         "unit": "GUS",
-        "region": "Ground",
+        "region": "Groun项目部",
         "site": "CNO.G",
         "excluded": false,
         "skip_stages": 0,
@@ -952,7 +979,7 @@
         "order": 18,
         "code": "GUS",
         "unit": "GUS",
-        "region": "Ground",
+        "region": "Groun项目部",
         "site": "DFW.G",
         "excluded": true,
         "skip_stages": 5,
@@ -968,23 +995,23 @@
         "order": 19,
         "code": "GUS",
         "unit": "GUS",
-        "region": "Ground",
+        "region": "Groun项目部",
         "site": "IAH.G",
         "excluded": false,
         "skip_stages": 0,
         "states": {
-          "供应商+业务培训": "未开始",
-          "文员提需": "未开始",
-          "HR发单": "未开始",
-          "运营数据晾晒": "未开始",
-          "推广结束": "未开始"
+          "供应商+业务培训": "完成",
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "运营数据晾晒": "进行中",
+          "推广结束": "进行中"
         }
       },
       {
         "order": 20,
         "code": "GUS",
         "unit": "GUS",
-        "region": "加拿大",
+        "region": "加拿大大区",
         "site": "YYZ.H",
         "excluded": false,
         "skip_stages": 0,
@@ -993,14 +1020,14 @@
           "文员提需": "完成",
           "HR发单": "完成",
           "运营数据晾晒": "进行中",
-          "推广结束": "未开始"
+          "推广结束": "进行中"
         }
       },
       {
         "order": 21,
         "code": "GUS",
         "unit": "GUS",
-        "region": "加拿大",
+        "region": "加拿大大区",
         "site": "YVR.H",
         "excluded": false,
         "skip_stages": 0,
@@ -1009,14 +1036,14 @@
           "文员提需": "完成",
           "HR发单": "完成",
           "运营数据晾晒": "进行中",
-          "推广结束": "未开始"
+          "推广结束": "进行中"
         }
       },
       {
         "order": 22,
         "code": "GUS",
         "unit": "GUS",
-        "region": "中南",
+        "region": "中南大区",
         "site": "ATL.H",
         "excluded": false,
         "skip_stages": 0,
@@ -1032,7 +1059,7 @@
         "order": 23,
         "code": "GUS",
         "unit": "GUS",
-        "region": "中南",
+        "region": "中南大区",
         "site": "CLT.H",
         "excluded": false,
         "skip_stages": 0,
@@ -1048,7 +1075,7 @@
         "order": 24,
         "code": "GUS",
         "unit": "GUS",
-        "region": "中南",
+        "region": "中南大区",
         "site": "PDK.H",
         "excluded": false,
         "skip_stages": 0,
@@ -1064,7 +1091,7 @@
         "order": 25,
         "code": "GUS",
         "unit": "GUS",
-        "region": "佛州",
+        "region": "佛州大区",
         "site": "MIA.H",
         "excluded": false,
         "skip_stages": 0,
@@ -1080,7 +1107,7 @@
         "order": 26,
         "code": "GUS",
         "unit": "GUS",
-        "region": "佛州",
+        "region": "佛州大区",
         "site": "MCO.H",
         "excluded": false,
         "skip_stages": 0,
@@ -1117,11 +1144,11 @@
         "excluded": false,
         "skip_stages": 0,
         "states": {
-          "供应商+业务培训": "未开始",
-          "文员提需": "未开始",
-          "HR发单": "未开始",
-          "运营数据晾晒": "未开始",
-          "推广结束": "未开始"
+          "供应商+业务培训": "暂不推进",
+          "文员提需": "暂不推进",
+          "HR发单": "暂不推进",
+          "运营数据晾晒": "暂不推进",
+          "推广结束": "暂不推进"
         }
       },
       {
@@ -1133,11 +1160,11 @@
         "excluded": false,
         "skip_stages": 0,
         "states": {
-          "供应商+业务培训": "未开始",
-          "文员提需": "未开始",
-          "HR发单": "未开始",
-          "运营数据晾晒": "未开始",
-          "推广结束": "未开始"
+          "供应商+业务培训": "暂不推进",
+          "文员提需": "暂不推进",
+          "HR发单": "暂不推进",
+          "运营数据晾晒": "暂不推进",
+          "推广结束": "暂不推进"
         }
       },
       {
@@ -1149,11 +1176,27 @@
         "excluded": false,
         "skip_stages": 0,
         "states": {
-          "供应商+业务培训": "未开始",
-          "文员提需": "未开始",
-          "HR发单": "未开始",
-          "运营数据晾晒": "未开始",
-          "推广结束": "未开始"
+          "供应商+业务培训": "暂不推进",
+          "文员提需": "暂不推进",
+          "HR发单": "暂不推进",
+          "运营数据晾晒": "暂不推进",
+          "推广结束": "暂不推进"
+        }
+      },
+      {
+        "order": 31,
+        "code": "GEU",
+        "unit": "GEU",
+        "region": "法国",
+        "site": "巴黎仓",
+        "excluded": false,
+        "skip_stages": 0,
+        "states": {
+          "供应商+业务培训": "暂不推进",
+          "文员提需": "暂不推进",
+          "HR发单": "暂不推进",
+          "运营数据晾晒": "暂不推进",
+          "推广结束": "暂不推进"
         }
       }
     ],
@@ -1170,68 +1213,93 @@
     }
   },
   "plan": {
-    "total_tasks": 188,
-    "site_count": 105,
-    "supplier_count": 0,
+    "total_tasks": 510,
+    "site_count": 111,
+    "supplier_count": 109,
     "status_dist": {
-      "已完成": 30,
-      "关闭": 3,
+      "已完成": 52,
+      "关闭": 4,
       "延期": 26,
       "暂不推进": 40,
       "进行中": 2,
-      "待开始": 86,
-      "未填写": 1
+      "待开始": 85,
+      "未填写": 301
     },
     "region_dist": {
-      "美西大区": 22,
-      "德州大区": 19,
-      "佛州大区": 14,
-      "中南大区": 35,
-      "大湖大区": 30,
+      "美西大区": 44,
+      "德州大区": 81,
+      "佛州大区": 52,
+      "中南大区": 95,
+      "大湖大区": 90,
       "Ground项目部": 33,
-      "东北大区": 35
+      "东北大区": 91,
+      "加拿大大区": 6,
+      "荷兰": 5,
+      "西班牙": 1,
+      "法国": 7,
+      "意大利": 5
     },
     "region_status_matrix": {
       "美西大区": {
-        "已完成": 20,
+        "已完成": 42,
         "关闭": 2
       },
       "德州大区": {
         "已完成": 2,
         "延期": 10,
-        "暂不推进": 7
+        "暂不推进": 7,
+        "未填写": 62
       },
       "佛州大区": {
-        "暂不推进": 14
+        "暂不推进": 14,
+        "未填写": 38
       },
       "中南大区": {
         "暂不推进": 19,
-        "延期": 16
+        "延期": 16,
+        "未填写": 60
       },
       "大湖大区": {
         "进行中": 1,
         "关闭": 1,
-        "待开始": 28
+        "待开始": 28,
+        "未填写": 60
       },
       "Ground项目部": {
         "进行中": 1,
-        "待开始": 32
+        "待开始": 31,
+        "关闭": 1
       },
       "东北大区": {
         "已完成": 8,
         "待开始": 26,
+        "未填写": 57
+      },
+      "加拿大大区": {
+        "未填写": 6
+      },
+      "荷兰": {
+        "未填写": 5
+      },
+      "西班牙": {
         "未填写": 1
+      },
+      "法国": {
+        "未填写": 7
+      },
+      "意大利": {
+        "未填写": 5
       }
     },
     "batch_dist": {
-      "第一批": 1,
-      "第二批": 21,
+      "第一批": 44,
       "第三批": 4,
       "第四批": 29,
-      "第五批": 37,
+      "第五批": 97,
       "第七批": 3,
-      "第八批": 60,
-      "第六批": 33
+      "第八批": 120,
+      "第六批": 33,
+      "未填写": 180
     }
   }
 }

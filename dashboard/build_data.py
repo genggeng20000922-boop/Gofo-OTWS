@@ -404,7 +404,18 @@ def build_plan(rows):
         name = k.split("（")[0].split("(")[0].strip() or "未分类"
         region_c[name] += v
 
-    suppliers = [k for k in dist("供应商").keys() if k != "未填写"]
+    # 供应商字段历史上叫过「供应商信息」，后改名为「供应商名称」，两者都兼容
+    SUPPLIER_FIELDS = ("供应商名称", "供应商信息", "供应商")
+
+    def supplier_of(r):
+        for f in SUPPLIER_FIELDS:
+            v = pick_str(r.get(f))
+            if v:
+                return v
+        return "未填写"
+
+    supplier_c = collections.Counter(supplier_of(r) for r in rows)
+    suppliers = [k for k in supplier_c.keys() if k != "未填写"]
     sites = set(pick_str(r.get("站点/HUB")) for r in rows if pick_str(r.get("站点/HUB")))
 
     # 区域 x 状态 交叉
