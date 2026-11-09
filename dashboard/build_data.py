@@ -17,6 +17,7 @@
 
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -280,7 +281,7 @@ def build_progress(rows):
             "order": idx,          # 多维表原始行序，用于明细表展示排序
             "code": unit or "—",
             "unit": unit or "未分类",
-            "region": pick_str(r.get("区域"), "未分类"),
+            "region": norm_region(r.get("区域")),
             "site": site,
             # 无需推广的仓：保留在明细表中，但不计入任何统计
             "excluded": is_skip,
@@ -380,6 +381,100 @@ def build_progress(rows):
     return merged
 
 
+def norm_region(name):
+    """区域名归一化：去掉尾部编号括号，并修正已知的拼写差异。
+
+    两个多维表的区域写法可能不一致（如进度表「Groun项目部」缺 d、计划表「Ground项目部」），
+    这里统一成正确写法，避免同一区域在看板出现两个名字。源数据不做改动。
+    """
+    s = pick_str(name, "未分类")
+    s = s.split("（")[0].split("(")[0].strip() or "未分类"
+    return REGION_ALIAS.get(s, s)
+
+
+# 区域名别名：把源数据里的错误写法映射到正确写法
+REGION_ALIAS = {
+    "Groun项目部": "Ground项目部",
+}
+
+
+# 供应商字段历史上曾用名不同，按优先级依次尝试
+SUPPLIER_FIELDS = ("供应商名称", "供应商信息", "供应商")
+
+
+def supplier_of(row):
+    """取供应商名称，兼容字段改名；无值时返回「未填写」"""
+    for f in SUPPLIER_FIELDS:
+        v = pick_str(row.get(f))
+        if v:
+            return re.sub(r"\s+", " ", v).strip()
+    return "未填写"
+
+
+def supplier_key(name):
+    """供应商去重键：忽略大小写与多余空格，但保留业务上的差异（如 HR vs HIRE）"""
+    return re.sub(r"\s+", " ", str(name).strip()).lower()
+
+
+def build_supplier(rows):
+    """按区域统计去重供应商数，并提供穿透明细（区域 -> 供应商 -> 站点）"""
+    # region -> key -> {name, tasks, sites:{site: {type, status}}}
+    reg_map = collections.defaultdict(lambda: collections.defaultdict(
+        lambda: {"name": "", "tasks": 0, "sites": {}}))
+    canon = {}          # key -> 规范展示名（首次出现的写法）
+    key_regions = collections.defaultdict(set)
+
+    for r in rows:
+        sup = supplier_of(r)
+        if sup == "未填写":
+            continue
+        region = norm_region(r.get("区域"))
+        k = supplier_key(sup)
+        # 统一展示名：优先保留含大小写更完整的写法（取最长字符串）
+        if k not in canon or len(sup) > len(canon[k]):
+            canon[k] = sup
+        entry = reg_map[region][k]
+        entry["name"] = canon[k]
+        entry["tasks"] += 1
+        site = pick_str(r.get("站点/HUB"), "—")
+        s = entry["sites"].setdefault(site, {"name": site, "type": pick_str(r.get("类型（HUB/站点）"), ""), "status": ""})
+        st = pick_str(r.get("推广状态"))
+        if st:
+            s["status"] = st
+        key_regions[k].add(region)
+
+    by_region = []
+    for region, sups in reg_map.items():
+        items = []
+        for k, e in sups.items():
+            sites = sorted(e["sites"].values(), key=lambda x: x["name"])
+            items.append({
+                "name": e["name"],
+                "tasks": e["tasks"],
+                "site_count": len(sites),
+                "sites": sites,
+            })
+        items.sort(key=lambda x: (-x["tasks"], x["name"].lower()))
+        by_region.append({
+            "region": region,
+            "supplier_count": len(items),
+            "task_count": sum(x["tasks"] for x in items),
+            "suppliers": items,
+        })
+    by_region.sort(key=lambda x: (-x["supplier_count"], -x["task_count"]))
+
+    all_keys = set(canon.keys())
+    sum_by_region = sum(x["supplier_count"] for x in by_region)
+
+    return {
+        "total_unique": len(all_keys),        # 全区域去重总数（跨区域只算一次）
+        "sum_by_region": sum_by_region,       # 各区域相加（跨区域重复计）
+        "cross_region_count": sum(1 for k, v in key_regions.items() if len(v) > 1),
+        "task_count": sum(1 for r in rows if supplier_of(r) != "未填写"),
+        "by_region": by_region,
+    }
+
+
 def build_plan(rows):
     total = len(rows)
 
@@ -398,30 +493,20 @@ def build_plan(rows):
     status = dist("推广状态")
     region_raw = dist("区域")
 
-    # 归一化区域名：去掉尾部的编号括号，如「德州大区（8）」->「德州大区」
+    # 归一化区域名：去掉尾部编号括号并修正已知拼写差异
     region_c = collections.Counter()
     for k, v in region_raw.items():
-        name = k.split("（")[0].split("(")[0].strip() or "未分类"
-        region_c[name] += v
+        region_c[norm_region(k)] += v
 
-    # 供应商字段历史上叫过「供应商信息」，后改名为「供应商名称」，两者都兼容
-    SUPPLIER_FIELDS = ("供应商名称", "供应商信息", "供应商")
-
-    def supplier_of(r):
-        for f in SUPPLIER_FIELDS:
-            v = pick_str(r.get(f))
-            if v:
-                return v
-        return "未填写"
-
-    supplier_c = collections.Counter(supplier_of(r) for r in rows)
-    suppliers = [k for k in supplier_c.keys() if k != "未填写"]
+    # 供应商去重统一走 supplier_key（忽略大小写/多余空格），与 supplier 模块口径保持一致，
+    # 否则卡片数与区域明细会出现两个互相矛盾的数字
+    suppliers = {supplier_key(n) for n in (supplier_of(r) for r in rows) if n != "未填写"}
     sites = set(pick_str(r.get("站点/HUB")) for r in rows if pick_str(r.get("站点/HUB")))
 
     # 区域 x 状态 交叉
     cross = collections.defaultdict(collections.Counter)
     for r in rows:
-        reg = (pick_str(r.get("区域"), "未分类")).split("（")[0].split("(")[0].strip() or "未分类"
+        reg = norm_region(r.get("区域"))
         cross[reg][pick_str(r.get("推广状态"), "未填写")] += 1
 
     batch = collections.Counter()
@@ -458,6 +543,7 @@ def main():
     print("[3/3] 聚合…", file=sys.stderr)
     prog = build_progress(prog_rows)
     plan = build_plan(plan_rows)
+    supplier = build_supplier(plan_rows)
 
     now = datetime.now(CST)
     payload = {
@@ -489,9 +575,14 @@ def main():
                 "site_count": plan["site_count"],
                 "supplier_count": plan["supplier_count"],
             },
+            "supplier": {
+                "total_unique": supplier["total_unique"],
+                "cross_region_count": supplier["cross_region_count"],
+            },
         },
         "progress": prog,
         "plan": plan,
+        "supplier": supplier,
     }
 
     if probe:
