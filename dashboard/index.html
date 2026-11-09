@@ -251,6 +251,16 @@ footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11
 
   <div class="cards" id="cards"></div>
 
+  <section class="panel">
+    <h2>
+      <span>区域供应商分布 <span class="hint" id="sup-summary"></span></span>
+      <span class="filters">
+        <button class="btn sm" id="sup-expand-all">展开全部</button>
+      </span>
+    </h2>
+    <div class="body"><div class="sup-list" id="sup-list"></div></div>
+  </section>
+
   <div class="grid g-2">
     <section class="panel">
       <h2>区域推广完成率 <span class="hint">按仓折算 · 每仓完成阶段数 ÷ 5 后取平均</span></h2>
@@ -272,16 +282,6 @@ footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11
       <div class="body"><div class="dist" id="region-dist"></div></div>
     </section>
   </div>
-
-  <section class="panel">
-    <h2>
-      <span>区域供应商分布 <span class="hint" id="sup-summary"></span></span>
-      <span class="filters">
-        <button class="btn sm" id="sup-expand-all">展开全部</button>
-      </span>
-    </h2>
-    <div class="body"><div class="sup-list" id="sup-list"></div></div>
-  </section>
 
   <section class="panel">
     <h2>
@@ -617,6 +617,14 @@ function renderSupplier(d){
         <div class="sup-body" hidden>${items}</div>
       </div>`;
   }).join("");
+
+  // 默认展开第一个区域，避免用户以为只有汇总数字、看不到明细
+  const firstHead = box.querySelector(".sup-head");
+  const firstBody = box.querySelector(".sup-body");
+  if (firstHead && firstBody){
+    firstBody.removeAttribute("hidden");
+    firstHead.classList.add("open");
+  }
 
   // 展开全部状态复位
   const btn = document.getElementById("sup-expand-all");
