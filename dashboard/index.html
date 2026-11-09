@@ -167,6 +167,39 @@ tbody tr.row-exc .tag{filter:grayscale(1)}
   border:1px dashed #d1d5db; vertical-align:middle; white-space:nowrap;
 }
 
+/* ---------- 供应商明细弹窗 ---------- */
+.modal[hidden]{display:none}
+.modal{position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center; padding:24px}
+.modal-mask{position:absolute; inset:0; background:rgba(17,24,39,.45); backdrop-filter:blur(2px)}
+.modal-box{
+  position:relative; background:var(--panel); border-radius:16px; width:min(820px, 100%);
+  max-height:min(82vh, 760px); display:flex; flex-direction:column;
+  box-shadow:0 20px 60px rgba(16,24,40,.24); animation:modalIn .16s ease-out;
+}
+@keyframes modalIn{from{opacity:0; transform:translateY(8px) scale(.99)} to{opacity:1; transform:none}}
+.modal-head{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:16px 20px; border-bottom:1px solid var(--line); flex:0 0 auto;
+}
+.modal-title{font-size:15px; font-weight:650; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+.modal-sub{font-size:12px; font-weight:400; color:var(--ink-3)}
+.modal-actions{display:flex; align-items:center; gap:8px}
+.modal-close{
+  width:28px; height:28px; border:none; background:transparent; border-radius:8px;
+  color:var(--ink-3); font-size:15px; cursor:pointer; line-height:1; transition:.12s;
+}
+.modal-close:hover{background:#f3f4f6; color:var(--ink)}
+.modal-body{padding:8px 20px 20px; overflow-y:auto; flex:1 1 auto}
+
+/* 卡片可点击（供应商数） */
+.card.clickable{cursor:pointer; transition:transform .12s, box-shadow .12s, border-color .12s}
+.card.clickable:hover{transform:translateY(-1px); box-shadow:0 4px 14px rgba(16,24,40,.10); border-color:#d7e3fb}
+.card.clickable:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+.card .drill-hint{
+  display:inline-flex; align-items:center; gap:3px; margin-left:6px;
+  font-size:10.5px; color:var(--brand); font-weight:600;
+}
+
 /* ---------- 供应商分布（可穿透） ---------- */
 .sup-list{display:flex; flex-direction:column; gap:2px}
 .sup-row{border-bottom:1px solid var(--line)}
@@ -251,16 +284,6 @@ footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11
 
   <div class="cards" id="cards"></div>
 
-  <section class="panel">
-    <h2>
-      <span>区域供应商分布 <span class="hint" id="sup-summary"></span></span>
-      <span class="filters">
-        <button class="btn sm" id="sup-expand-all">展开全部</button>
-      </span>
-    </h2>
-    <div class="body"><div class="sup-list" id="sup-list"></div></div>
-  </section>
-
   <div class="grid g-2">
     <section class="panel">
       <h2>区域推广完成率 <span class="hint">按仓折算 · 每仓完成阶段数 ÷ 5 后取平均</span></h2>
@@ -325,6 +348,25 @@ footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11
 
 </div>
 
+<!-- 供应商明细弹窗：由「合作供应商数」卡片触发 -->
+<div class="modal" id="sup-modal" hidden>
+  <div class="modal-mask" data-close></div>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="sup-modal-title">
+    <div class="modal-head">
+      <span class="modal-title" id="sup-modal-title">
+        供应商明细 <span class="modal-sub" id="sup-summary"></span>
+      </span>
+      <span class="modal-actions">
+        <button class="btn sm" id="sup-expand-all">展开全部</button>
+        <button class="modal-close" data-close aria-label="关闭">✕</button>
+      </span>
+    </div>
+    <div class="modal-body">
+      <div class="sup-list" id="sup-list"></div>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ============================================================
    数据契约（字段名以多维表为准）
@@ -337,6 +379,7 @@ footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11
    - kpi.supplier.total_unique  -> 全区域去重供应商数
    - kpi.supplier.cross_region_count -> 跨区域出现的供应商家数
    - supplier.by_region[]       -> 区域 -> 供应商 -> 站点 穿透明细
+                                   （由「合作供应商数」卡片点击打开弹窗展示）
    - progress.regions[]         -> 区域完成率堆叠条
    - progress.funnel[]          -> 环节漏斗
    - plan.status_dist           -> 任务状态分布
@@ -433,16 +476,20 @@ function renderCards(d){
         return Number.isFinite(Number(c)) && Number(c) > 0
           ? `全区域去重 · ${num(c)} 家跨区域`
           : "全区域去重";
-      })(), cls:"c-hold" },
+      })(), cls:"c-hold", drill:"supplier" },
   ];
-  document.getElementById("cards").innerHTML = cards.map(c => `
-    <div class="card ${c.cls}">
-      <div class="lbl">${esc(c.lbl)}</div>
+  document.getElementById("cards").innerHTML = cards.map(c => {
+    const isDrill = !!c.drill;
+    return `
+    <div class="card ${c.cls}${isDrill ? " clickable" : ""}"
+         ${isDrill ? 'role="button" tabindex="0" data-drill="' + esc(c.drill) + '" title="点击查看明细"' : ""}>
+      <div class="lbl">${esc(c.lbl)}${isDrill ? '<span class="drill-hint">明细 ›</span>' : ""}</div>
       <div class="val">${esc(c.val)}${c.unit ? `<span class="u">${esc(c.unit)}</span>` : ""}</div>
       ${c.bar !== undefined && Number.isFinite(c.bar)
         ? `<div class="bar"><i style="width:${Math.max(0,Math.min(100,c.bar))}%"></i></div>` : ""}
       <div class="foot">${esc(c.foot)}</div>
-    </div>`).join("");
+    </div>`;
+  }).join("");
 }
 
 /* ---------- 渲染：区域完成率堆叠条 ---------- */
@@ -562,7 +609,7 @@ function syncRegionOptions(){
 }
 
 /* ---------- 渲染：HUB 明细 ---------- */
-/* ---------- 渲染：区域供应商分布（区域 → 供应商 → 站点） ---------- */
+/* ---------- 渲染：供应商明细弹窗内容（区域 → 供应商 → 站点） ---------- */
 function renderSupplier(d){
   const s = requirePath(d, "supplier");
   const box = document.getElementById("sup-list");
@@ -632,6 +679,42 @@ function renderSupplier(d){
 }
 
 /* 供应商面板交互：事件委托，只需绑定一次 */
+/* ---------- 供应商明细弹窗：由「合作供应商数」卡片打开 ---------- */
+function openSupplierModal(){
+  const modal = document.getElementById("sup-modal");
+  if (!modal) return;
+  if (lastData) renderSupplier(lastData);   // 按需渲染
+  modal.removeAttribute("hidden");
+  document.body.style.overflow = "hidden";
+  const close = modal.querySelector(".modal-close");
+  if (close) close.focus();
+}
+
+function closeSupplierModal(){
+  const modal = document.getElementById("sup-modal");
+  if (!modal || modal.hasAttribute("hidden")) return;
+  modal.setAttribute("hidden", "");
+  document.body.style.overflow = "";
+  const card = document.querySelector('.card[data-drill="supplier"]');
+  if (card) card.focus();
+}
+
+/* 卡片点击（事件委托，卡片会随数据重绘） */
+document.addEventListener("click", (ev) => {
+  const t = ev.target;
+  if (!t || typeof t.closest !== "function") return;
+  if (t.closest('.card[data-drill="supplier"]')){ openSupplierModal(); return; }
+  if (t.closest("[data-close]")) closeSupplierModal();
+});
+
+/* 卡片键盘可达 */
+document.addEventListener("keydown", (ev) => {
+  if (ev.key === "Escape"){ closeSupplierModal(); return; }
+  if (ev.key !== "Enter" && ev.key !== " ") return;
+  const card = ev.target.closest && ev.target.closest('.card[data-drill="supplier"]');
+  if (card){ ev.preventDefault(); openSupplierModal(); }
+});
+
 (function bindSupplier(){
   const box = document.getElementById("sup-list");
   const btn = document.getElementById("sup-expand-all");
@@ -833,7 +916,8 @@ function render(d, failed){
     renderFunnel(d);
     renderDist("status-dist", requirePath(d,"plan.status_dist"), STATUS_COLOR);
     renderDist("region-dist", requirePath(d,"plan.region_dist"), null);
-    renderSupplier(d);
+    // 供应商明细按需渲染：弹窗打开时才生成 DOM，避免首屏加载 400+ 站点节点
+    if (!document.getElementById("sup-modal").hasAttribute("hidden")) renderSupplier(d);
     renderDetail(d);
     const pt = requirePath(d,"kpi.plan.total_tasks");
     document.getElementById("plan-total").textContent =
