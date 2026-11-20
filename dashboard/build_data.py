@@ -416,6 +416,18 @@ def supplier_key(name):
     return re.sub(r"\s+", " ", str(name).strip()).lower()
 
 
+def all_closed_suppliers(rows):
+    """名下全部站点的推广状态均为「关闭」的供应商 key 集合。
+    只要有一条记录不是「关闭」（含未填写），就不视为整体关闭。"""
+    states = collections.defaultdict(set)
+    for r in rows:
+        s = supplier_of(r)
+        if s == "未填写":
+            continue
+        states[supplier_key(s)].add(str(pick_str(r.get("推广状态"))).strip())
+    return {k for k, vals in states.items() if vals and vals == {"关闭"}}
+
+
 def build_supplier(rows):
     """按区域统计去重供应商数，并提供穿透明细（区域 -> 供应商 -> 站点）"""
     # region -> key -> {name, tasks, sites:{site: {type, status}}}
@@ -444,10 +456,14 @@ def build_supplier(rows):
         key_regions[k].add(region)
 
     by_region = []
+    dropped = set()   # 全部站点均为「关闭」的供应商，整家剔除
     for region, sups in reg_map.items():
         items = []
         for k, e in sups.items():
             sites = sorted(e["sites"].values(), key=lambda x: x["name"])
+            if sites and all(str(x["status"]).strip() == "关闭" for x in sites):
+                dropped.add(k)
+                continue
             items.append({
                 "name": e["name"],
                 "tasks": e["tasks"],
@@ -463,6 +479,12 @@ def build_supplier(rows):
         })
     by_region.sort(key=lambda x: (-x["supplier_count"], -x["task_count"]))
 
+    # 剔除的供应商同步从全局去重集合、跨区域统计、任务数中移除，保证各口径一致
+    excluded_names = [canon.get(k, k) for k in dropped]
+    for k in dropped:
+        canon.pop(k, None)
+        key_regions.pop(k, None)
+
     all_keys = set(canon.keys())
     sum_by_region = sum(x["supplier_count"] for x in by_region)
 
@@ -470,7 +492,10 @@ def build_supplier(rows):
         "total_unique": len(all_keys),        # 全区域去重总数（跨区域只算一次）
         "sum_by_region": sum_by_region,       # 各区域相加（跨区域重复计）
         "cross_region_count": sum(1 for k, v in key_regions.items() if len(v) > 1),
-        "task_count": sum(1 for r in rows if supplier_of(r) != "未填写"),
+        "task_count": sum(1 for r in rows
+                          if supplier_of(r) != "未填写"
+                          and supplier_key(supplier_of(r)) not in dropped),
+        "excluded_suppliers": sorted(excluded_names),
         "by_region": by_region,
     }
 
@@ -500,7 +525,9 @@ def build_plan(rows):
 
     # 供应商去重统一走 supplier_key（忽略大小写/多余空格），与 supplier 模块口径保持一致，
     # 否则卡片数与区域明细会出现两个互相矛盾的数字
-    suppliers = {supplier_key(n) for n in (supplier_of(r) for r in rows) if n != "未填写"}
+    closed = all_closed_suppliers(rows)
+    suppliers = {supplier_key(n) for n in (supplier_of(r) for r in rows)
+                 if n != "未填写" and supplier_key(n) not in closed}
     sites = set(pick_str(r.get("站点/HUB")) for r in rows if pick_str(r.get("站点/HUB")))
 
     # 区域 x 状态 交叉
