@@ -32,6 +32,7 @@ BASE_TOKEN = "TorLbanFNaFDussPBckcwdvvnhc"
 TABLE_PROGRESS = "tbl6Z0fPeMdHw61W"   # 2、区域推广进度
 TABLE_PLAN = "tbl3mOJhdyedSGZH"       # 1、推广计划
 OUT_PATH = "data.json"
+OUT_ACTIVE_PATH = "data_active.json"   # 剔除「暂不推进」站点的对照口径
 CST = timezone(timedelta(hours=8))
 
 API_HOST = "https://open.feishu.cn/open-apis"
@@ -264,6 +265,22 @@ STAGES = ["供应商+业务培训", "文员提需", "HR发单", "运营数据晾
 # 判定规则（兜底）：EXCLUDE_SITES 中显式列出的仓名，用于表内状态未及时更新时强制排除
 STAGE_SKIP = "无需推广"
 EXCLUDE_SITES = set()
+
+
+def hold_sites(rows):
+    """返回 5 个阶段全部为「暂不推进」的站点集合。
+
+    这类站点已明确停止推广，用于「剔除暂不推进」对照口径：
+    进度表、计划表、供应商明细三者按同一站点集合过滤，保证各卡片口径一致。
+    """
+    out = set()
+    for r in rows:
+        states = [pick_str(r.get(s), STAGE_TODO) for s in STAGES]
+        if all(v == STAGE_HOLD for v in states):
+            site = pick_str(r.get("站点/HUB"), "")
+            if site:
+                out.add(site)
+    return out
 
 
 def build_progress(rows):
@@ -567,58 +584,81 @@ def main():
     plan_rows = backend.fetch(TABLE_PLAN)
     print("      %d 条" % len(plan_rows), file=sys.stderr)
 
+    # 对照口径：剔除 5 阶段全部「暂不推进」的站点
+    # 三张数据源按同一站点集合过滤后再聚合，避免卡片之间数字互相矛盾
+    hold = hold_sites(prog_rows)
+    print("      暂不推进站点 %d 个：%s" % (len(hold), "、".join(sorted(hold))), file=sys.stderr)
+    active_prog_rows = [r for r in prog_rows if pick_str(r.get("站点/HUB"), "") not in hold]
+    active_plan_rows = [r for r in plan_rows if pick_str(r.get("站点/HUB"), "") not in hold]
+
     print("[3/3] 聚合…", file=sys.stderr)
     prog = build_progress(prog_rows)
     plan = build_plan(plan_rows)
     supplier = build_supplier(plan_rows)
+    prog_a = build_progress(active_prog_rows)
+    plan_a = build_plan(active_plan_rows)
+    supplier_a = build_supplier(active_plan_rows)
 
     now = datetime.now(CST)
-    payload = {
-        "updated_at": now.isoformat(timespec="seconds"),
-        "generated_ts": int(now.timestamp()),
-        "schedule": {
-            # 与 .github/workflows/sync-data.yml 的 cron 保持一致
-            "cron": "*/5 * * * *",
-            "interval_minutes": 5,
-            "note": "GitHub Actions 定时任务，高峰期可能排队延迟",
-        },
-        "source": {
-            "base_token": BASE_TOKEN,
-            "tables": [
-                {"id": TABLE_PROGRESS, "name": "2、区域推广进度", "rows": len(prog_rows)},
-                {"id": TABLE_PLAN, "name": "1、推广计划", "rows": len(plan_rows)},
-            ],
-        },
-        "kpi": {
-            "progress": {
-                "total_sites": prog["total_sites"],
-                "region_count": prog["region_count"],
-                "overall_rate": prog["overall_rate"],
-                "weighted_rate": prog["weighted_rate"],
-                "stage_done": prog["stage_done"],
+
+    def make_payload(p_rows, pl_rows, p, pl, sup, scope, hold_list=()):
+        return {
+            "updated_at": now.isoformat(timespec="seconds"),
+            "generated_ts": int(now.timestamp()),
+            "scope": scope,   # all / active（剔除暂不推进）
+            "schedule": {
+                # 与 .github/workflows/sync-data.yml 的 cron 保持一致
+                "cron": "*/5 * * * *",
+                "interval_minutes": 5,
+                "note": "GitHub Actions 定时任务，高峰期可能排队延迟",
             },
-            "plan": {
-                "total_tasks": plan["total_tasks"],
-                "site_count": plan["site_count"],
-                "supplier_count": plan["supplier_count"],
+            "source": {
+                "base_token": BASE_TOKEN,
+                "tables": [
+                    {"id": TABLE_PROGRESS, "name": "2、区域推广进度", "rows": len(p_rows)},
+                    {"id": TABLE_PLAN, "name": "1、推广计划", "rows": len(pl_rows)},
+                ],
             },
-            "supplier": {
-                "total_unique": supplier["total_unique"],
-                "cross_region_count": supplier["cross_region_count"],
+            "kpi": {
+                "progress": {
+                    "total_sites": p["total_sites"],
+                    "region_count": p["region_count"],
+                    "overall_rate": p["overall_rate"],
+                    "weighted_rate": p["weighted_rate"],
+                    "stage_done": p["stage_done"],
+                },
+                "plan": {
+                    "total_tasks": pl["total_tasks"],
+                    "site_count": pl["site_count"],
+                    "supplier_count": pl["supplier_count"],
+                },
+                "supplier": {
+                    "total_unique": sup["total_unique"],
+                    "cross_region_count": sup["cross_region_count"],
+                },
             },
-        },
-        "progress": prog,
-        "plan": plan,
-        "supplier": supplier,
-    }
+            "progress": p,
+            "plan": pl,
+            "supplier": sup,
+            "excluded_hold": {
+                "rule": "5 个推进阶段全部为「暂不推进」的站点",
+                "sites": sorted(hold_list),
+                "count": len(hold_list),
+            },
+        }
+
+    payload = make_payload(prog_rows, plan_rows, prog, plan, supplier, "all")
+    payload_active = make_payload(active_prog_rows, active_plan_rows,
+                                  prog_a, plan_a, supplier_a, "active", hold)
 
     if probe:
         print(json.dumps(payload["kpi"], ensure_ascii=False, indent=2))
         return
 
-    with open(OUT_PATH, "w", encoding="utf-8") as f:
-        json.dump(payload, f, ensure_ascii=False, indent=2, default=str)
-    print("已生成 %s（%s）" % (OUT_PATH, payload["updated_at"]), file=sys.stderr)
+    for path, obj in ((OUT_PATH, payload), (OUT_ACTIVE_PATH, payload_active)):
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(obj, f, ensure_ascii=False, indent=2, default=str)
+        print("已生成 %s（%s）" % (path, obj["updated_at"]), file=sys.stderr)
 
 
 if __name__ == "__main__":

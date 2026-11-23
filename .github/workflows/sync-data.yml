@@ -68,11 +68,11 @@ jobs:
       - name: Verify output
         run: |
           test -f data.json || { echo "::error::data.json 未生成"; exit 1; }
+          test -f data_active.json || { echo "::error::data_active.json 未生成"; exit 1; }
           python - <<'PY'
           import json, sys
-          d = json.load(open('data.json', encoding='utf-8'))
           required = [
-              "updated_at","kpi.progress.total_sites","kpi.progress.region_count",
+              "updated_at","scope","kpi.progress.total_sites","kpi.progress.region_count",
               "kpi.progress.overall_rate","kpi.progress.weighted_rate",
               "kpi.plan.total_tasks","kpi.plan.site_count",
               "kpi.plan.supplier_count","progress.regions","progress.funnel",
@@ -81,35 +81,37 @@ jobs:
               "schedule","schedule.interval_minutes","schedule.cron",
               "progress.excluded","progress.excluded.count","progress.excluded.rule",
               "supplier","supplier.total_unique","supplier.by_region",
-              "kpi.supplier.total_unique",
+              "kpi.supplier.total_unique","excluded_hold","excluded_hold.count",
           ]
           def get(o, p):
               for k in p.split('.'):
                   if not isinstance(o, dict) or k not in o: return None
                   o = o[k]
               return o
-          miss = [p for p in required if get(d, p) is None]
-          if miss:
-              print("::error::契约缺失字段: " + ", ".join(miss)); sys.exit(1)
-          print(f"契约校验通过 12/12，{len(get(d,'progress.records') or [])} 个站点，更新于 {d['updated_at']}")
+          for fn in ('data.json', 'data_active.json'):
+              d = json.load(open(fn, encoding='utf-8'))
+              miss = [p for p in required if get(d, p) is None]
+              if miss:
+                  print(f"::error::{fn} 契约缺失字段: " + ", ".join(miss)); sys.exit(1)
+              print(f"{fn} 契约校验通过，{len(get(d,'progress.records') or [])} 条记录，scope={d['scope']}，更新于 {d['updated_at']}")
           PY
 
       - name: Guard - no secrets in output
         run: |
-          if grep -rniE 'app_secret|tenant_access_token|cli_[a-z0-9]{10,}|\bsecret\b' index.html data.json 2>/dev/null; then
+          if grep -rniE 'app_secret|tenant_access_token|cli_[a-z0-9]{10,}|\bsecret\b' index.html active.html data.json data_active.json 2>/dev/null; then
             echo "::error::发布产物中检测到疑似凭证"; exit 1
           fi
           echo "凭证检查通过"
 
-      - name: Commit refreshed data.json
+      - name: Commit refreshed data files
         run: |
           cd ..
-          if git diff --quiet -- dashboard/data.json; then
-            echo "data.json 无变化，跳过提交"
+          if git diff --quiet -- dashboard/data.json dashboard/data_active.json; then
+            echo "数据无变化，跳过提交"
           else
             git config user.name  "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add dashboard/data.json
+            git add dashboard/data.json dashboard/data_active.json
             git commit -m "chore: 同步看板数据 $(date -u +'%Y-%m-%d %H:%M UTC')"
             git push
           fi

@@ -1,0 +1,3750 @@
+{
+  "updated_at": "2026-11-23T18:05:15+08:00",
+  "generated_ts": 1795428315,
+  "scope": "active",
+  "schedule": {
+    "cron": "*/5 * * * *",
+    "interval_minutes": 5,
+    "note": "GitHub Actions 定时任务，高峰期可能排队延迟"
+  },
+  "source": {
+    "base_token": "TorLbanFNaFDussPBckcwdvvnhc",
+    "tables": [
+      {
+        "id": "tbl6Z0fPeMdHw61W",
+        "name": "2、区域推广进度",
+        "rows": 22
+      },
+      {
+        "id": "tbl3mOJhdyedSGZH",
+        "name": "1、推广计划",
+        "rows": 401
+      }
+    ]
+  },
+  "kpi": {
+    "progress": {
+      "total_sites": 16,
+      "region_count": 7,
+      "overall_rate": 92.5,
+      "weighted_rate": 81.2,
+      "stage_done": {
+        "供应商+业务培训": 16,
+        "文员提需": 16,
+        "HR发单": 16,
+        "运营数据晾晒": 13,
+        "推广结束": 13
+      }
+    },
+    "plan": {
+      "total_tasks": 401,
+      "site_count": 104,
+      "supplier_count": 85
+    },
+    "supplier": {
+      "total_unique": 85,
+      "cross_region_count": 14
+    }
+  },
+  "progress": {
+    "total_sites": 16,
+    "region_count": 7,
+    "overall_rate": 92.5,
+    "weighted_rate": 81.2,
+    "stage_done": {
+      "供应商+业务培训": 16,
+      "文员提需": 16,
+      "HR发单": 16,
+      "运营数据晾晒": 13,
+      "推广结束": 13
+    },
+    "regions": [
+      {
+        "name": "美西大区",
+        "total": 4,
+        "done": 4,
+        "doing": 0,
+        "todo": 0,
+        "hold": 0,
+        "rate": 100.0
+      },
+      {
+        "name": "东北大区",
+        "total": 2,
+        "done": 2,
+        "doing": 0,
+        "todo": 0,
+        "hold": 0,
+        "rate": 100.0
+      },
+      {
+        "name": "加拿大大区",
+        "total": 2,
+        "done": 2,
+        "doing": 0,
+        "todo": 0,
+        "hold": 0,
+        "rate": 100.0
+      },
+      {
+        "name": "大湖大区",
+        "total": 1,
+        "done": 1,
+        "doing": 0,
+        "todo": 0,
+        "hold": 0,
+        "rate": 100.0
+      },
+      {
+        "name": "荷兰",
+        "total": 1,
+        "done": 1,
+        "doing": 0,
+        "todo": 0,
+        "hold": 0,
+        "rate": 100.0
+      },
+      {
+        "name": "Ground项目部",
+        "total": 4,
+        "done": 3,
+        "doing": 1,
+        "todo": 0,
+        "hold": 0,
+        "rate": 90.0
+      },
+      {
+        "name": "德州大区",
+        "total": 2,
+        "done": 0,
+        "doing": 2,
+        "todo": 0,
+        "hold": 0,
+        "rate": 60.0
+      }
+    ],
+    "funnel": [
+      {
+        "name": "供应商+业务培训",
+        "value": 16
+      },
+      {
+        "name": "文员提需",
+        "value": 16
+      },
+      {
+        "name": "HR发单",
+        "value": 16
+      },
+      {
+        "name": "运营数据晾晒",
+        "value": 13
+      },
+      {
+        "name": "推广结束",
+        "value": 13
+      }
+    ],
+    "stage_matrix": [
+      {
+        "name": "供应商+业务培训",
+        "完成": 16,
+        "进行中": 0,
+        "未开始": 0,
+        "暂不推进": 0,
+        "无需推广": 0
+      },
+      {
+        "name": "文员提需",
+        "完成": 16,
+        "进行中": 0,
+        "未开始": 0,
+        "暂不推进": 0,
+        "无需推广": 0
+      },
+      {
+        "name": "HR发单",
+        "完成": 16,
+        "进行中": 0,
+        "未开始": 0,
+        "暂不推进": 0,
+        "无需推广": 0
+      },
+      {
+        "name": "运营数据晾晒",
+        "完成": 13,
+        "进行中": 3,
+        "未开始": 0,
+        "暂不推进": 0,
+        "无需推广": 0
+      },
+      {
+        "name": "推广结束",
+        "完成": 13,
+        "进行中": 3,
+        "未开始": 0,
+        "暂不推进": 0,
+        "无需推广": 0
+      }
+    ],
+    "by_unit": {
+      "GEU": {
+        "total_sites": 1,
+        "region_count": 1,
+        "overall_rate": 100.0,
+        "weighted_rate": 100.0,
+        "stage_done": {
+          "供应商+业务培训": 1,
+          "文员提需": 1,
+          "HR发单": 1,
+          "运营数据晾晒": 1,
+          "推广结束": 1
+        },
+        "regions": [
+          {
+            "name": "荷兰",
+            "total": 1,
+            "done": 1,
+            "doing": 0,
+            "todo": 0,
+            "hold": 0,
+            "rate": 100.0
+          }
+        ],
+        "funnel": [
+          {
+            "name": "供应商+业务培训",
+            "value": 1
+          },
+          {
+            "name": "文员提需",
+            "value": 1
+          },
+          {
+            "name": "HR发单",
+            "value": 1
+          },
+          {
+            "name": "运营数据晾晒",
+            "value": 1
+          },
+          {
+            "name": "推广结束",
+            "value": 1
+          }
+        ],
+        "stage_matrix": [
+          {
+            "name": "供应商+业务培训",
+            "完成": 1,
+            "进行中": 0,
+            "未开始": 0,
+            "暂不推进": 0,
+            "无需推广": 0
+          },
+          {
+            "name": "文员提需",
+            "完成": 1,
+            "进行中": 0,
+            "未开始": 0,
+            "暂不推进": 0,
+            "无需推广": 0
+          },
+          {
+            "name": "HR发单",
+            "完成": 1,
+            "进行中": 0,
+            "未开始": 0,
+            "暂不推进": 0,
+            "无需推广": 0
+          },
+          {
+            "name": "运营数据晾晒",
+            "完成": 1,
+            "进行中": 0,
+            "未开始": 0,
+            "暂不推进": 0,
+            "无需推广": 0
+          },
+          {
+            "name": "推广结束",
+            "完成": 1,
+            "进行中": 0,
+            "未开始": 0,
+            "暂不推进": 0,
+            "无需推广": 0
+          }
+        ]
+      },
+      "GUS": {
+        "total_sites": 15,
+        "region_count": 6,
+        "overall_rate": 92.0,
+        "weighted_rate": 80.0,
+        "stage_done": {
+          "供应商+业务培训": 15,
+          "文员提需": 15,
+          "HR发单": 15,
+          "运营数据晾晒": 12,
+          "推广结束": 12
+        },
+        "regions": [
+          {
+            "name": "美西大区",
+            "total": 4,
+            "done": 4,
+            "doing": 0,
+            "todo": 0,
+            "hold": 0,
+            "rate": 100.0
+          },
+          {
+            "name": "东北大区",
+            "total": 2,
+            "done": 2,
+            "doing": 0,
+            "todo": 0,
+            "hold": 0,
+            "rate": 100.0
+          },
+          {
+            "name": "加拿大大区",
+            "total": 2,
+            "done": 2,
+            "doing": 0,
+            "todo": 0,
+            "hold": 0,
+            "rate": 100.0
+          },
+          {
+            "name": "大湖大区",
+            "total": 1,
+            "done": 1,
+            "doing": 0,
+            "todo": 0,
+            "hold": 0,
+            "rate": 100.0
+          },
+          {
+            "name": "Ground项目部",
+            "total": 4,
+            "done": 3,
+            "doing": 1,
+            "todo": 0,
+            "hold": 0,
+            "rate": 90.0
+          },
+          {
+            "name": "德州大区",
+            "total": 2,
+            "done": 0,
+            "doing": 2,
+            "todo": 0,
+            "hold": 0,
+            "rate": 60.0
+          }
+        ],
+        "funnel": [
+          {
+            "name": "供应商+业务培训",
+            "value": 15
+          },
+          {
+            "name": "文员提需",
+            "value": 15
+          },
+          {
+            "name": "HR发单",
+            "value": 15
+          },
+          {
+            "name": "运营数据晾晒",
+            "value": 12
+          },
+          {
+            "name": "推广结束",
+            "value": 12
+          }
+        ],
+        "stage_matrix": [
+          {
+            "name": "供应商+业务培训",
+            "完成": 15,
+            "进行中": 0,
+            "未开始": 0,
+            "暂不推进": 0,
+            "无需推广": 0
+          },
+          {
+            "name": "文员提需",
+            "完成": 15,
+            "进行中": 0,
+            "未开始": 0,
+            "暂不推进": 0,
+            "无需推广": 0
+          },
+          {
+            "name": "HR发单",
+            "完成": 15,
+            "进行中": 0,
+            "未开始": 0,
+            "暂不推进": 0,
+            "无需推广": 0
+          },
+          {
+            "name": "运营数据晾晒",
+            "完成": 12,
+            "进行中": 3,
+            "未开始": 0,
+            "暂不推进": 0,
+            "无需推广": 0
+          },
+          {
+            "name": "推广结束",
+            "完成": 12,
+            "进行中": 3,
+            "未开始": 0,
+            "暂不推进": 0,
+            "无需推广": 0
+          }
+        ]
+      },
+      "全部": {
+        "total_sites": 16,
+        "region_count": 7,
+        "overall_rate": 92.5,
+        "weighted_rate": 81.2,
+        "stage_done": {
+          "供应商+业务培训": 16,
+          "文员提需": 16,
+          "HR发单": 16,
+          "运营数据晾晒": 13,
+          "推广结束": 13
+        },
+        "regions": [
+          {
+            "name": "美西大区",
+            "total": 4,
+            "done": 4,
+            "doing": 0,
+            "todo": 0,
+            "hold": 0,
+            "rate": 100.0
+          },
+          {
+            "name": "东北大区",
+            "total": 2,
+            "done": 2,
+            "doing": 0,
+            "todo": 0,
+            "hold": 0,
+            "rate": 100.0
+          },
+          {
+            "name": "加拿大大区",
+            "total": 2,
+            "done": 2,
+            "doing": 0,
+            "todo": 0,
+            "hold": 0,
+            "rate": 100.0
+          },
+          {
+            "name": "大湖大区",
+            "total": 1,
+            "done": 1,
+            "doing": 0,
+            "todo": 0,
+            "hold": 0,
+            "rate": 100.0
+          },
+          {
+            "name": "荷兰",
+            "total": 1,
+            "done": 1,
+            "doing": 0,
+            "todo": 0,
+            "hold": 0,
+            "rate": 100.0
+          },
+          {
+            "name": "Ground项目部",
+            "total": 4,
+            "done": 3,
+            "doing": 1,
+            "todo": 0,
+            "hold": 0,
+            "rate": 90.0
+          },
+          {
+            "name": "德州大区",
+            "total": 2,
+            "done": 0,
+            "doing": 2,
+            "todo": 0,
+            "hold": 0,
+            "rate": 60.0
+          }
+        ],
+        "funnel": [
+          {
+            "name": "供应商+业务培训",
+            "value": 16
+          },
+          {
+            "name": "文员提需",
+            "value": 16
+          },
+          {
+            "name": "HR发单",
+            "value": 16
+          },
+          {
+            "name": "运营数据晾晒",
+            "value": 13
+          },
+          {
+            "name": "推广结束",
+            "value": 13
+          }
+        ],
+        "stage_matrix": [
+          {
+            "name": "供应商+业务培训",
+            "完成": 16,
+            "进行中": 0,
+            "未开始": 0,
+            "暂不推进": 0,
+            "无需推广": 0
+          },
+          {
+            "name": "文员提需",
+            "完成": 16,
+            "进行中": 0,
+            "未开始": 0,
+            "暂不推进": 0,
+            "无需推广": 0
+          },
+          {
+            "name": "HR发单",
+            "完成": 16,
+            "进行中": 0,
+            "未开始": 0,
+            "暂不推进": 0,
+            "无需推广": 0
+          },
+          {
+            "name": "运营数据晾晒",
+            "完成": 13,
+            "进行中": 3,
+            "未开始": 0,
+            "暂不推进": 0,
+            "无需推广": 0
+          },
+          {
+            "name": "推广结束",
+            "完成": 13,
+            "进行中": 3,
+            "未开始": 0,
+            "暂不推进": 0,
+            "无需推广": 0
+          }
+        ]
+      }
+    },
+    "unit_order": [
+      "GUS",
+      "GEU"
+    ],
+    "records": [
+      {
+        "order": 0,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "美西大区",
+        "site": "CNO.H",
+        "excluded": false,
+        "skip_stages": 0,
+        "states": {
+          "供应商+业务培训": "完成",
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "运营数据晾晒": "完成",
+          "推广结束": "完成"
+        }
+      },
+      {
+        "order": 1,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "美西大区",
+        "site": "SFO.H",
+        "excluded": false,
+        "skip_stages": 0,
+        "states": {
+          "供应商+业务培训": "完成",
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "运营数据晾晒": "完成",
+          "推广结束": "完成"
+        }
+      },
+      {
+        "order": 2,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "美西大区",
+        "site": "SEA.H",
+        "excluded": false,
+        "skip_stages": 0,
+        "states": {
+          "供应商+业务培训": "完成",
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "运营数据晾晒": "完成",
+          "推广结束": "完成"
+        }
+      },
+      {
+        "order": 3,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "美西大区",
+        "site": "LAV.H",
+        "excluded": false,
+        "skip_stages": 0,
+        "states": {
+          "供应商+业务培训": "完成",
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "运营数据晾晒": "完成",
+          "推广结束": "完成"
+        }
+      },
+      {
+        "order": 4,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "东北大区",
+        "site": "BWI.H",
+        "excluded": false,
+        "skip_stages": 0,
+        "states": {
+          "供应商+业务培训": "完成",
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "运营数据晾晒": "完成",
+          "推广结束": "完成"
+        }
+      },
+      {
+        "order": 5,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "东北大区",
+        "site": "EWR.H",
+        "excluded": false,
+        "skip_stages": 0,
+        "states": {
+          "供应商+业务培训": "完成",
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "运营数据晾晒": "完成",
+          "推广结束": "完成"
+        }
+      },
+      {
+        "order": 6,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "东北大区",
+        "site": "JFK.H",
+        "excluded": true,
+        "skip_stages": 5,
+        "states": {
+          "供应商+业务培训": "无需推广",
+          "文员提需": "无需推广",
+          "HR发单": "无需推广",
+          "运营数据晾晒": "无需推广",
+          "推广结束": "无需推广"
+        }
+      },
+      {
+        "order": 7,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "德州大区",
+        "site": "IAH.H",
+        "excluded": false,
+        "skip_stages": 0,
+        "states": {
+          "供应商+业务培训": "完成",
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "运营数据晾晒": "进行中",
+          "推广结束": "进行中"
+        }
+      },
+      {
+        "order": 8,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "德州大区",
+        "site": "DFW.H",
+        "excluded": false,
+        "skip_stages": 0,
+        "states": {
+          "供应商+业务培训": "完成",
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "运营数据晾晒": "进行中",
+          "推广结束": "进行中"
+        }
+      },
+      {
+        "order": 9,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "大湖大区",
+        "site": "IND.H",
+        "excluded": false,
+        "skip_stages": 0,
+        "states": {
+          "供应商+业务培训": "完成",
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "运营数据晾晒": "完成",
+          "推广结束": "完成"
+        }
+      },
+      {
+        "order": 10,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "Ground项目部",
+        "site": "EWR.G",
+        "excluded": false,
+        "skip_stages": 0,
+        "states": {
+          "供应商+业务培训": "完成",
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "运营数据晾晒": "完成",
+          "推广结束": "完成"
+        }
+      },
+      {
+        "order": 11,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "Ground项目部",
+        "site": "ORD.G",
+        "excluded": true,
+        "skip_stages": 5,
+        "states": {
+          "供应商+业务培训": "无需推广",
+          "文员提需": "无需推广",
+          "HR发单": "无需推广",
+          "运营数据晾晒": "无需推广",
+          "推广结束": "无需推广"
+        }
+      },
+      {
+        "order": 12,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "Ground项目部",
+        "site": "ATL.G",
+        "excluded": true,
+        "skip_stages": 5,
+        "states": {
+          "供应商+业务培训": "无需推广",
+          "文员提需": "无需推广",
+          "HR发单": "无需推广",
+          "运营数据晾晒": "无需推广",
+          "推广结束": "无需推广"
+        }
+      },
+      {
+        "order": 13,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "Ground项目部",
+        "site": "SAV.G",
+        "excluded": true,
+        "skip_stages": 5,
+        "states": {
+          "供应商+业务培训": "无需推广",
+          "文员提需": "无需推广",
+          "HR发单": "无需推广",
+          "运营数据晾晒": "无需推广",
+          "推广结束": "无需推广"
+        }
+      },
+      {
+        "order": 14,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "Ground项目部",
+        "site": "ONT.G",
+        "excluded": false,
+        "skip_stages": 0,
+        "states": {
+          "供应商+业务培训": "完成",
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "运营数据晾晒": "完成",
+          "推广结束": "完成"
+        }
+      },
+      {
+        "order": 15,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "Ground项目部",
+        "site": "SFO.G",
+        "excluded": true,
+        "skip_stages": 5,
+        "states": {
+          "供应商+业务培训": "无需推广",
+          "文员提需": "无需推广",
+          "HR发单": "无需推广",
+          "运营数据晾晒": "无需推广",
+          "推广结束": "无需推广"
+        }
+      },
+      {
+        "order": 16,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "Ground项目部",
+        "site": "CNO.G",
+        "excluded": false,
+        "skip_stages": 0,
+        "states": {
+          "供应商+业务培训": "完成",
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "运营数据晾晒": "完成",
+          "推广结束": "完成"
+        }
+      },
+      {
+        "order": 17,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "Ground项目部",
+        "site": "DFW.G",
+        "excluded": true,
+        "skip_stages": 5,
+        "states": {
+          "供应商+业务培训": "无需推广",
+          "文员提需": "无需推广",
+          "HR发单": "无需推广",
+          "运营数据晾晒": "无需推广",
+          "推广结束": "无需推广"
+        }
+      },
+      {
+        "order": 18,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "Ground项目部",
+        "site": "IAH.G",
+        "excluded": false,
+        "skip_stages": 0,
+        "states": {
+          "供应商+业务培训": "完成",
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "运营数据晾晒": "进行中",
+          "推广结束": "进行中"
+        }
+      },
+      {
+        "order": 19,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "加拿大大区",
+        "site": "YYZ.H",
+        "excluded": false,
+        "skip_stages": 0,
+        "states": {
+          "供应商+业务培训": "完成",
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "运营数据晾晒": "完成",
+          "推广结束": "完成"
+        }
+      },
+      {
+        "order": 20,
+        "code": "GUS",
+        "unit": "GUS",
+        "region": "加拿大大区",
+        "site": "YVR.H",
+        "excluded": false,
+        "skip_stages": 0,
+        "states": {
+          "供应商+业务培训": "完成",
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "运营数据晾晒": "完成",
+          "推广结束": "完成"
+        }
+      },
+      {
+        "order": 21,
+        "code": "GEU",
+        "unit": "GEU",
+        "region": "荷兰",
+        "site": "阿姆仓",
+        "excluded": false,
+        "skip_stages": 0,
+        "states": {
+          "供应商+业务培训": "完成",
+          "文员提需": "完成",
+          "HR发单": "完成",
+          "运营数据晾晒": "完成",
+          "推广结束": "完成"
+        }
+      }
+    ],
+    "excluded": {
+      "sites": [
+        "ATL.G",
+        "DFW.G",
+        "JFK.H",
+        "ORD.G",
+        "SAV.G",
+        "SFO.G"
+      ],
+      "count": 6,
+      "rule": "五阶段全部为「无需推广」"
+    }
+  },
+  "plan": {
+    "total_tasks": 401,
+    "site_count": 104,
+    "supplier_count": 85,
+    "status_dist": {
+      "已完成": 47,
+      "关闭": 9,
+      "延期": 17,
+      "进行中": 10,
+      "暂不推进": 19,
+      "待开始": 72,
+      "未填写": 227
+    },
+    "region_dist": {
+      "美西大区": 34,
+      "德州大区": 66,
+      "佛州大区": 36,
+      "中南大区": 68,
+      "大湖大区": 78,
+      "Ground项目部": 29,
+      "东北大区": 79,
+      "加拿大大区": 6,
+      "荷兰": 5
+    },
+    "region_status_matrix": {
+      "美西大区": {
+        "已完成": 30,
+        "关闭": 4
+      },
+      "德州大区": {
+        "已完成": 2,
+        "延期": 9,
+        "进行中": 2,
+        "暂不推进": 3,
+        "未填写": 50
+      },
+      "佛州大区": {
+        "暂不推进": 6,
+        "未填写": 30
+      },
+      "中南大区": {
+        "暂不推进": 10,
+        "延期": 8,
+        "未填写": 50
+      },
+      "大湖大区": {
+        "已完成": 1,
+        "关闭": 4,
+        "待开始": 24,
+        "未填写": 49
+      },
+      "Ground项目部": {
+        "已完成": 4,
+        "待开始": 22,
+        "关闭": 1,
+        "进行中": 2
+      },
+      "东北大区": {
+        "已完成": 8,
+        "待开始": 26,
+        "未填写": 45
+      },
+      "加拿大大区": {
+        "进行中": 6
+      },
+      "荷兰": {
+        "已完成": 2,
+        "未填写": 3
+      }
+    },
+    "batch_dist": {
+      "第一批": 36,
+      "第三批": 9,
+      "第四批": 4,
+      "未填写": 336,
+      "第六批": 2,
+      "第五批": 6,
+      "第二批": 2,
+      "第七批": 6
+    }
+  },
+  "supplier": {
+    "total_unique": 85,
+    "sum_by_region": 104,
+    "cross_region_count": 14,
+    "task_count": 385,
+    "excluded_suppliers": [
+      "STORX"
+    ],
+    "by_region": [
+      {
+        "region": "东北大区",
+        "supplier_count": 20,
+        "task_count": 79,
+        "suppliers": [
+          {
+            "name": "Direct Jobs Solutions Inc",
+            "tasks": 22,
+            "site_count": 22,
+            "sites": [
+              {
+                "name": "ALB",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "BDL",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "BDR",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "BOS",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "BUF",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "BWI",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "DCA",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "EWR.H",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "FRG",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "GED",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "IAD",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "JFK01",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "LDJ",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "LGA",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MDT",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "PHL01",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "PIT",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "PNE01（PHL02）",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "RIC01",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "RIC02",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "SYR",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "TEB",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Employer Soultion Services Inc.",
+            "tasks": 10,
+            "site_count": 10,
+            "sites": [
+              {
+                "name": "BDL",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "BDR",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "BOS",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "BUF",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "IAD",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "JFK01",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "PHL01",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "PIT",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "RIC01",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "RIC02",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Qianyi",
+            "tasks": 8,
+            "site_count": 8,
+            "sites": [
+              {
+                "name": "ALB",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "BUF",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "LDJ",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "MDT",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "ORF01",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "RIC02",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "SYR",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "TEB",
+                "type": "站点",
+                "status": "待开始"
+              }
+            ]
+          },
+          {
+            "name": "H B LUCKY INC",
+            "tasks": 7,
+            "site_count": 7,
+            "sites": [
+              {
+                "name": "BDL",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "BDR",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "BWI",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "BWI.H",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "DCA",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "IAD",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "RIC01",
+                "type": "站点",
+                "status": "待开始"
+              }
+            ]
+          },
+          {
+            "name": "Z&Z Express Inc",
+            "tasks": 5,
+            "site_count": 5,
+            "sites": [
+              {
+                "name": "BDL",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "BDR",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "BUF",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "EWR.H",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "PIT",
+                "type": "站点",
+                "status": "待开始"
+              }
+            ]
+          },
+          {
+            "name": "On Target Staffing, LLC",
+            "tasks": 4,
+            "site_count": 4,
+            "sites": [
+              {
+                "name": "BWI",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "GED",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "RIC01",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "RIC02",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Nexus Proservices Inc",
+            "tasks": 3,
+            "site_count": 3,
+            "sites": [
+              {
+                "name": "FRG",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "JFK01",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "LGA",
+                "type": "站点",
+                "status": "待开始"
+              }
+            ]
+          },
+          {
+            "name": "On Taregt",
+            "tasks": 3,
+            "site_count": 3,
+            "sites": [
+              {
+                "name": "ABE",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "GED",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "ORF01",
+                "type": "站点",
+                "status": "待开始"
+              }
+            ]
+          },
+          {
+            "name": "AAS Express LLC",
+            "tasks": 2,
+            "site_count": 2,
+            "sites": [
+              {
+                "name": "BWI",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "BWI.H",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "APEX STAFFING SOLUTION INC",
+            "tasks": 2,
+            "site_count": 2,
+            "sites": [
+              {
+                "name": "JFK.H",
+                "type": "HUB",
+                "status": "待开始"
+              },
+              {
+                "name": "JFK01",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "ESS/HY",
+            "tasks": 2,
+            "site_count": 2,
+            "sites": [
+              {
+                "name": "PHL01",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "PNE01（PHL02）",
+                "type": "站点",
+                "status": "待开始"
+              }
+            ]
+          },
+          {
+            "name": "Imperial Workforce LLC",
+            "tasks": 2,
+            "site_count": 2,
+            "sites": [
+              {
+                "name": "EWR.H",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "JFK.H",
+                "type": "HUB",
+                "status": "待开始"
+              }
+            ]
+          },
+          {
+            "name": "Total Express",
+            "tasks": 2,
+            "site_count": 2,
+            "sites": [
+              {
+                "name": "RIC01",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "RIC02",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Activ Staffing LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "EWR.H",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "General Workforce NJ LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "BOS",
+                "type": "站点",
+                "status": "待开始"
+              }
+            ]
+          },
+          {
+            "name": "LONG RIVER LT INC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "EWR.H",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "MAGIC CASTLE LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "BWI",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "PRIMAL ELEMENT INTERNATIONAL INC.",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "JFK01",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Qianyi EXPRESS INC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "EWR.H",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "Vald Staffing LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "BWI",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "region": "德州大区",
+        "supplier_count": 19,
+        "task_count": 66,
+        "suppliers": [
+          {
+            "name": "MakerS Express LLC",
+            "tasks": 10,
+            "site_count": 10,
+            "sites": [
+              {
+                "name": "AUS",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "DFW",
+                "type": "站点",
+                "status": "延期"
+              },
+              {
+                "name": "DFW.H",
+                "type": "HUB",
+                "status": "进行中"
+              },
+              {
+                "name": "IAH",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "IAH.H",
+                "type": "HUB",
+                "status": "进行中"
+              },
+              {
+                "name": "MEM.LIT",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "OKC",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "SAT",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "TUL",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "TYR",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Hi4 Logistics LLC",
+            "tasks": 9,
+            "site_count": 9,
+            "sites": [
+              {
+                "name": "AUS",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "DFW",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "IAH",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "IAH.H",
+                "type": "HUB",
+                "status": "延期"
+              },
+              {
+                "name": "MEM.LIT",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "OKC",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "SAT",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "TUL",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "TYR",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "LLLYNN Logistics INC",
+            "tasks": 9,
+            "site_count": 9,
+            "sites": [
+              {
+                "name": "AUS",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "DFW",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "DFW.H",
+                "type": "HUB",
+                "status": ""
+              },
+              {
+                "name": "IAH",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MEM.LIT",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "OKC",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "SAT",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "TUL",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "TYR",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "E NOVA LOGISTIC GROUP LLC",
+            "tasks": 8,
+            "site_count": 8,
+            "sites": [
+              {
+                "name": "AUS",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "DFW",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "IAH",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MEM.LIT",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "OKC",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "SAT",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "TUL",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "TYR",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "FAST HORSE LOGISTICS LLC",
+            "tasks": 5,
+            "site_count": 5,
+            "sites": [
+              {
+                "name": "DFW",
+                "type": "站点",
+                "status": "暂不推进"
+              },
+              {
+                "name": "DFW.H",
+                "type": "HUB",
+                "status": "暂不推进"
+              },
+              {
+                "name": "OKC",
+                "type": "站点",
+                "status": "延期"
+              },
+              {
+                "name": "TUL",
+                "type": "站点",
+                "status": "已完成"
+              },
+              {
+                "name": "TYR",
+                "type": "站点",
+                "status": "延期"
+              }
+            ]
+          },
+          {
+            "name": "Employer Solutions Services Inc",
+            "tasks": 3,
+            "site_count": 3,
+            "sites": [
+              {
+                "name": "DFW",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "IAH",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "IAH.H",
+                "type": "HUB",
+                "status": "延期"
+              }
+            ]
+          },
+          {
+            "name": "Grace Hymn LLC",
+            "tasks": 3,
+            "site_count": 3,
+            "sites": [
+              {
+                "name": "IAH",
+                "type": "站点",
+                "status": "延期"
+              },
+              {
+                "name": "IAH.H",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "MEM.LIT",
+                "type": "站点",
+                "status": "延期"
+              }
+            ]
+          },
+          {
+            "name": "PowerHouse Staffing",
+            "tasks": 3,
+            "site_count": 3,
+            "sites": [
+              {
+                "name": "DFW",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "IAH",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "IAH.H",
+                "type": "HUB",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "B&A American Group LLC",
+            "tasks": 2,
+            "site_count": 2,
+            "sites": [
+              {
+                "name": "DFW",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "DFW.H",
+                "type": "HUB",
+                "status": "暂不推进"
+              }
+            ]
+          },
+          {
+            "name": "Imperial Workforce LLC",
+            "tasks": 2,
+            "site_count": 2,
+            "sites": [
+              {
+                "name": "DFW",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "IAH",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "JPA",
+            "tasks": 2,
+            "site_count": 2,
+            "sites": [
+              {
+                "name": "AUS",
+                "type": "站点",
+                "status": "延期"
+              },
+              {
+                "name": "SAT",
+                "type": "站点",
+                "status": "延期"
+              }
+            ]
+          },
+          {
+            "name": "NASA Logistics Carriers LLC",
+            "tasks": 2,
+            "site_count": 2,
+            "sites": [
+              {
+                "name": "DFW",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "DFW.H",
+                "type": "HUB",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "SATURNV DEVELOPMENTS LLC",
+            "tasks": 2,
+            "site_count": 2,
+            "sites": [
+              {
+                "name": "DFW",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "DFW.H",
+                "type": "HUB",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "(TX）11Bravo Security",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "DFW",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Fast Staff LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "IAH",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "FlashCargo LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "IAH",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Flight outsourcing",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "IAH",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Instaservice1 LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "DFW",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Loyalty Staffing Services LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "DFW",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "region": "美西大区",
+        "supplier_count": 16,
+        "task_count": 33,
+        "suppliers": [
+          {
+            "name": "AAS Express LLC",
+            "tasks": 7,
+            "site_count": 7,
+            "sites": [
+              {
+                "name": "CNO.H",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "DEN",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "LAV.H",
+                "type": "HUB",
+                "status": "关闭"
+              },
+              {
+                "name": "PHX",
+                "type": "站点",
+                "status": "已完成"
+              },
+              {
+                "name": "SAN01",
+                "type": "站点",
+                "status": "关闭"
+              },
+              {
+                "name": "SEA.H",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "SFO.H",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "J&S Out Front delivery and Transportation LLC",
+            "tasks": 5,
+            "site_count": 5,
+            "sites": [
+              {
+                "name": "CNO.H",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "DEN",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "LAV.H",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "PHX",
+                "type": "站点",
+                "status": "已完成"
+              },
+              {
+                "name": "SEA.H",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "Select Hire Services LLC",
+            "tasks": 4,
+            "site_count": 4,
+            "sites": [
+              {
+                "name": "CNO.H",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "LAV.H",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "PHX",
+                "type": "站点",
+                "status": "已完成"
+              },
+              {
+                "name": "SEA.H",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "Reliant HR LLC",
+            "tasks": 3,
+            "site_count": 3,
+            "sites": [
+              {
+                "name": "CNO.H",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "LAV.H",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "SAN01",
+                "type": "站点",
+                "status": "关闭"
+              }
+            ]
+          },
+          {
+            "name": "Direct Jobs Solutions Inc",
+            "tasks": 2,
+            "site_count": 2,
+            "sites": [
+              {
+                "name": "CNO.H",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "PHX",
+                "type": "站点",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "JC-SL Epxress Inc",
+            "tasks": 2,
+            "site_count": 2,
+            "sites": [
+              {
+                "name": "CNO.H",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "LAV.H",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "A-Share Express LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "CNO.H",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "Alliance Guard Service Inc",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "CNO.H",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "April Flower LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "DEN",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "Dynasty Employment Solutions Inc",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "CNO.H",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "Flash Way Express",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "CNO.H",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "Flash Way Express LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "SFO.H",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "HONGYUN LOGISTICS LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "SFO.H",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "Imperial Workforce LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "SEA.H",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "Nova Space Inc",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "CNO.H",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "TG EXPRESS TRUCKER LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "LAV.H",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "region": "大湖大区",
+        "supplier_count": 11,
+        "task_count": 78,
+        "suppliers": [
+          {
+            "name": "Grace Hymn LLC",
+            "tasks": 21,
+            "site_count": 21,
+            "sites": [
+              {
+                "name": "BMI",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "CID",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "CLE",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "CMH",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "CVG.H",
+                "type": "HUB",
+                "status": "关闭"
+              },
+              {
+                "name": "DAY",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "DSM",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "DTW",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "FWA",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "GRB",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "IND",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "LEX",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "MCI",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "MKE",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "MSN",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "MSP",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "OMA",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "PIA",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "RFD",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "SDF",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "STL",
+                "type": "站点",
+                "status": "待开始"
+              }
+            ]
+          },
+          {
+            "name": "MakerS Express LLC",
+            "tasks": 17,
+            "site_count": 17,
+            "sites": [
+              {
+                "name": "CLE",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CMH",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CVG.H",
+                "type": "HUB",
+                "status": "关闭"
+              },
+              {
+                "name": "DTW",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "GRB",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "IND",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "LEX",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MCI",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MDW",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MKE",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MSN",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MSP",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "OMA",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "ORD",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "RFD",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "SDF",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "STL",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "J&S Out Front Logistics LLC",
+            "tasks": 15,
+            "site_count": 15,
+            "sites": [
+              {
+                "name": "CLE",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CMH",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CVG.H",
+                "type": "HUB",
+                "status": "关闭"
+              },
+              {
+                "name": "DTW",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "IND",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MCI",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MDW",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MKE",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MSN",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MSP",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "OMA",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "ORD",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "RFD",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "SDF",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "STL",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Imperial Workforce LLC",
+            "tasks": 14,
+            "site_count": 14,
+            "sites": [
+              {
+                "name": "CLE",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CMH",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CVG.H",
+                "type": "HUB",
+                "status": "关闭"
+              },
+              {
+                "name": "DTW",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "IND",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MCI",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MDW",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MKE",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MSN",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MSP",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "OMA",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "ORD",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "SDF",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "STL",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "JC-SL Express Inc",
+            "tasks": 3,
+            "site_count": 3,
+            "sites": [
+              {
+                "name": "IND",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "IND.H",
+                "type": "HUB",
+                "status": ""
+              },
+              {
+                "name": "ORD",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "MI2016 Transportation Services LLC",
+            "tasks": 3,
+            "site_count": 3,
+            "sites": [
+              {
+                "name": "IND.H",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "MDW",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "ORD",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "LUCKY WJ",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "MDW",
+                "type": "站点",
+                "status": "待开始"
+              }
+            ]
+          },
+          {
+            "name": "Lucky WJ Corp",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "ORD",
+                "type": "站点",
+                "status": "待开始"
+              }
+            ]
+          },
+          {
+            "name": "SDP STAFFING SOLUTIONS INC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "ORD",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Select Hire Services LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "ORD",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Ultimile Logistics, LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "ORD",
+                "type": "站点",
+                "status": "待开始"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "region": "中南大区",
+        "supplier_count": 11,
+        "task_count": 68,
+        "suppliers": [
+          {
+            "name": "JC-SL Express Inc",
+            "tasks": 12,
+            "site_count": 12,
+            "sites": [
+              {
+                "name": "ATL",
+                "type": "站点",
+                "status": "暂不推进"
+              },
+              {
+                "name": "AVL",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "BNA",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CAE",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CLT01",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CLT02",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "GSO",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "GSP",
+                "type": "站点",
+                "status": "延期"
+              },
+              {
+                "name": "MAC",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "PDK",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "RDU",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "TRI",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Luxor Staffing,Inc",
+            "tasks": 11,
+            "site_count": 11,
+            "sites": [
+              {
+                "name": "ATL",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "AVL",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "BNA",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CAE",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CLT01",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CLT02",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "GSO",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "GSP",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MAC",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "RDU",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "TRI",
+                "type": "站点",
+                "status": "延期"
+              }
+            ]
+          },
+          {
+            "name": "Direct Jobs Solutions Inc",
+            "tasks": 10,
+            "site_count": 10,
+            "sites": [
+              {
+                "name": "ATL",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "AVL",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "BNA",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CAE",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CLT01",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CLT02",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "GSO",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "GSP",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MAC",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "RDU",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Imperial Workforce LLC",
+            "tasks": 10,
+            "site_count": 10,
+            "sites": [
+              {
+                "name": "ATL",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "AVL",
+                "type": "站点",
+                "status": "暂不推进"
+              },
+              {
+                "name": "BNA",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CAE",
+                "type": "站点",
+                "status": "暂不推进"
+              },
+              {
+                "name": "CLT01",
+                "type": "站点",
+                "status": "暂不推进"
+              },
+              {
+                "name": "CLT02",
+                "type": "站点",
+                "status": "暂不推进"
+              },
+              {
+                "name": "GSO",
+                "type": "站点",
+                "status": "暂不推进"
+              },
+              {
+                "name": "PDK",
+                "type": "站点",
+                "status": "延期"
+              },
+              {
+                "name": "RDU",
+                "type": "站点",
+                "status": "暂不推进"
+              },
+              {
+                "name": "VPC",
+                "type": "站点",
+                "status": "延期"
+              }
+            ]
+          },
+          {
+            "name": "Employer Solutions Services Inc",
+            "tasks": 7,
+            "site_count": 7,
+            "sites": [
+              {
+                "name": "ATL",
+                "type": "站点",
+                "status": "暂不推进"
+              },
+              {
+                "name": "BNA",
+                "type": "站点",
+                "status": "暂不推进"
+              },
+              {
+                "name": "CLT01",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CLT02",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "GSP",
+                "type": "站点",
+                "status": "延期"
+              },
+              {
+                "name": "PDK",
+                "type": "站点",
+                "status": "延期"
+              },
+              {
+                "name": "RDU",
+                "type": "站点",
+                "status": "暂不推进"
+              }
+            ]
+          },
+          {
+            "name": "Executive Recruiting Center LLC",
+            "tasks": 6,
+            "site_count": 6,
+            "sites": [
+              {
+                "name": "ATL",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "BNA",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CLT01",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CLT02",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "PDK",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "RDU",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "RAPID DISPATCH SOLUTIONS LLC",
+            "tasks": 5,
+            "site_count": 5,
+            "sites": [
+              {
+                "name": "ATL",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "BNA",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CLT01",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CLT02",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "RDU",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "SELECT HR SERVICES LLC",
+            "tasks": 4,
+            "site_count": 4,
+            "sites": [
+              {
+                "name": "ATL",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CLT01",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "CLT02",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "MAC",
+                "type": "站点",
+                "status": "延期"
+              }
+            ]
+          },
+          {
+            "name": "EMEC Staffing Services Inc",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "ATL",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Select HR",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "VPC",
+                "type": "站点",
+                "status": "延期"
+              }
+            ]
+          },
+          {
+            "name": "XPS STAFFING LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "ATL",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "region": "Ground项目部",
+        "supplier_count": 11,
+        "task_count": 14,
+        "suppliers": [
+          {
+            "name": "J&S Out Front delivery and Transportation LLC",
+            "tasks": 2,
+            "site_count": 2,
+            "sites": [
+              {
+                "name": "CNO.G",
+                "type": "HUB",
+                "status": "已完成"
+              },
+              {
+                "name": "ONT.G",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "Nexus Proservices Inc.",
+            "tasks": 2,
+            "site_count": 2,
+            "sites": [
+              {
+                "name": "AT303",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "NY112",
+                "type": "站点",
+                "status": "待开始"
+              }
+            ]
+          },
+          {
+            "name": "Z&Z Express Inc",
+            "tasks": 2,
+            "site_count": 2,
+            "sites": [
+              {
+                "name": "CB080",
+                "type": "站点",
+                "status": "待开始"
+              },
+              {
+                "name": "EWR.G",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "AAS Express LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "ONT.G",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "Chase Labor Solutions LLLP",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "CH600",
+                "type": "站点",
+                "status": "待开始"
+              }
+            ]
+          },
+          {
+            "name": "Executive Recruiting Center LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "SD921",
+                "type": "站点",
+                "status": "待开始"
+              }
+            ]
+          },
+          {
+            "name": "Imperial Workforce",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "AT303",
+                "type": "站点",
+                "status": "待开始"
+              }
+            ]
+          },
+          {
+            "name": "MI2016 Transportation Services LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "CH600",
+                "type": "站点",
+                "status": "待开始"
+              }
+            ]
+          },
+          {
+            "name": "Staff X Service",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "IAH.G",
+                "type": "HUB",
+                "status": "进行中"
+              }
+            ]
+          },
+          {
+            "name": "XPRESS Hire LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "IAH.G",
+                "type": "HUB",
+                "status": "进行中"
+              }
+            ]
+          },
+          {
+            "name": "XPS STAFFING LLC",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "AT303",
+                "type": "站点",
+                "status": "待开始"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "region": "佛州大区",
+        "supplier_count": 6,
+        "task_count": 36,
+        "suppliers": [
+          {
+            "name": "Joy On Us Llc",
+            "tasks": 6,
+            "site_count": 6,
+            "sites": [
+              {
+                "name": "FTM",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "JAX",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "OCF",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "SRQ",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "TPA",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "WPB",
+                "type": "站点",
+                "status": "暂不推进"
+              }
+            ]
+          },
+          {
+            "name": "Masis Staffing Services",
+            "tasks": 6,
+            "site_count": 6,
+            "sites": [
+              {
+                "name": "FTM",
+                "type": "站点",
+                "status": "暂不推进"
+              },
+              {
+                "name": "JAX",
+                "type": "站点",
+                "status": "暂不推进"
+              },
+              {
+                "name": "OCF",
+                "type": "站点",
+                "status": "暂不推进"
+              },
+              {
+                "name": "SRQ",
+                "type": "站点",
+                "status": "暂不推进"
+              },
+              {
+                "name": "TPA",
+                "type": "站点",
+                "status": "暂不推进"
+              },
+              {
+                "name": "WPB",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Mynn",
+            "tasks": 6,
+            "site_count": 6,
+            "sites": [
+              {
+                "name": "FTM",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "JAX",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "OCF",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "SRQ",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "TPA",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "WPB",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "POPULARILY LLC",
+            "tasks": 6,
+            "site_count": 6,
+            "sites": [
+              {
+                "name": "FTM",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "JAX",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "OCF",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "SRQ",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "TPA",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "WPB",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "RAPID DISPATCH SOULUTION LLC",
+            "tasks": 6,
+            "site_count": 6,
+            "sites": [
+              {
+                "name": "FTM",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "JAX",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "OCF",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "SRQ",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "TPA",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "WPB",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "SELECT HR SERVICES LLC",
+            "tasks": 6,
+            "site_count": 6,
+            "sites": [
+              {
+                "name": "FTM",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "JAX",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "OCF",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "SRQ",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "TPA",
+                "type": "站点",
+                "status": ""
+              },
+              {
+                "name": "WPB",
+                "type": "站点",
+                "status": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "region": "加拿大大区",
+        "supplier_count": 5,
+        "task_count": 6,
+        "suppliers": [
+          {
+            "name": "Speedy Transport Inc.",
+            "tasks": 2,
+            "site_count": 2,
+            "sites": [
+              {
+                "name": "YVR.H",
+                "type": "HUB",
+                "status": "进行中"
+              },
+              {
+                "name": "YYZ.H",
+                "type": "HUB",
+                "status": "进行中"
+              }
+            ]
+          },
+          {
+            "name": "3K Personnel",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "YVR.H",
+                "type": "HUB",
+                "status": "进行中"
+              }
+            ]
+          },
+          {
+            "name": "Global HR",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "YYZ.H",
+                "type": "HUB",
+                "status": "进行中"
+              }
+            ]
+          },
+          {
+            "name": "Goldstar",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "YYZ.H",
+                "type": "HUB",
+                "status": "进行中"
+              }
+            ]
+          },
+          {
+            "name": "Labour Max",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "YYZ.H",
+                "type": "HUB",
+                "status": "进行中"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "region": "荷兰",
+        "supplier_count": 5,
+        "task_count": 5,
+        "suppliers": [
+          {
+            "name": "Cosmos Logistics",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "AMS-阿姆斯特仓",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "Hetwerkt MA",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "AMS-阿姆斯特仓",
+                "type": "HUB",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "KKS-Ultrendbureau B.V.",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "AMS-阿姆斯特仓",
+                "type": "HUB",
+                "status": "已完成"
+              }
+            ]
+          },
+          {
+            "name": "One Solution B.V.",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "AMS-阿姆斯特仓",
+                "type": "HUB",
+                "status": ""
+              }
+            ]
+          },
+          {
+            "name": "Pacework",
+            "tasks": 1,
+            "site_count": 1,
+            "sites": [
+              {
+                "name": "AMS-阿姆斯特仓",
+                "type": "HUB",
+                "status": ""
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "excluded_hold": {
+    "rule": "5 个推进阶段全部为「暂不推进」的站点",
+    "sites": [
+      "ATL.H",
+      "CLT.H",
+      "MCO.H",
+      "MIA.H",
+      "ORD.H",
+      "PDK.H",
+      "巴黎仓",
+      "米兰仓",
+      "罗马仓",
+      "马德里仓"
+    ],
+    "count": 10
+  }
+}

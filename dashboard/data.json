@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-11-20T17:08:41+08:00",
-  "generated_ts": 1795165721,
+  "updated_at": "2026-11-23T18:05:15+08:00",
+  "generated_ts": 1795428315,
+  "scope": "all",
   "schedule": {
     "cron": "*/5 * * * *",
     "interval_minutes": 5,
@@ -4423,5 +4424,10 @@
         ]
       }
     ]
+  },
+  "excluded_hold": {
+    "rule": "5 个推进阶段全部为「暂不推进」的站点",
+    "sites": [],
+    "count": 0
   }
 }

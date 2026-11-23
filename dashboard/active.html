@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>推广运营数据看板（剔除暂不推进）</title>
+<style>
+:root{
+  --bg:#f4f6fb; --panel:#ffffff; --ink:#111827; --ink-2:#4b5563; --ink-3:#8a93a5;
+  --line:#e6e9f0; --brand:#2563eb; --brand-soft:#eff4ff;
+  --ok:#10b981; --warn:#f59e0b; --bad:#ef4444; --hold:#9aa3b2; --todo:#cbd5e1;
+  --radius:14px; --shadow:0 1px 2px rgba(16,24,40,.04),0 6px 20px rgba(16,24,40,.06);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1360px; margin:0 auto; padding:26px 24px 64px}
+
+/* ---------- 顶部 ---------- */
+header{display:flex; align-items:flex-start; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:22px}
+h1{margin:0 0 6px; font-size:23px; font-weight:650; letter-spacing:-.2px}
+.sub{color:var(--ink-3); font-size:12.5px}
+.sub2{margin-top:7px; display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--ink-3)}
+.sub2 b{color:var(--ink-2); font-weight:600}
+.sub2 b.warn{color:#b45309}
+.sub2 .sep{color:#d7dce5}
+.stamp{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+.pill{
+  display:inline-flex; align-items:center; gap:7px; padding:7px 13px; border-radius:999px;
+  background:var(--panel); border:1px solid var(--line); font-size:12.5px; color:var(--ink-2);
+  box-shadow:var(--shadow); white-space:nowrap;
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--ok);flex:none}
+.dot.stale{background:var(--warn)}
+.dot.err{background:var(--bad)}
+.dot.load{background:var(--brand); animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.btn{
+  padding:7px 15px; border-radius:999px; border:1px solid var(--line); background:var(--panel);
+  color:var(--ink-2); font-size:12.5px; cursor:pointer; box-shadow:var(--shadow); transition:.15s;
+  font-family:inherit;
+}
+.btn:hover{border-color:var(--brand); color:var(--brand)}
+.btn:disabled{opacity:.55; cursor:default}
+
+.banner{
+  display:none; margin-bottom:18px; padding:12px 16px; border-radius:var(--radius);
+  font-size:13px; border:1px solid;
+}
+.banner.show{display:block}
+.banner.warn{background:#fffbeb; border-color:#fde68a; color:#92400e}
+.banner.err{background:#fef2f2; border-color:#fecaca; color:#991b1b}
+
+/* ---------- 指标卡 ---------- */
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(212px,1fr)); gap:14px; margin-bottom:22px}
+.card{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:17px 18px 15px; box-shadow:var(--shadow); position:relative; overflow:hidden;
+}
+.card::after{content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--brand); opacity:.85}
+.card.c-ok::after{background:var(--ok)} .card.c-warn::after{background:var(--warn)}
+.card.c-hold::after{background:var(--hold)} .card.c-todo::after{background:var(--todo)}
+.card .lbl{font-size:12.5px; color:var(--ink-3); margin-bottom:9px; display:flex; align-items:center; gap:6px}
+.card .val{font-size:29px; font-weight:660; letter-spacing:-.6px; line-height:1.1; font-variant-numeric:tabular-nums}
+.card .val .u{font-size:14px; font-weight:500; color:var(--ink-2); margin-left:3px; letter-spacing:0}
+.card .foot{margin-top:9px; font-size:11.5px; color:var(--ink-3)}
+.bar{height:4px; border-radius:2px; background:var(--line); margin-top:10px; overflow:hidden}
+.bar>i{display:block; height:100%; border-radius:2px; background:var(--brand); transition:width .5s}
+
+/* ---------- 区块 ---------- */
+.unitbar{display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap}
+.ub-lbl{font-size:12.5px; color:var(--ink-3)}
+.tabs{display:inline-flex; gap:4px; background:var(--panel); border:1px solid var(--line);
+      border-radius:999px; padding:4px; box-shadow:var(--shadow)}
+.tab{
+  border:none; background:transparent; color:var(--ink-2); font-size:13px; font-family:inherit;
+  padding:6px 16px; border-radius:999px; cursor:pointer; transition:.15s; white-space:nowrap;
+  display:inline-flex; align-items:center; gap:6px;
+}
+.tab:hover{color:var(--brand)}
+.tab.on{background:var(--brand); color:#fff; font-weight:600}
+.tab i{font-style:normal; font-size:11px; opacity:.7}
+.tab.on i{opacity:.85}
+
+.grid{display:grid; gap:14px; margin-bottom:16px}
+.g-2{grid-template-columns:1.25fr 1fr}
+.g-2b{grid-template-columns:1fr 1fr}
+@media(max-width:980px){.g-2,.g-2b{grid-template-columns:1fr}}
+.panel{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden}
+.panel h2{
+  margin:0; padding:15px 18px 13px; font-size:14px; font-weight:620;
+  border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; gap:10px;
+}
+.panel h2 .hint{font-size:11.5px; font-weight:400; color:var(--ink-3)}
+.panel .body{padding:16px 18px 18px}
+.panel .body.tight{padding:8px 0 4px}
+
+/* ---------- 筛选器 ---------- */
+.filters{display:inline-flex; align-items:center; gap:10px; flex-wrap:wrap; font-weight:400}
+.fl{display:inline-flex; align-items:center; gap:6px; font-size:11.5px; color:var(--ink-3)}
+.fl select{
+  font-family:inherit; font-size:12.5px; color:var(--ink); background:var(--panel);
+  border:1px solid var(--line); border-radius:8px; padding:5px 9px; cursor:pointer;
+  min-width:88px; transition:.15s;
+}
+.fl select:hover{border-color:var(--brand)}
+.fl select:focus{outline:none; border-color:var(--brand); box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.btn.sm{padding:5px 12px; font-size:12px}
+
+/* ---------- 区域进度 ---------- */
+.region{margin-bottom:15px}
+.region:last-child{margin-bottom:2px}
+.region .top{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:6px; gap:10px}
+.region .nm{font-size:13px; font-weight:600}
+.region .nm small{font-weight:400; color:var(--ink-3); margin-left:6px; font-size:11.5px}
+.region .pc{font-size:13px; font-weight:650; font-variant-numeric:tabular-nums}
+.stack{display:flex; height:9px; border-radius:5px; overflow:hidden; background:var(--line)}
+.stack>span{display:block; height:100%; transition:width .5s}
+.s-done{background:var(--ok)} .s-doing{background:var(--brand)} .s-todo{background:var(--todo)} .s-hold{background:var(--hold)}
+.legend{display:flex; gap:14px; flex-wrap:wrap; font-size:11.5px; color:var(--ink-2); margin-top:14px; padding-top:13px; border-top:1px solid var(--line)}
+.legend i{display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:5px; vertical-align:-1px}
+
+/* ---------- 漏斗 ---------- */
+.funnel .row{display:flex; align-items:center; gap:11px; margin-bottom:11px}
+.funnel .row:last-child{margin-bottom:0}
+.funnel .fn{width:118px; flex:none; font-size:12.5px; color:var(--ink-2); text-align:right}
+.funnel .track{flex:1; height:26px; background:#f7f8fc; border-radius:6px; overflow:hidden; position:relative}
+.funnel .fill{
+  height:100%; border-radius:6px; background:linear-gradient(90deg,#3b82f6,#60a5fa);
+  display:flex; align-items:center; padding-left:10px; color:#fff; font-size:12px; font-weight:600;
+  transition:width .55s; min-width:0; font-variant-numeric:tabular-nums;
+}
+.funnel .fv{width:62px; flex:none; font-size:12.5px; font-weight:620; text-align:left; font-variant-numeric:tabular-nums}
+
+/* ---------- 表格 ---------- */
+.tbl-scroll{overflow:auto; max-height:520px}
+table{width:100%; border-collapse:collapse; font-size:12.5px}
+thead th{
+  position:sticky; top:0; z-index:2; background:#fafbfd; color:var(--ink-2); font-weight:600; text-align:center;
+  padding:10px 8px; border-bottom:1px solid var(--line); white-space:nowrap; font-size:12px;
+}
+thead th:first-child,tbody td:first-child{text-align:left; padding-left:18px}
+tbody td{padding:9px 8px; border-bottom:1px solid #f2f4f8; text-align:center; white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#fbfcfe}
+.site{font-weight:600}
+.na{color:var(--ink-3)}
+.tag{display:inline-block; padding:2px 9px; border-radius:999px; font-size:11.5px; font-weight:500; line-height:1.7}
+.t-完成{background:#ecfdf5; color:#047857}
+.t-进行中{background:var(--brand-soft); color:#1d4ed8}
+.t-未开始{background:#f3f4f6; color:#6b7280}
+.t-暂不推进{background:#f9fafb; color:#9aa3b2}
+.t-无需推广{background:#f5f5f4; color:#a8a29e; text-decoration:line-through}
+.t-其他{background:#f5f3ff; color:#6d28d9}
+
+/* ---------- 已剔除（无需推广）行 ---------- */
+tbody tr.row-exc{opacity:.5}
+tbody tr.row-exc:hover{background:transparent}
+tbody tr.row-exc .site{color:var(--ink-3); font-weight:500}
+tbody tr.row-exc .tag{filter:grayscale(1)}
+.exc-badge{
+  display:inline-block; margin-left:6px; padding:1px 7px; border-radius:999px;
+  background:#f3f4f6; color:#6b7280; font-size:10.5px; font-weight:500;
+  border:1px dashed #d1d5db; vertical-align:middle; white-space:nowrap;
+}
+
+/* ---------- 供应商明细弹窗 ---------- */
+.modal[hidden]{display:none}
+.modal{position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center; padding:24px}
+.modal-mask{position:absolute; inset:0; background:rgba(17,24,39,.45); backdrop-filter:blur(2px)}
+.modal-box{
+  position:relative; background:var(--panel); border-radius:16px; width:min(820px, 100%);
+  max-height:min(82vh, 760px); display:flex; flex-direction:column;
+  box-shadow:0 20px 60px rgba(16,24,40,.24); animation:modalIn .16s ease-out;
+}
+@keyframes modalIn{from{opacity:0; transform:translateY(8px) scale(.99)} to{opacity:1; transform:none}}
+.modal-head{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:16px 20px; border-bottom:1px solid var(--line); flex:0 0 auto;
+}
+.modal-title{font-size:15px; font-weight:650; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+.modal-sub{font-size:12px; font-weight:400; color:var(--ink-3)}
+.modal-actions{display:flex; align-items:center; gap:8px}
+.modal-close{
+  width:28px; height:28px; border:none; background:transparent; border-radius:8px;
+  color:var(--ink-3); font-size:15px; cursor:pointer; line-height:1; transition:.12s;
+}
+.modal-close:hover{background:#f3f4f6; color:var(--ink)}
+.modal-body{padding:8px 20px 20px; overflow-y:auto; flex:1 1 auto}
+
+/* 卡片可点击（供应商数） */
+.card.clickable{cursor:pointer; transition:transform .12s, box-shadow .12s, border-color .12s}
+.card.clickable:hover{transform:translateY(-1px); box-shadow:0 4px 14px rgba(16,24,40,.10); border-color:#d7e3fb}
+.card.clickable:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+.card .drill-hint{
+  display:inline-flex; align-items:center; gap:3px; margin-left:6px;
+  font-size:10.5px; color:var(--brand); font-weight:600;
+}
+
+/* ---------- 供应商分布（可穿透） ---------- */
+.sup-list{display:flex; flex-direction:column; gap:2px}
+.sup-row{border-bottom:1px solid var(--line)}
+.sup-row:last-child{border-bottom:none}
+
+.sup-head{
+  display:flex; align-items:center; gap:10px; padding:9px 4px; cursor:pointer;
+  border-radius:8px; transition:background .12s;
+}
+.sup-head:hover{background:#fafbfe}
+.sup-head .caret{
+  width:14px; flex:0 0 14px; color:var(--ink-3); font-size:10px;
+  transition:transform .15s; display:inline-block;
+}
+.sup-head.open .caret{transform:rotate(90deg)}
+.sup-region{font-weight:600; font-size:13.5px; min-width:96px}
+.sup-count{
+  font-variant-numeric:tabular-nums; font-weight:700; color:var(--brand);
+  font-size:14px; min-width:52px;
+}
+.sup-count small{font-weight:500; color:var(--ink-3); font-size:11px; margin-left:2px}
+.sup-tasks{font-size:11.5px; color:var(--ink-3); min-width:70px}
+.sup-bar{flex:1; height:6px; background:#eef1f7; border-radius:999px; overflow:hidden; min-width:60px}
+.sup-bar i{display:block; height:100%; background:var(--brand); border-radius:999px; opacity:.55}
+
+/* 第二层：供应商名单 */
+.sup-body{padding:0 0 10px 24px}
+.sup-item{border-left:2px solid #eef1f7; padding-left:12px; margin-bottom:2px}
+.sup-item-head{
+  display:flex; align-items:center; gap:8px; padding:6px 4px; cursor:pointer;
+  border-radius:6px; font-size:12.5px;
+}
+.sup-item-head:hover{background:#fafbfe}
+.sup-item-head .caret{width:12px; flex:0 0 12px; color:var(--ink-3); font-size:9px; transition:transform .15s}
+.sup-item-head.open .caret{transform:rotate(90deg)}
+.sup-name{flex:1; color:var(--ink-2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.sup-meta{font-size:11px; color:var(--ink-3); font-variant-numeric:tabular-nums; white-space:nowrap}
+
+/* 第三层：站点 */
+.sup-sites{display:flex; flex-wrap:wrap; gap:5px; padding:4px 0 8px 20px}
+.chip{
+  display:inline-block; padding:1px 8px; border-radius:6px; font-size:11px;
+  background:#f4f6fb; color:var(--ink-2); border:1px solid #e9edf4;
+  font-variant-numeric:tabular-nums;
+}
+.chip.hub{background:var(--brand-soft); border-color:#dbe6ff; color:#1d4ed8; font-weight:600}
+.chip.hub::after{content:" · HUB"; font-size:9.5px; opacity:.7; font-weight:400}
+
+/* ---------- 状态分布 ---------- */
+.dist{display:flex; flex-direction:column; gap:9px}
+.dist .d{display:flex; align-items:center; gap:10px}
+.dist .d .n{width:62px; flex:none; font-size:12.5px; color:var(--ink-2)}
+.dist .d .t{flex:1; height:8px; background:#f2f4f8; border-radius:4px; overflow:hidden}
+.dist .d .t>i{display:block; height:100%; border-radius:4px; transition:width .5s}
+.dist .d .v{width:44px; flex:none; text-align:right; font-size:12.5px; font-weight:600; font-variant-numeric:tabular-nums}
+
+footer{margin-top:26px; padding-top:16px; border-top:1px solid var(--line); color:var(--ink-3); font-size:11.5px; line-height:1.9}
+footer code{background:#eef1f6; padding:1px 6px; border-radius:4px; font-size:11px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <h1>推广运营数据看板 <span style="font-size:14px;font-weight:500;color:#b45309;background:#fffbeb;border:1px solid #fde68a;padding:3px 10px;border-radius:999px;vertical-align:middle;margin-left:8px">剔除暂不推进口径</span></h1>
+      <div class="sub">数据源：飞书多维表 · 推广计划 / 区域推广进度 &nbsp;|&nbsp; <b style="color:#b45309">口径：剔除 5 阶段全部「暂不推进」的站点</b> &nbsp;|&nbsp; <a href="./index.html" style="color:#2563eb">查看全量口径 →</a></div>
+      <div class="sub2" id="sync-info"></div>
+    </div>
+    <div class="stamp">
+      <span class="pill" id="freshness"><i class="dot load" id="dot"></i><span id="fresh-text">数据加载中…</span></span>
+      <button class="btn" id="refresh">刷新数据</button>
+    </div>
+  </header>
+
+  <div class="banner" id="banner"></div>
+
+  <div class="unitbar">
+    <span class="ub-lbl">业务单元</span>
+    <div class="tabs" id="unit-tabs"></div>
+  </div>
+
+  <div class="cards" id="cards"></div>
+
+  <div class="grid g-2">
+    <section class="panel">
+      <h2>区域推广完成率 <span class="hint">按仓折算 · 每仓完成阶段数 ÷ 5 后取平均</span></h2>
+      <div class="body" id="regions"></div>
+    </section>
+    <section class="panel funnel">
+      <h2>推进环节漏斗 <span class="hint">各环节达成「完成」的 HUB 数</span></h2>
+      <div class="body" id="funnel"></div>
+    </section>
+  </div>
+
+  <div class="grid g-2b">
+    <section class="panel">
+      <h2>推广任务状态分布 <span class="hint" id="plan-total"></span></h2>
+      <div class="body"><div class="dist" id="status-dist"></div></div>
+    </section>
+    <section class="panel">
+      <h2>推广计划区域分布 <span class="hint">按任务条数</span></h2>
+      <div class="body"><div class="dist" id="region-dist"></div></div>
+    </section>
+  </div>
+
+  <section class="panel">
+    <h2>
+      <span>HUB 推进明细 <span class="hint" id="detail-count"></span></span>
+      <span class="filters">
+        <label class="fl">
+          <span>区域</span>
+          <select id="filter-region"><option value="">全部</option></select>
+        </label>
+        <label class="fl">
+          <span>状态</span>
+          <select id="filter-status">
+            <option value="">全部</option>
+            <option value="完成">完成</option>
+            <option value="进行中">进行中</option>
+            <option value="未开始">未开始</option>
+            <option value="暂不推进">暂不推进</option>
+            <option value="无需推广">无需推广</option>
+          </select>
+        </label>
+        <button class="btn sm" id="filter-reset">重置</button>
+      </span>
+    </h2>
+    <div class="tbl-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>HUB</th><th>区域</th>
+            <th>供应商+业务培训</th><th>文员提需</th><th>HR发单</th><th>运营数据晾晒</th><th>推广结束</th>
+          </tr>
+        </thead>
+        <tbody id="detail"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <div>数据表：<code>2、区域推广进度</code> · <code>1、推广计划</code> &nbsp;|&nbsp; Base：<code>TorLbanFNaFDussPBckcwdvvnhc</code></div>
+    <div>页面仅读取 <code>data_active.json</code>，不含任何凭证；数据由构建脚本 <code>build_data.py</code> 定时从多维表拉取生成。</div>
+  </footer>
+
+</div>
+
+<!-- 供应商明细弹窗：由「合作供应商数」卡片触发 -->
+<div class="modal" id="sup-modal" hidden>
+  <div class="modal-mask" data-close></div>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="sup-modal-title">
+    <div class="modal-head">
+      <span class="modal-title" id="sup-modal-title">
+        供应商明细 <span class="modal-sub" id="sup-summary"></span>
+      </span>
+      <span class="modal-actions">
+        <button class="btn sm" id="sup-expand-all">展开全部</button>
+        <button class="modal-close" data-close aria-label="关闭">✕</button>
+      </span>
+    </div>
+    <div class="modal-body">
+      <div class="sup-list" id="sup-list"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   数据契约（字段名以多维表为准）
+   - kpi.progress.total_sites   -> HUB 总数
+   - kpi.progress.region_count  -> 覆盖区域数
+   - kpi.progress.overall_rate  -> 整体完成率（按仓折算：每仓完成阶段数÷5 后平均）
+   - kpi.progress.weighted_rate -> 对照口径（五阶段全完成的仓占比）
+   - kpi.plan.total_tasks       -> 推广任务总数
+   - kpi.plan.supplier_count    -> 供应商数（与 kpi.supplier.total_unique 同口径）
+   - kpi.supplier.total_unique  -> 全区域去重供应商数
+   - kpi.supplier.cross_region_count -> 跨区域出现的供应商家数
+   - supplier.by_region[]       -> 区域 -> 供应商 -> 站点 穿透明细
+                                   （由「合作供应商数」卡片点击打开弹窗展示）
+   - progress.regions[]         -> 区域完成率堆叠条
+   - progress.funnel[]          -> 环节漏斗
+   - plan.status_dist           -> 任务状态分布
+   - plan.region_dist           -> 区域任务分布
+   - progress.records[]         -> HUB 明细（含 excluded 标记）
+   - progress.excluded.sites[]  -> 无需推广、已从统计中剔除的仓
+   缺失/异常一律渲染 "—"，不显示 NaN。
+   ============================================================ */
+
+const NA = "—";
+const STALE_MIN = 15;        // 超过该分钟数视为数据陈旧，顶部标黄
+const POLL_MS = 5 * 60 * 1000; // 每 5 分钟重新拉取
+
+let lastGood = null;
+
+/* ---------- 取值工具：任何异常都返回占位符 ---------- */
+function num(v){
+  if (v === null || v === undefined || v === "") return NA;
+  const n = Number(v);
+  return Number.isFinite(n) ? n : NA;
+}
+function text(v){
+  if (v === null || v === undefined || v === "") return NA;
+  return String(v);
+}
+function pct(v){
+  const n = Number(v);
+  return Number.isFinite(n) ? n.toFixed(1) + "%" : NA;
+}
+function fmt(n){
+  const x = Number(n);
+  return Number.isFinite(x) ? x.toLocaleString("zh-CN") : NA;
+}
+function esc(s){
+  return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+/* ---------- 卡片可达性检查 ---------- */
+function requirePath(obj, path){
+  return path.split(".").reduce((o,k) => (o && o[k] !== undefined ? o[k] : undefined), obj);
+}
+
+/* ---------- 业务单元（GUS / GEU）切换 ---------- */
+let currentUnit = "全部";
+let lastData = null;
+
+/** 取当前选中业务单元的数据切片；缺失时回退到「全部」 */
+function viewData(){
+  if (!lastData) return null;
+  const byUnit = requirePath(lastData, "progress.by_unit");
+  if (!byUnit) return lastData;   // 老结构兼容
+  return byUnit[currentUnit] || byUnit["全部"] || null;
+}
+
+function renderUnitTabs(){
+  const box = document.getElementById("unit-tabs");
+  if (!box) return;
+  const byUnit = requirePath(lastData, "progress.by_unit");
+  if (!byUnit){
+    box.innerHTML = "";
+    return;
+  }
+  const order = requirePath(lastData, "progress.unit_order") || [];
+  const tabs = order.concat(["全部"]);
+  box.innerHTML = tabs.map(u => {
+    const b = byUnit[u] || {};
+    const on = (u === currentUnit) ? " on" : "";
+    const cnt = Number.isFinite(Number(b.total_sites)) ? `<i>${b.total_sites}</i>` : "";
+    return `<button class="tab${on}" data-unit="${esc(u)}">${esc(u)}${cnt}</button>`;
+  }).join("");
+  box.querySelectorAll(".tab").forEach(el => {
+    el.addEventListener("click", () => {
+      currentUnit = el.getAttribute("data-unit");
+      render(lastData, false);
+    });
+  });
+}
+
+/* ---------- 渲染：指标卡 ---------- */
+function renderCards(d){
+  const v = viewData() || {};
+  const w = v.weighted_rate;
+  const cards = [
+    { lbl:"HUB 总数",       val:num(v.total_sites),  unit:"个",
+      foot:"覆盖 " + num(v.region_count) + " 个区域", cls:"c-ok" },
+    { lbl:"整体完成率",     val:pct(v.overall_rate), unit:"",
+      foot:"按仓折算（每仓完成阶段数÷5 后平均）" + (Number.isFinite(Number(w)) ? " · 五阶段全完成占 " + pct(w) : ""),
+      cls:"", bar:Number(v.overall_rate) },
+    { lbl:"推广任务总数",   val:num(requirePath(d,"kpi.plan.total_tasks")),     unit:"条",
+      foot:"覆盖 " + num(requirePath(d,"kpi.plan.site_count")) + " 个站点/HUB", cls:"c-warn" },
+    { lbl:"合作供应商数",   val:num(requirePath(d,"kpi.supplier.total_unique")),  unit:"家",
+      foot:(function(){
+        const c = requirePath(d,"kpi.supplier.cross_region_count");
+        return Number.isFinite(Number(c)) && Number(c) > 0
+          ? `全区域去重 · ${num(c)} 家跨区域`
+          : "全区域去重";
+      })(), cls:"c-hold", drill:"supplier" },
+  ];
+  document.getElementById("cards").innerHTML = cards.map(c => {
+    const isDrill = !!c.drill;
+    return `
+    <div class="card ${c.cls}${isDrill ? " clickable" : ""}"
+         ${isDrill ? 'role="button" tabindex="0" data-drill="' + esc(c.drill) + '" title="点击查看明细"' : ""}>
+      <div class="lbl">${esc(c.lbl)}${isDrill ? '<span class="drill-hint">明细 ›</span>' : ""}</div>
+      <div class="val">${esc(c.val)}${c.unit ? `<span class="u">${esc(c.unit)}</span>` : ""}</div>
+      ${c.bar !== undefined && Number.isFinite(c.bar)
+        ? `<div class="bar"><i style="width:${Math.max(0,Math.min(100,c.bar))}%"></i></div>` : ""}
+      <div class="foot">${esc(c.foot)}</div>
+    </div>`;
+  }).join("");
+}
+
+/* ---------- 渲染：区域完成率堆叠条 ---------- */
+function renderRegions(d){
+  const v = viewData() || {};
+  const regs = v.regions;
+  const box = document.getElementById("regions");
+  if (!Array.isArray(regs) || !regs.length){
+    box.innerHTML = `<div class="na">${NA} 暂无区域数据</div>`;
+    return;
+  }
+  const max = Math.max(1, ...regs.map(r => Number(r.total) || 0));
+  box.innerHTML = regs.map(r => {
+    const t = Number(r.total) || 0;
+    const seg = (v2) => t ? (v2 / t * 100) : 0;
+    return `
+    <div class="region">
+      <div class="top">
+        <span class="nm">${esc(text(r.name))}<small>${fmt(t)} 个 HUB · ${fmt(r.done)} 已完成</small></span>
+        <span class="pc">${pct(r.rate)}</span>
+      </div>
+      <div class="stack" style="width:100%">
+        <span class="s-done"  style="width:${seg(r.done||0)}%;opacity:${0.55+0.45*t/max}"></span>
+        <span class="s-doing" style="width:${seg(r.doing||0)}%"></span>
+        <span class="s-todo"  style="width:${seg(r.todo||0)}%"></span>
+        <span class="s-hold"  style="width:${seg(r.hold||0)}%"></span>
+      </div>
+    </div>`;
+  }).join("") + `
+    <div class="legend">
+      <span><i class="s-done"></i>已完成 ${fmt(regs.reduce((a,r)=>a+(r.done||0),0))}</span>
+      <span><i class="s-doing"></i>进行中 ${fmt(regs.reduce((a,r)=>a+(r.doing||0),0))}</span>
+      <span><i class="s-todo"></i>未开始 ${fmt(regs.reduce((a,r)=>a+(r.todo||0),0))}</span>
+      <span><i class="s-hold"></i>暂不推进 ${fmt(regs.reduce((a,r)=>a+(r.hold||0),0))}</span>
+    </div>`;
+}
+
+/* ---------- 渲染：漏斗 ---------- */
+function renderFunnel(d){
+  const v = viewData() || {};
+  const f = v.funnel;
+  const box = document.getElementById("funnel");
+  if (!Array.isArray(f) || !f.length){
+    box.innerHTML = `<div class="na">${NA} 暂无环节数据</div>`;
+    return;
+  }
+  const total = Number(v.total_sites) || 1;
+  box.innerHTML = `<div>${f.map(x => {
+    const v2 = Number(x.value);
+    const w = Number.isFinite(v2) ? Math.max(1.5, v2 / total * 100) : 0;
+    return `
+    <div class="row">
+      <span class="fn">${esc(text(x.name))}</span>
+      <span class="track"><span class="fill" style="width:${w}%">${Number.isFinite(v2)?v2:NA}</span></span>
+      <span class="fv">${pct(Number.isFinite(v2) ? v2/total*100 : NaN)}</span>
+    </div>`;
+  }).join("")}</div>`;
+}
+
+/* ---------- 渲染：分布条 ---------- */
+const STATUS_COLOR = {
+  "已完成":"#10b981", "进行中":"#2563eb", "待开始":"#cbd5e1",
+  "延期":"#f59e0b", "暂不推进":"#9aa3b2", "关闭":"#ef4444", "未填写":"#e5e7eb"
+};
+function renderDist(elId, obj, colorMap){
+  const el = document.getElementById(elId);
+  const entries = obj && typeof obj === "object"
+    ? Object.entries(obj).sort((a,b) => b[1]-a[1]) : [];
+  if (!entries.length){ el.innerHTML = `<div class="na">${NA} 暂无数据</div>`; return; }
+  const max = Math.max(1, ...entries.map(e => Number(e[1]) || 0));
+  el.innerHTML = entries.map(([k,v]) => {
+    const n = Number(v) || 0;
+    const c = (colorMap && colorMap[k]) || "#3b82f6";
+    return `
+    <div class="d">
+      <span class="n">${esc(k)}</span>
+      <span class="t"><i style="width:${n/max*100}%;background:${c}"></i></span>
+      <span class="v">${fmt(n)}</span>
+    </div>`;
+  }).join("");
+}
+
+/* ---------- 明细表筛选状态 ---------- */
+let filterRegion = "";
+let filterStatus = "";
+
+/** 按当前业务单元 + 区域 + 状态筛选明细 */
+function detailRows(){
+  const all = requirePath(lastData,"progress.records");
+  if (!Array.isArray(all)) return all;
+  return all.filter(r => {
+    if (currentUnit !== "全部" && (r.unit || "") !== currentUnit) return false;
+    if (filterRegion && (r.region || "") !== filterRegion) return false;
+    if (filterStatus){
+      const vals = Object.values(r.states || {});
+      if (!vals.includes(filterStatus)) return false;
+    }
+    return true;
+  });
+}
+
+/** 重建区域下拉选项（选项随业务单元变化） */
+function syncRegionOptions(){
+  const sel = document.getElementById("filter-region");
+  if (!sel) return;
+  const all = requirePath(lastData,"progress.records");
+  if (!Array.isArray(all)){ sel.innerHTML = `<option value="">全部</option>`; return; }
+  const pool = all.filter(r => currentUnit === "全部" || (r.unit || "") === currentUnit);
+  const names = [...new Set(pool.map(r => r.region).filter(Boolean))].sort((a,b) => a.localeCompare(b,"zh"));
+  const prev = filterRegion;
+  sel.innerHTML = `<option value="">全部</option>` +
+    names.map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join("");
+  // 原选项仍存在则保留，否则回退到「全部」
+  if (prev && names.includes(prev)) sel.value = prev;
+  else filterRegion = "";
+  sel.value = filterRegion;
+}
+
+/* ---------- 渲染：HUB 明细 ---------- */
+/* ---------- 渲染：供应商明细弹窗内容（区域 → 供应商 → 站点） ---------- */
+function renderSupplier(d){
+  const s = requirePath(d, "supplier");
+  const box = document.getElementById("sup-list");
+  const sum = document.getElementById("sup-summary");
+  if (!box) return;
+
+  const rows = (s && Array.isArray(s.by_region)) ? s.by_region : [];
+  if (!rows.length){
+    box.innerHTML = `<div class="na">${NA} 暂无供应商数据</div>`;
+    if (sum) sum.textContent = "";
+    return;
+  }
+
+  if (sum){
+    const total = num(s.total_unique);
+    const cross = Number(s.cross_region_count) || 0;
+    sum.textContent = `全区域去重 ${total} 家` + (cross ? ` · 其中 ${cross} 家跨区域` : "");
+  }
+
+  const maxCount = Math.max(1, ...rows.map(r => Number(r.supplier_count) || 0));
+
+  box.innerHTML = rows.map(r => {
+    const cnt = Number(r.supplier_count) || 0;
+    const w = cnt / maxCount * 100;
+    const sups = Array.isArray(r.suppliers) ? r.suppliers : [];
+    const items = sups.map(x => {
+      const sites = Array.isArray(x.sites) ? x.sites : [];
+      const chips = sites.map(st => {
+        const isHub = String(st.type || "").toUpperCase() === "HUB";
+        return `<span class="chip${isHub ? " hub" : ""}">${esc(st.name)}</span>`;
+      }).join("");
+      return `
+        <div class="sup-item">
+          <div class="sup-item-head">
+            <span class="caret">▶</span>
+            <span class="sup-name" title="${esc(x.name)}">${esc(x.name)}</span>
+            <span class="sup-meta">${fmt(x.tasks)} 任务 · ${fmt(x.site_count)} 站点</span>
+          </div>
+          <div class="sup-sites" hidden>${chips || `<span class="na">${NA}</span>`}</div>
+        </div>`;
+    }).join("");
+
+    return `
+      <div class="sup-row">
+        <div class="sup-head">
+          <span class="caret">▶</span>
+          <span class="sup-region">${esc(text(r.region))}</span>
+          <span class="sup-count">${fmt(cnt)}<small>家</small></span>
+          <span class="sup-tasks">${fmt(r.task_count)} 条任务</span>
+          <span class="sup-bar"><i style="width:${w}%"></i></span>
+        </div>
+        <div class="sup-body" hidden>${items}</div>
+      </div>`;
+  }).join("");
+
+  // 默认展开第一个区域，避免用户以为只有汇总数字、看不到明细
+  const firstHead = box.querySelector(".sup-head");
+  const firstBody = box.querySelector(".sup-body");
+  if (firstHead && firstBody){
+    firstBody.removeAttribute("hidden");
+    firstHead.classList.add("open");
+  }
+
+  // 展开全部状态复位
+  const btn = document.getElementById("sup-expand-all");
+  if (btn) btn.textContent = "展开全部";
+}
+
+/* 供应商面板交互：事件委托，只需绑定一次 */
+/* ---------- 供应商明细弹窗：由「合作供应商数」卡片打开 ---------- */
+function openSupplierModal(){
+  const modal = document.getElementById("sup-modal");
+  if (!modal) return;
+  if (lastData) renderSupplier(lastData);   // 按需渲染
+  modal.removeAttribute("hidden");
+  document.body.style.overflow = "hidden";
+  const close = modal.querySelector(".modal-close");
+  if (close) close.focus();
+}
+
+function closeSupplierModal(){
+  const modal = document.getElementById("sup-modal");
+  if (!modal || modal.hasAttribute("hidden")) return;
+  modal.setAttribute("hidden", "");
+  document.body.style.overflow = "";
+  const card = document.querySelector('.card[data-drill="supplier"]');
+  if (card) card.focus();
+}
+
+/* 卡片点击（事件委托，卡片会随数据重绘） */
+document.addEventListener("click", (ev) => {
+  const t = ev.target;
+  if (!t || typeof t.closest !== "function") return;
+  if (t.closest('.card[data-drill="supplier"]')){ openSupplierModal(); return; }
+  if (t.closest("[data-close]")) closeSupplierModal();
+});
+
+/* 卡片键盘可达 */
+document.addEventListener("keydown", (ev) => {
+  if (ev.key === "Escape"){ closeSupplierModal(); return; }
+  if (ev.key !== "Enter" && ev.key !== " ") return;
+  const card = ev.target.closest && ev.target.closest('.card[data-drill="supplier"]');
+  if (card){ ev.preventDefault(); openSupplierModal(); }
+});
+
+(function bindSupplier(){
+  const box = document.getElementById("sup-list");
+  const btn = document.getElementById("sup-expand-all");
+  if (!box) return;
+
+  box.addEventListener("click", (ev) => {
+    // 第二层：点供应商 -> 展开站点
+    const itemHead = ev.target.closest(".sup-item-head");
+    if (itemHead){
+      const sites = itemHead.nextElementSibling;
+      if (sites){
+        const open = sites.hasAttribute("hidden");
+        if (open) sites.removeAttribute("hidden"); else sites.setAttribute("hidden", "");
+        itemHead.classList.toggle("open", open);
+      }
+      return;
+    }
+    // 第一层：点区域 -> 展开供应商名单
+    const head = ev.target.closest(".sup-head");
+    if (head){
+      const body = head.nextElementSibling;
+      if (body){
+        const open = body.hasAttribute("hidden");
+        if (open) body.removeAttribute("hidden"); else body.setAttribute("hidden", "");
+        head.classList.toggle("open", open);
+      }
+    }
+  });
+
+  if (btn){
+    btn.addEventListener("click", () => {
+      const bodies = box.querySelectorAll(".sup-body");
+      const anyClosed = Array.from(bodies).some(b => b.hasAttribute("hidden"));
+      bodies.forEach(b => {
+        if (anyClosed) b.removeAttribute("hidden"); else b.setAttribute("hidden", "");
+      });
+      box.querySelectorAll(".sup-head").forEach(h => h.classList.toggle("open", anyClosed));
+      btn.textContent = anyClosed ? "收起全部" : "展开全部";
+    });
+  }
+})();
+
+function renderDetail(d){
+  const recs = detailRows();
+  const tb = document.getElementById("detail");
+  const cnt = document.getElementById("detail-count");
+  const total = Array.isArray(requirePath(d,"progress.records")) ? requirePath(d,"progress.records").length : 0;
+  const shown = Array.isArray(recs) ? recs.length : 0;
+  const excAll = Number(requirePath(d,"progress.excluded.count")) || 0;
+  if (cnt){
+    let s = (shown === total) ? `${shown} 个 HUB` : `${shown} / ${total} 个 HUB（已筛选）`;
+    if (excAll > 0) s += ` · 已剔除 ${excAll} 个无需推广`;
+    cnt.textContent = s;
+  }
+  if (!Array.isArray(recs) || !recs.length){
+    tb.innerHTML = `<tr><td colspan="7" class="na">${NA} 无符合筛选条件的 HUB</td></tr>`;
+    return;
+  }
+  tb.innerHTML = recs.map(r => {
+    const cell = (v) => {
+      const s = text(v);
+      if (s === NA) return `<td class="na">${NA}</td>`;
+      const cls = ["完成","进行中","未开始","暂不推进","无需推广"].includes(s) ? "t-" + s : "t-其他";
+      return `<td><span class="tag ${cls}">${esc(s)}</span></td>`;
+    };
+    const st = r.states || {};
+    const isExc = !!r.excluded;
+    // 无需推广的仓：整行灰显，站点名后加标记，且不计入任何统计
+    return `<tr class="${isExc ? "row-exc" : ""}">
+      <td class="site">${esc(text(r.site))}${isExc ? `<span class="exc-badge" title="无需推广，不计入统计">无需推广</span>` : ""}</td>
+      <td>${esc(text(r.region))}</td>
+      ${cell(st["供应商+业务培训"])}${cell(st["文员提需"])}${cell(st["HR发单"])}
+      ${cell(st["运营数据晾晒"])}${cell(st["推广结束"])}
+    </tr>`;
+  }).join("");
+}
+
+/* ---------- 绑定筛选事件（仅绑定一次） ---------- */
+(function bindFilters(){
+  const fr = document.getElementById("filter-region");
+  const fs = document.getElementById("filter-status");
+  const rs = document.getElementById("filter-reset");
+  if (!fr || !fs || !rs) return;
+  fr.addEventListener("change", () => { filterRegion = fr.value; if (lastData) renderDetail(lastData); });
+  fs.addEventListener("change", () => { filterStatus = fs.value; if (lastData) renderDetail(lastData); });
+  rs.addEventListener("click", () => {
+    filterRegion = ""; filterStatus = "";
+    fr.value = ""; fs.value = "";
+    if (lastData) renderDetail(lastData);
+  });
+})();
+
+/* ---------- 同步频率与数据新鲜度信息 ---------- */
+function renderSyncInfo(d){
+  const el = document.getElementById("sync-info");
+  if (!el) return;
+  const sched = requirePath(d, "schedule") || {};
+  const mins = Number(sched.interval_minutes);
+  const cron = sched.cron;
+
+  // 配置频率
+  let freq = NA;
+  if (Number.isFinite(mins) && mins > 0){
+    freq = mins >= 60 ? (mins/60) + " 小时" : mins + " 分钟";
+  } else if (cron){
+    freq = cron;
+  }
+
+  // 数据新鲜度：距今多久
+  let fresh = NA, cls = "";
+  const ts = Number(requirePath(d, "generated_ts"));
+  const t = Number.isFinite(ts) ? ts*1000 : new Date(String(requirePath(d,"updated_at")||"")).getTime();
+  if (Number.isFinite(t)){
+    const minsAgo = Math.floor((Date.now() - t) / 60000);
+    if (minsAgo < 0) fresh = "刚刚";
+    else if (minsAgo < 60) fresh = minsAgo + " 分钟前";
+    else if (minsAgo < 1440){ fresh = Math.floor(minsAgo/60) + " 小时前"; cls = minsAgo > 360 ? "warn" : ""; }
+    else { fresh = Math.floor(minsAgo/1440) + " 天前"; cls = "warn"; }
+  }
+
+  const arr = [];
+  arr.push(`同步频率 <b>${esc(String(freq))}</b>`);
+  arr.push(`<span class="sep">·</span>`);
+  arr.push(`数据更新于 <b class="${cls}">${esc(fresh)}</b>`);
+  if (cron) { arr.push(`<span class="sep">·</span>`); arr.push(`<span>cron <b>${esc(cron)}</b></span>`); }
+  el.innerHTML = arr.join(" ");
+}
+
+/* ---------- 顶部新鲜度标记 ---------- */
+function renderFreshness(updatedAt, failed){
+  const dot = document.getElementById("dot");
+  const txt = document.getElementById("fresh-text");
+  dot.className = "dot";
+
+  if (failed){
+    dot.classList.add("err");
+    txt.textContent = updatedAt
+      ? "同步失败 · 显示 " + updatedAt + " 的数据"
+      : "同步失败 · 无可用数据";
+    return "err";
+  }
+  if (!updatedAt){
+    dot.classList.add("err");
+    txt.textContent = "数据时间缺失";
+    return "err";
+  }
+  const t = new Date(updatedAt).getTime();
+  if (!Number.isFinite(t)){
+    dot.classList.add("err");
+    txt.textContent = "数据时间格式异常";
+    return "err";
+  }
+  const mins = Math.floor((Date.now() - t) / 60000);
+  const rel = mins <= 0 ? "刚刚" : mins + " 分钟前";
+  txt.textContent = "最后更新 " + rel + "（" + updatedAt.slice(11,16) + "）";
+  if (mins > STALE_MIN){ dot.classList.add("stale"); return "stale"; }
+  return "ok";
+}
+
+function renderBanner(state, updatedAt){
+  const b = document.getElementById("banner");
+  if (state === "err"){
+    b.className = "banner err show";
+    b.textContent = "⚠ 数据同步失败，页面保留上一次成功加载的数据" + (updatedAt ? "（" + updatedAt + "）" : "") + "。请检查定时任务运行记录。";
+  } else if (state === "stale"){
+    b.className = "banner warn show";
+    b.textContent = "⚠ 数据已超过 " + STALE_MIN + " 分钟未更新，请留意是否为旧数据。";
+  } else {
+    b.className = "banner";
+    b.textContent = "";
+  }
+}
+
+/* ---------- 契约校验 ---------- */
+function validate(d){
+  const required = [
+    "updated_at","kpi.progress.total_sites","kpi.progress.region_count","kpi.progress.overall_rate",
+    "kpi.plan.total_tasks","kpi.plan.site_count","kpi.plan.supplier_count",
+    "progress.regions","progress.funnel","progress.records","plan.status_dist","plan.region_dist"
+  ];
+  const miss = required.filter(p => requirePath(d,p) === undefined);
+  if (miss.length) console.warn("[契约校验] 缺失字段，将渲染占位符:", miss.join(", "));
+  return miss;
+}
+
+/* ---------- 主渲染 ---------- */
+function render(d, failed){
+  if (d){
+    lastData = d;
+    validate(d);
+    // 若当前选中的单元已不存在，回退到「全部」
+    const byUnit = requirePath(d, "progress.by_unit");
+    if (byUnit && currentUnit !== "全部" && !byUnit[currentUnit]) currentUnit = "全部";
+    renderUnitTabs();
+    renderSyncInfo(d);
+    syncRegionOptions();   // 区域下拉需随业务单元重建
+    renderCards(d);
+    renderRegions(d);
+    renderFunnel(d);
+    renderDist("status-dist", requirePath(d,"plan.status_dist"), STATUS_COLOR);
+    renderDist("region-dist", requirePath(d,"plan.region_dist"), null);
+    // 供应商明细按需渲染：弹窗打开时才生成 DOM，避免首屏加载 400+ 站点节点
+    if (!document.getElementById("sup-modal").hasAttribute("hidden")) renderSupplier(d);
+    renderDetail(d);
+    const pt = requirePath(d,"kpi.plan.total_tasks");
+    document.getElementById("plan-total").textContent =
+      Number.isFinite(Number(pt)) ? "共 " + fmt(pt) + " 条" : "";
+    lastGood = d;
+  }
+  const updatedAt = lastGood ? String(lastGood.updated_at || "").slice(0,19).replace("T"," ") : "";
+  const state = renderFreshness(updatedAt, !!failed);
+  renderBanner(failed ? "err" : state, updatedAt);
+}
+
+/* ---------- 拉取 data_active.json（剔除暂不推进口径） ---------- */
+async function load(manual){
+  const btn = document.getElementById("refresh");
+  if (manual){ btn.disabled = true; document.getElementById("dot").className = "dot load"; }
+  try{
+    const res = await fetch("./data_active.json?t=" + Date.now(), { cache:"no-store" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const d = await res.json();
+    render(d, false);
+    return true;
+  }catch(e){
+    console.error("拉取 data_active.json 失败:", e);
+    render(null, true);   // 保留 lastGood，只改状态标记
+    return false;
+  }finally{
+    if (manual) btn.disabled = false;
+  }
+}
+
+document.getElementById("refresh").addEventListener("click", () => load(true));
+load(false);
+setInterval(() => load(false), POLL_MS);
+</script>
+</body>
+</html>
