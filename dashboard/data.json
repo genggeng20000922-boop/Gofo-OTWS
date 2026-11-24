@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-11-24T13:13:42+08:00",
-  "generated_ts": 1795497222,
+  "updated_at": "2026-11-24T23:56:19+08:00",
+  "generated_ts": 1795535779,
   "scope": "all",
   "schedule": {
     "cron": "*/5 * * * *",
